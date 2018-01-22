@@ -569,14 +569,16 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 					drawSymbol(out, cx, cy, nx, ny, radiusCircle,
 							style.isCIS(), p1, thickness);
 				} else {
-					double vdx = (dest.x - orig.x);
-					double vdy = (dest.y - orig.y);
-					vdx /= 6.0;
-					vdy /= 6.0;
-					drawSymbol(out, cx + vdx, cy + vdy, nx, ny, radiusCircle,
-							style.isCIS(), p2, thickness);
-					drawSymbol(out, cx - vdx, cy - vdy, nx, ny, radiusCircle,
-							style.isCIS(), p1, thickness);
+					if (conf._drawAlternativeLW) {
+						drawAlternativeLW(out, orig, dest, style);
+					} else {
+						double vdx = (dest.x - orig.x);
+						double vdy = (dest.y - orig.y);
+						vdx /= 6.0;
+						vdy /= 6.0;
+						drawSymbol(out, cx + vdx, cy + vdy, nx, ny, radiusCircle, style.isCIS(), p2, thickness);
+						drawSymbol(out, cx - vdx, cy - vdy, nx, ny, radiusCircle, style.isCIS(), p1, thickness);
+					}
 				}
 			}
 		} else if (conf._mainBPStyle == VARNAConfig.BP_STYLE.RNAVIZ) {
@@ -587,6 +589,11 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		} else if (conf._mainBPStyle == VARNAConfig.BP_STYLE.SIMPLE) {
 			out.drawLine(orig.x, orig.y, dest.x, dest.y, conf._bpThickness);
 		}
+	}
+
+	private void drawAlternativeLW(final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest,
+																 final ModeleBP style) {
+		// TODO
 	}
 
 	private void drawColorMap(VARNAConfig _conf, SecStrDrawingProducer out) {

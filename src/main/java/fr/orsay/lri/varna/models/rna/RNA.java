@@ -17,38 +17,6 @@
  */
 package fr.orsay.lri.varna.models.rna;
 
-import java.awt.Color;
-import java.awt.Point;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Serializable;
-import java.io.StreamTokenizer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Set;
-import java.util.Stack;
-import java.util.Vector;
-
-import javax.xml.transform.sax.TransformerHandler;
-
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributesImpl;
-
 import fr.orsay.lri.varna.applications.templateEditor.Couple;
 import fr.orsay.lri.varna.exceptions.ExceptionExportFailed;
 import fr.orsay.lri.varna.exceptions.ExceptionFileFormatOrSyntax;
@@ -77,7 +45,35 @@ import fr.orsay.lri.varna.models.templates.RNATemplateDrawingAlgorithmException;
 import fr.orsay.lri.varna.models.templates.RNATemplateMapping;
 import fr.orsay.lri.varna.utils.RNAMLParser;
 import fr.orsay.lri.varna.utils.XMLUtils;
-import fr.orsay.lri.varna.views.VueUI;
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Serializable;
+import java.io.StreamTokenizer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Set;
+import java.util.Stack;
+import java.util.Vector;
+import javax.xml.transform.sax.TransformerHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * The RNA model which contain the base list and the draw algorithm mode
@@ -591,10 +587,53 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 	}
 
-	private void drawAlternativeLW(final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest,
-																 final ModeleBP style) {
-		// TODO
-	}
+  private void drawAlternativeLW(
+      final SecStrDrawingProducer out,
+      final Point2D.Double orig,
+      final Point2D.Double dest,
+      final ModeleBP style) {
+    final ModeleBP.Edge edge5 = style.getEdgePartner5();
+    final ModeleBP.Edge edge3 = style.getEdgePartner3();
+    assert edge5 != edge3;
+
+    if (edge5 == ModeleBP.Edge.WC) {
+      if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
+        drawSquareInCircle(out, orig, dest);
+      } else if (edge3 == ModeleBP.Edge.SUGAR) {
+        drawTriangleInCircle(out, orig, dest);
+      }
+    } else if (edge5 == ModeleBP.Edge.HOOGSTEEN) {
+      if (edge3 == ModeleBP.Edge.WC) {
+        drawCircleInSquare(out, orig, dest);
+      } else if (edge3 == ModeleBP.Edge.SUGAR) {
+        drawTriangelInSquare(out, orig, dest);
+      }
+    } else if (edge5 == ModeleBP.Edge.SUGAR) {
+      if (edge3 == ModeleBP.Edge.WC) {
+        drawCircleInTriangle(out, orig, dest);
+      } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
+        drawSquareInTriangle(out, orig, dest);
+      }
+    }
+  }
+
+  private void drawSquareInCircle(
+      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+
+  private void drawTriangleInCircle(
+      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+
+  private void drawCircleInSquare(
+      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+
+  private void drawTriangleInSquare(
+      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+
+  private void drawCircleInTriangle(
+      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+
+  private void drawSquareInTriangle(
+      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
 
 	private void drawColorMap(VARNAConfig _conf, SecStrDrawingProducer out) {
 		double v1 = _conf._cm.getMinValue();

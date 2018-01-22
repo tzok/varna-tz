@@ -125,7 +125,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 
 	public static final int DEFAULT_DRAW_MODE = DRAW_MODE_RADIATE;
 
-	public int BASE_RADIUS = 10;
+	public static int BASE_RADIUS = 10;
 	public static final double LOOP_DISTANCE = 40.0; // distance between base
 														// pairs in an helix
 	public static final double BASE_PAIR_DISTANCE = 65.0; // distance between
@@ -566,7 +566,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 							style.isCIS(), p1, thickness);
 				} else {
 					if (conf._drawAlternativeLW) {
-						drawAlternativeLW(out, orig, dest, style);
+            drawAlternativeLW(out, orig, dest, style, thickness, radiusCircle);
 					} else {
 						double vdx = (dest.x - orig.x);
 						double vdy = (dest.y - orig.y);
@@ -591,49 +591,75 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
       final SecStrDrawingProducer out,
       final Point2D.Double orig,
       final Point2D.Double dest,
-      final ModeleBP style) {
+      final ModeleBP style,
+      final double thickness,
+      final double unit) {
     final ModeleBP.Edge edge5 = style.getEdgePartner5();
     final ModeleBP.Edge edge3 = style.getEdgePartner3();
     assert edge5 != edge3;
 
     if (edge5 == ModeleBP.Edge.WC) {
       if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
-        drawSquareInCircle(out, orig, dest);
+        drawSquareInCircle(out, orig, dest, thickness, unit);
       } else if (edge3 == ModeleBP.Edge.SUGAR) {
-        drawTriangleInCircle(out, orig, dest);
+        drawTriangleInCircle(out, orig, dest, thickness, unit);
       }
     } else if (edge5 == ModeleBP.Edge.HOOGSTEEN) {
       if (edge3 == ModeleBP.Edge.WC) {
-        drawCircleInSquare(out, orig, dest);
+        drawCircleInSquare(out, orig, dest, thickness, unit);
       } else if (edge3 == ModeleBP.Edge.SUGAR) {
-        drawTriangelInSquare(out, orig, dest);
+        drawTriangleInSquare(out, orig, dest, thickness, unit);
       }
     } else if (edge5 == ModeleBP.Edge.SUGAR) {
       if (edge3 == ModeleBP.Edge.WC) {
-        drawCircleInTriangle(out, orig, dest);
+        drawCircleInTriangle(out, orig, dest, thickness, unit);
       } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
-        drawSquareInTriangle(out, orig, dest);
+        drawSquareInTriangle(out, orig, dest, thickness, unit);
       }
     }
   }
 
   private void drawSquareInCircle(
-      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+      final SecStrDrawingProducer out,
+      final Point2D.Double orig,
+      final Point2D.Double dest,
+      final double thickness,
+      final double unit) {}
 
   private void drawTriangleInCircle(
-      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+      final SecStrDrawingProducer out,
+      final Point2D.Double orig,
+      final Point2D.Double dest,
+      final double thickness,
+      final double unit) {}
 
   private void drawCircleInSquare(
-      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+      final SecStrDrawingProducer out,
+      final Point2D.Double orig,
+      final Point2D.Double dest,
+      final double thickness,
+      final double unit) {}
 
   private void drawTriangleInSquare(
-      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+      final SecStrDrawingProducer out,
+      final Point2D.Double orig,
+      final Point2D.Double dest,
+      final double thickness,
+      final double unit) {}
 
   private void drawCircleInTriangle(
-      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+      final SecStrDrawingProducer out,
+      final Point2D.Double orig,
+      final Point2D.Double dest,
+      final double thickness,
+      final double unit) {}
 
   private void drawSquareInTriangle(
-      final SecStrDrawingProducer out, final Point2D.Double orig, final Point2D.Double dest) {}
+      final SecStrDrawingProducer out,
+      final Point2D.Double orig,
+      final Point2D.Double dest,
+      final double thickness,
+      final double unit) {}
 
 	private void drawColorMap(VARNAConfig _conf, SecStrDrawingProducer out) {
 		double v1 = _conf._cm.getMinValue();

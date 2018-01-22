@@ -4156,4 +4156,11 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	ArrayList<ModeleBase> getListeBases() {
 		return _listeBases;
 	}
+
+	public void addBPAux(final int i, final int j, final ModeleBP.Edge edge5, final ModeleBP.Edge edge3,
+											 final ModeleBP.Stericity ster) {
+		final ModeleBase part5 = _listeBases.get(i);
+		final ModeleBase part3 = _listeBases.get(j);
+		_structureAux.add(new ModeleBP(part5, part3, edge5, edge3, ster));
+	}
 }

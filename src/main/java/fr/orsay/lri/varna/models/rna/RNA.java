@@ -81,13 +81,13 @@ import fr.orsay.lri.varna.views.VueUI;
 
 /**
  * The RNA model which contain the base list and the draw algorithm mode
- * 
+ *
  * @author darty
- * 
+ *
  */
 public class RNA extends InterfaceVARNAObservable implements Serializable {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 7541274455751497303L;
 
@@ -104,7 +104,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	 * so that the user can "disentangle" the drawing by spinning the helices
 	 * around the axis defined by their multiloop (bulge or internal loop)
 	 * origin. This is roughly the initial placement strategy of RNAViz.
-	 * 
+	 *
 	 * @see <a href="http://rnaviz.sourceforge.net/">RNAViz</a>
 	 */
 	public static final int DRAW_MODE_RADIATE = 2;
@@ -255,6 +255,13 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 
 	transient private ArrayList<InterfaceVARNAListener> _listeVARNAListener = new ArrayList<InterfaceVARNAListener>();
 
+	private boolean treatIsolatedAsNonPlanar;
+
+	public RNA(final boolean treatIsolatedAsNonPlanar) {
+		super();
+		this.treatIsolatedAsNonPlanar = treatIsolatedAsNonPlanar;
+	}
+
 	public RNA() {
 		this("");
 	}
@@ -337,9 +344,9 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	private static double correctComponent(double c)
 	{
 	    c = c / 255.0;
-	    if (c <= 0.03928) 
+	    if (c <= 0.03928)
 	    	c = c/12.92;
-	    else 
+	    else
 	    	c = Math.pow(((c+0.055)/1.055) , 2.4);
 	    return c;
 	}
@@ -347,16 +354,16 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	{
 		return 0.2126 * correctComponent(c.getRed()) + 0.7152 * correctComponent(c.getGreen()) + 0.0722 * correctComponent(c.getBlue());
 	}
-	
+
 	public static boolean whiteLabelPreferrable(Color c)
 	{
 		if (getLuminance(c) > 0.179)
 			return false;
 		return true;
 	}
-	
 
-	
+
+
 	public Color getBaseNameColor(int i, VARNAConfig conf) {
 		Color result = _listeBases.get(i).getStyleBase().get_base_name_color();
 		if ( RNA.whiteLabelPreferrable(getBaseInnerColor(i, conf)))
@@ -859,7 +866,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		// Drawing Bases
 		double baseFontSize = (1.5 * BASE_RADIUS);
 		out.setFont(PSExport.FONT_HELVETICA_BOLD, baseFontSize);
-		
+
 		for (int i = 0; i < _listeBases.size(); i++) {
 			x0 = coords[i].x;
 			y0 = coords[i].y;
@@ -1345,15 +1352,15 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	public int getDrawMode() {
 		return _drawMode;
 	}
-	
+
 	public static double HYSTERESIS_EPSILON = .15;
 	public static final double[] HYSTERESIS_ATTRACTORS = {0.,Math.PI/4.,Math.PI/2.,3.*Math.PI/4.,Math.PI,5.*(Math.PI)/4.,3.*(Math.PI)/2,7.*(Math.PI)/4.};
-	
+
 	public static double normalizeAngle(double angle)
 	{
 		return normalizeAngle(angle,0.);
 	}
-	
+
 	public static double normalizeAngle(double angle, double fromVal)
 	{
 		double toVal = fromVal +2.*Math.PI;
@@ -1366,13 +1373,13 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		{
 			result -= 2.*Math.PI;
 		}
-		return result;		
+		return result;
 	}
-	
+
 	public static double correctHysteresis(double angle)
 	{
 		double result = normalizeAngle(angle);
-		
+
 		for (int i=0;i<HYSTERESIS_ATTRACTORS.length;i++)
 		{
 			double att = HYSTERESIS_ATTRACTORS[i];
@@ -1383,11 +1390,11 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 		return result;
 	}
-	
+
 	private void distributeUnpaired(
 			double radius,
-			double angle, 
-			double pHel, 
+			double angle,
+			double pHel,
 			double base,
 			Point2D.Double center,
 			Vector<Integer> bases)
@@ -1404,15 +1411,15 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			{
 				addedRadius=Math.min(1.0,(2*BASE_RADIUS-mydist)/4)*computeRadius(mydist, 2.29*(bases.size() + 1)*BASE_RADIUS-mydist);
 			}
-			
-			
+
+
 			ArrayList<Point2D.Double> pos = computeNewAngles(bases.size(),center,VN, angle,base + pHel,radius,addedRadius);
-			for (int i = 0; i < bases.size(); i++) 
+			for (int i = 0; i < bases.size(); i++)
 			{
 				int k = bases.get(i);
 				setCoord(k, pos.get(i));
-			}				
-		
+			}
+
 	}
 
 	private double computeRadius(double b, double pobj)
@@ -1441,7 +1448,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 		return a;
 	}
-	
+
 	public static double computeAngle(Point2D.Double center, Point2D.Double p) {
 		double dist = center.distance(p);
 		double angle = Math.asin((p.y - center.y) / dist);
@@ -1450,7 +1457,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 		return angle;
 	}
-	
+
 	private Point2D.Double rotatePoint(Point2D.Double center, Point2D.Double p,
 			double angle) {
 		double dist = p.distance(center);
@@ -1467,7 +1474,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	}
 
 
-	
+
 	private void rotateHelix(Point2D.Double center, int i, int j, double angle) {
 		for (int k = i; k <= j; k++) {
 			Point2D.Double oldp = getCoords(k);
@@ -1482,11 +1489,11 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			}
 		}
 	}
-	
 
 
-	private void fixUnpairedPositions(boolean isDirect, 
-			double pHelR, 
+
+	private void fixUnpairedPositions(boolean isDirect,
+			double pHelR,
 			double pLimL, double pLimR, double pHelL, double radius, double base, Point2D.Double center,Vector<Integer> prevBases,Vector<Integer> nextBases)
 	{
 		if (isDirect) {
@@ -1500,14 +1507,14 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			double anglePrev = normalizeAngle(pHelL - pLimR);
 			double angleNext = normalizeAngle(pLimL - pHelR);
 			distributeUnpaired(radius,-anglePrev, pHelL, base,
-					center,prevBases);			
+					center,prevBases);
 			distributeUnpaired(radius,angleNext, pHelR, base,
 					center,nextBases);
 		}
-	
+
 	}
-	
-	private static Point2D.Double getPoint(double angleLine, double angleBulge, Point2D.Double center,  
+
+	private static Point2D.Double getPoint(double angleLine, double angleBulge, Point2D.Double center,
 			Point2D.Double VN,double radius, double addedRadius, double dirBulge)
 	{
 		return new Point2D.Double(
@@ -1516,29 +1523,29 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 				center.y + radius * Math.sin(angleLine)+
 				dirBulge*addedRadius*Math.sin(angleBulge)*VN.y);
 	}
-	
 
-	private ArrayList<Point2D.Double> computeNewAngles(int numPoints, Point2D.Double center,  
+
+	private ArrayList<Point2D.Double> computeNewAngles(int numPoints, Point2D.Double center,
 			Point2D.Double VN, double angle, double angleBase, double radius, double addedRadius)
 	{
 		ArrayList<Point2D.Double> result = new ArrayList<Point2D.Double>();
 		if (numPoints>0)
 		{
 		ArrayList<Double> factors = new ArrayList<Double>();
-		
+
 
 		Point2D.Double prevP = new Point2D.Double(
 				center.x + radius * Math.cos(angleBase),
 				center.y + radius * Math.sin(angleBase));
-		
-		
+
+
 		double fact = 0.;
-		
+
 		double angleBulge = 0.;
 		double dirBulge = (angle<0)?-1.:1.;
-		double dtarget =2.*BASE_RADIUS; 
-		
-		for (int i = 0; i < numPoints; i++) 
+		double dtarget =2.*BASE_RADIUS;
+
+		for (int i = 0; i < numPoints; i++)
 		{
 				double lbound = fact;
 				double ubound = 1.0;
@@ -1557,8 +1564,8 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 					else
 					{
 						lbound = fact;
-						fact = (fact+ubound)/2.0;					
-					}				
+						fact = (fact+ubound)/2.0;
+					}
 					angleLine = angleBase + angle*fact;
 					angleBulge = Math.PI*fact;
 					currP = getPoint(angleLine, angleBulge, center,VN,radius, addedRadius, dirBulge);
@@ -1567,16 +1574,16 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 				factors.add(fact);
 				prevP = currP;
 		}
-		
-		
+
+
 		double rescale = 1.0/(factors.get(factors.size()-1)+factors.get(0));
 
 		for(int j=0;j<factors.size();j++)
 		{
 			factors.set(j,factors.get(j)*rescale);
 		}
-		
-		 
+
+
 		if (addedRadius>0)
 		{
 			prevP =  getPoint(angleBase, 0, center,VN,radius, addedRadius, dirBulge);
@@ -1586,7 +1593,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 				double newfact = factors.get(j);
 				double angleLine = angleBase + angle*newfact;
 				angleBulge = Math.PI*newfact;
-				Point2D.Double currP = getPoint(angleLine, angleBulge, center,VN,radius, addedRadius, dirBulge); 
+				Point2D.Double currP = getPoint(angleLine, angleBulge, center,VN,radius, addedRadius, dirBulge);
 				totDist += currP.distance(prevP);
 				prevP = currP;
 			}
@@ -1597,7 +1604,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			prevP = new Point2D.Double(
 					center.x + radius * Math.cos(angleBase),
 					center.y + radius * Math.sin(angleBase));
-			for (int i = 0; i < numPoints; i++) 
+			for (int i = 0; i < numPoints; i++)
 			{
 					double lbound = fact;
 					double ubound = 1.5;
@@ -1616,8 +1623,8 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 						else
 						{
 							lbound = fact;
-							fact = (fact+ubound)/2.0;					
-						}				
+							fact = (fact+ubound)/2.0;
+						}
 						angleLine = angleBase + angle*fact;
 						angleBulge = Math.PI*fact;
 						currP = getPoint(angleLine, angleBulge, center,VN,radius, addedRadius, dirBulge);
@@ -1631,8 +1638,8 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			{
 				factors.set(j,factors.get(j)*rescale);
 			}
-		}	
-		
+		}
+
 
 
 		for(int j=0;j<factors.size();j++)
@@ -1640,14 +1647,14 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			double newfact = factors.get(j);
 			double angleLine = angleBase + angle*newfact;
 			angleBulge = Math.PI*newfact;
-			result.add(getPoint(angleLine, angleBulge, center,VN,radius, addedRadius, dirBulge));			
+			result.add(getPoint(angleLine, angleBulge, center,VN,radius, addedRadius, dirBulge));
 		}
-		}	
+		}
 		return result;
 	}
-	
-	
-	
+
+
+
 	void drawLoop(int i, int j, double x, double y, double dirAngle,
 			Point2D.Double[] coords, Point2D.Double[] centers, double[] angles) {
 		if (i > j) {
@@ -1730,11 +1737,11 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 					// Base cannot be paired twice, so next base is at
 					// "unpaired base distance"
 					+ 1.0 * angleIncrementML;
-			
+
 			ArrayList<Integer> currUnpaired = new ArrayList<Integer>();
 			Couple<Double,Double> currInterval = new Couple<Double,Double>(0.,baseAngle-1.0 * angleIncrementML);
 			ArrayList<Couple<ArrayList<Integer>,Couple<Double,Double>>> intervals = new ArrayList<Couple<ArrayList<Integer>,Couple<Double,Double>>>();
-			
+
 			for (k = basesMultiLoop.size() - 1; k >= 0; k--) {
 				l = basesMultiLoop.get(k).intValue();
 				//System.out.println(l+" ");
@@ -1746,7 +1753,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 					baseAngle = correctHysteresis(baseAngle+angleIncrementBP/2.)-angleIncrementBP/2.;
 					currInterval.first = baseAngle;
 					intervals.add(new Couple<ArrayList<Integer>,Couple<Double,Double>>(currUnpaired,currInterval));
-					currInterval = new Couple<Double,Double>(-1.,-1.);  
+					currInterval = new Couple<Double,Double>(-1.,-1.);
 					currUnpaired = new ArrayList<Integer>();
 				}
 				else if (isPaired5)
@@ -1760,7 +1767,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 
 				angles[l] = baseAngle;
 				if (isPaired3)
-				{ 
+				{
 					baseAngle += angleIncrementBP;
 				}
 				else {
@@ -1772,14 +1779,14 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 					- 0.5 * angleIncrementBP;
 			intervals.add(new Couple<ArrayList<Integer>,Couple<Double,Double>>(currUnpaired,currInterval));
 			//System.out.println("Inc. ML:"+angleIncrementML+" BP:"+angleIncrementBP);
-			
+
 			for(Couple<ArrayList<Integer>,Couple<Double,Double>> inter: intervals)
 			{
 				//double mid = inter.second.second;
 				double mina = inter.second.first;
 				double maxa = normalizeAngle(inter.second.second,mina);
 				//System.out.println(""+mina+" " +maxa);
-				
+
 				for (int n=0;n<inter.first.size();n++)
 				{
 					double ratio = (1.+n)/(1.+inter.first.size());
@@ -1787,16 +1794,16 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 					angles[b] = mina + (1.-ratio)*(maxa-mina);
 				}
 			}
-			
-			
+
+
 			for (k = basesMultiLoop.size() - 1; k >= 0; k--) {
 				l = basesMultiLoop.get(k).intValue();
 				coords[l].x = mlCenter.x + multiLoopRadius
 						* Math.cos(angles[l]);
 				coords[l].y = mlCenter.y + multiLoopRadius
 						* Math.sin(angles[l]);
-			}	
-			
+			}
+
 			// System.out.println("n1:"+n1+" n2:"+n2);
 			double newAngle;
 			int m, n;
@@ -1855,7 +1862,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		return nextBases;
 	}
 
-	
+
 	public void rotateEverything(double delta, double base, double pLimL, double pLimR, Point h, Point ml, Hashtable<Integer,Point2D.Double> backupPos)
 	{
 		boolean isDirect = testDirectionality(ml.x, ml.y, h.x);
@@ -1877,24 +1884,24 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 
 		Vector<Integer> prevBases = getPreviousUnpaired(h);
 		Vector<Integer> nextBases = getNextUnpaired(h);
-		
+
 		double radius = center.distance(helixStart);
 
-		for (int j = 0; j < prevBases.size(); j++) 
+		for (int j = 0; j < prevBases.size(); j++)
 		{
 			int k = prevBases.get(j);
 			backupPos.put(k, getCoords(k));
 		}
-		for (int j = 0; j < nextBases.size(); j++) 
+		for (int j = 0; j < nextBases.size(); j++)
 		{
 			int k = nextBases.get(j);
 			backupPos.put(k, getCoords(k));
 		}
-		fixUnpairedPositions(isDirect, pHelR, pLimL, pLimR, pHelL, radius, base,center,prevBases,nextBases);		
+		fixUnpairedPositions(isDirect, pHelR, pLimL, pLimR, pHelL, radius, base,center,prevBases,nextBases);
 	}
-	
-	
-	
+
+
+
 	public void drawRNARadiate() {
 		drawRNARadiate(-1.0, VARNAConfig.DEFAULT_SPACE_BETWEEN_BASES, true);
 	}
@@ -1904,7 +1911,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	}
 
 	public static final double FLAT_RECURSIVE_INCREMENT = 20.;
-	
+
 	public void drawRNARadiate(double dirAngle, double _spaceBetweenBases,
 			boolean flatExteriorLoop) {
 		_drawn = true;
@@ -2030,17 +2037,17 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	 * motif.getListStrand().getStrand(i).getMB(j).getIndex();
 	 * get_listeBases().get(indice).setCoords( new Point2D.Double(0,0));
 	 * get_listeBases().get(indice).setCenter( new Point2D.Double(0, 0));
-	 * 
+	 *
 	 * } } //Recherche du brin central int centralStrand =
 	 * motif.getCentralStrand();
-	 * 
+	 *
 	 * //Cas o? l'on a un motif en ?toile if(centralStrand!=-1){ //On positionne
 	 * le brin central motif.positionneSpecificStrand(centralStrand,
 	 * spaceBetweenStrand);
-	 * 
+	 *
 	 * //On place les autres brins par rapport a ce brin central
 	 * motif.orderStrands(centralStrand); }
-	 * 
+	 *
 	 * else { centralStrand = 0; motif.positionneStrand(); motif.ajusteStrand();
 	 * } motif.reajustement(); motif.deviationBasePair();
 	 * motif.setCenterMotif(); }
@@ -2184,7 +2191,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	 * Sets the RNA to be drawn. Uses when comparison mode is on. Will draw the
 	 * super-structure passed in parameters and apply specials styles to the
 	 * bases owning by each RNA alignment and both.
-	 * 
+	 *
 	 * @param seq
 	 *            - The sequence of the super-structure This sequence shall be
 	 *            designed like this:
@@ -2342,17 +2349,17 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	public Point getExteriorHelix(int index) {
 		Point h = getHelixInterval(index);
 		int a = -1;
-		int b = -1;		
+		int b = -1;
 		while (!((h.x==0)&&(h.y==0)))
-		{			
+		{
 			a = h.x;
-			b = h.y;		
+			b = h.y;
 			h = getHelixInterval(a-1);
 		}
 		return new Point(a, b);
 	}
-	
-	
+
+
 	public ArrayList<Integer> getHelix(int index) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		if ((index < 0) || (index >= _listeBases.size())) {
@@ -2438,7 +2445,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	/**
 	 * Returns the RNA secondary structure displayed by this panel as a
 	 * well-parenthesized word, accordingly to the DBN format
-	 * 
+	 *
 	 * @return This panel's secondary structure
 	 */
 	public String getStructDBN() {
@@ -2533,7 +2540,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		System.out.println();
 
 	}
-	
+
 	public int[] getStrandShifts()
 	{
 		int[] result = new int[getSize()];
@@ -2547,9 +2554,9 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			result[i] = acc;
 		}
 		return result;
-		
+
 	}
-	
+
 	public String addStrandSeparators(String s)
 	{
 		String res = "";
@@ -2563,7 +2570,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 		return res;
 	}
-	
+
 
 	public String getStructDBN(boolean includeMostPKs) {
 		String result = getStructDBN();
@@ -2614,7 +2621,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 
 	/**
 	 * Returns the raw nucleotides sequence for the displayed RNA
-	 * 
+	 *
 	 * @return The RNA sequence
 	 */
 	public String getSeq() {
@@ -2781,6 +2788,9 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		str = correctReciprocity(str);
 
 		int[] planarSubset = RNAMLParser.planarize(str);
+		if (treatIsolatedAsNonPlanar) {
+			planarSubset = RNA.removeIsolatedFromMainStructure(planarSubset);
+		}
 		_structureAux.clear();
 
 		for (int i = 0; i < planarSubset.length; i++) {
@@ -2793,6 +2803,37 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			}
 		}
 
+	}
+
+	private static int[] removeIsolatedFromMainStructure(final int[] structure) {
+		final int[] nonIsolatedSubset = structure.clone();
+		for (int i = 0; i < structure.length; i++) {
+			if (RNA.isIsolated(structure, i)) {
+				nonIsolatedSubset[structure[i]] = -1;
+				nonIsolatedSubset[i] = -1;
+			}
+		}
+		return nonIsolatedSubset;
+	}
+
+	private static boolean isIsolated(final int[] structure, final int i) {
+		if (structure[i] == -1) {
+			return false;
+		}
+
+		// first
+		if (i == 0) {
+			return structure[1] == -1;
+		}
+
+		// last
+		final int n = structure.length;
+		if (i == (n - 1)) {
+			return structure[n - 2] == -1;
+		}
+
+		// middle
+		return (structure[i - 1] == -1) && (structure[i + 1] == -1);
 	}
 
 	public ArrayList<ModeleBase> get_listeBases() {
@@ -3070,7 +3111,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	 * should be unique, base numbers are not necessarily contiguous, and
 	 * indices should be preferred for any reasonably complex algorithmic
 	 * treatment.
-	 * 
+	 *
 	 * @param num
 	 *            The base number
 	 * @return The first index whose associated Base model has base number
@@ -3090,7 +3131,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	 * Adds a base pair to this RNA's structure. Tries to add it to the
 	 * secondary structure first, eventually adding it to the 'tertiary'
 	 * interactions if it clashes with the current secondary structure.
-	 * 
+	 *
 	 * @param baseNumber5
 	 *            - Base number of the origin of this base pair
 	 * @param baseNumber3
@@ -3107,7 +3148,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	 * Adds a base pair to this RNA's structure. Tries to add it to the
 	 * secondary structure first, possibly adding it to the 'tertiary'
 	 * interactions if it clashes with the current secondary structure.
-	 * 
+	 *
 	 * @param number5
 	 *            - Base number of the origin of this base pair
 	 * @param number3
@@ -3172,7 +3213,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	/**
 	 * Register base-pair, no question asked. More precisely, this function will
 	 * not try to determine if the base-pairs crosses any other.
-	 * 
+	 *
 	 * @param i
 	 * @param j
 	 * @param msbp
@@ -3193,7 +3234,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	/**
 	 * Register base-pair, no question asked. More precisely, this function will
 	 * not try to determine if the base-pairs crosses any other.
-	 * 
+	 *
 	 * @param i
 	 * @param j
 	 * @param msbp
@@ -3578,8 +3619,8 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 		cm.rescale(min, max);
 	}
-	
-	
+
+
 	private ArrayList<Double> loadDotPlot(StreamTokenizer st)
 	{
 		ArrayList<Double> result = new ArrayList<Double>();
@@ -3606,7 +3647,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 							int i = accumulator.get(accumulator.size()-3).intValue()-1;
 							int j = accumulator.get(accumulator.size()-2).intValue()-1;
 							double val = accumulator.get(accumulator.size()-1);
-							//System.err.println((char) type);			
+							//System.err.println((char) type);
 							BP.put(new Couple<Integer, Integer>(Math.min(i, j), Math.max(i, j)),val*val);
 							accumulator.clear();
 						}
@@ -3666,7 +3707,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 				isDotPlot = true;
 			}
 			else
-			{				
+			{
 				while (type != StreamTokenizer.TT_EOF) {
 					switch (type) {
 					case (StreamTokenizer.TT_NUMBER):
@@ -3802,7 +3843,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	 * Returns the base at index <code>index</code>. Indices are contiguous in
 	 * the sequence over an interval <code>[0,this.getSize()-1]</code>, where
 	 * <code>n</code> is the length of the sequence.
-	 * 
+	 *
 	 * @param index
 	 *            The index, <code>0 &le; index < this.getSize()</code>, of the
 	 *            base model
@@ -3816,7 +3857,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	 * Returns the set of bases of indices in <code>indices</code>. Indices are
 	 * contiguous in the sequence, and belong to an interval
 	 * <code>[0,n-1]</code>, where <code>n</code> is the length of the sequence.
-	 * 
+	 *
 	 * @param indices
 	 *            A Collection of indices <code>i</code>,
 	 *            <code>0 &le; index < this.getSize()</code>, where some base
@@ -3876,7 +3917,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 
 	/**
 	 * Rotates the RNA coordinates by a certain angle
-	 * 
+	 *
 	 * @param angleDegres
 	 *            Rotation angle, in degrees
 	 */
@@ -3940,10 +3981,10 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			}
 		}
 	}
-	
+
 	private static double MIN_DISTANCE = 10.;
-	
-	
+
+
 	/**
 	 * Flip an helix around its supporting base
 	 */
@@ -3960,7 +4001,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			// unit x-vector Ox.
 			Point2D.Double O = A;
 			Point2D.Double Ox = new Point2D.Double(AB.x / normAB, AB.y / normAB);
-			Hashtable<Integer,Point2D.Double> old = new Hashtable<Integer,Point2D.Double>(); 
+			Hashtable<Integer,Point2D.Double> old = new Hashtable<Integer,Point2D.Double>();
 			for (int i = hBeg + 1; i < hEnd; i++) {
 				Point2D.Double P = getCoords(i);
 				Point2D.Double nP = project(O, Ox, P);

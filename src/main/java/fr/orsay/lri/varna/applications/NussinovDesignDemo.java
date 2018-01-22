@@ -2,7 +2,7 @@
  VARNA is a tool for the automated drawing, visualization and annotation of the secondary structure of RNA, designed as a companion software for web servers and databases.
  Copyright (C) 2008  Kevin Darty, Alain Denise and Yann Ponty.
  electronic mail : Yann.Ponty@lri.fr
- paper mail : LRI, bat 490 Université Paris-Sud 91405 Orsay Cedex France
+ paper mail : LRI, bat 490 Universit Paris-Sud 91405 Orsay Cedex France
 
  This file is part of VARNA version 3.1.
  VARNA version 3.1 is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
@@ -169,7 +169,7 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 		setBackground(_backgroundColor);
 		_vpMaster.setBackground(_backgroundColor);
 		_vpMaster.addVARNAListener(this);
-		_vpMaster.setTitle("Meilleur repliement - Séquence courante");
+		_vpMaster.setTitle("Meilleur repliement - Squence courante");
 		
 		_vpTarget.setBackground(_targetColor);
 		_vpTarget.setModifiable(false);
@@ -274,16 +274,16 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 		_infos.setInfo(sols, count(getSeq()));
 		if ((sols.size()==1)&&(sols.get(0).equals(_struct.getSelectedItem().toString())))
 		{
-			this._vpMaster.setTitle("Félicitations !");
+			this._vpMaster.setTitle("Flicitations !");
 			/*JOptionPane.showMessageDialog(null, 
-					"Vous avez trouvé une séquence pour cette structure !!!\n Saurez vous faire le design de molécules plus complexes ?",
-					"Félicitations !", 
+					"Vous avez trouv une squence pour cette structure !!!\n Saurez vous faire le design de molcules plus complexes ?",
+					"Flicitations !", 
 					JOptionPane.INFORMATION_MESSAGE);*/
 			
 		}
 		else
 		{
-			this._vpMaster.setTitle("Meilleur repliement - Séquence courante");
+			this._vpMaster.setTitle("Meilleur repliement - Squence courante");
 		}
 	}
 	

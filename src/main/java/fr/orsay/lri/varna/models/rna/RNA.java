@@ -252,8 +252,20 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 
 	transient private ArrayList<InterfaceVARNAListener> _listeVARNAListener = new ArrayList<InterfaceVARNAListener>();
 
-	private boolean treatIsolatedAsNonPlanar;
-	private String dotBracket = "";
+  private boolean treatIsolatedAsNonPlanar;
+  private String dotBracket = "";
+  private final Color[] pseudoknotColors =
+      new Color[] {
+        Color.decode("#808080"), // pk == 0 (
+        Color.decode("#007200"), // pk == 1 [
+        Color.decode("#052060"), // pk == 2 {
+        Color.decode("#8F0000"), // pk == 3 <
+        Color.decode("#5D005D"), // pk == 4 A
+        Color.decode("#3C739D"), // pk == 5 B
+        Color.decode("#8F7600"), // pk == 6 C
+        Color.decode("#D25FD2"), // pk == 7 D
+        Color.decode("#9FB925"), // pk == 8 E
+      };
 
 	public RNA(final boolean treatIsolatedAsNonPlanar) {
 		super();
@@ -2238,7 +2250,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 		for (int i = 0; i < size; i++) {
 			if (array_struct[i] != -1) {
-				this.addBPNow(i, array_struct[i]);
+				this.addBPNow(i, array_struct[i], 0);
 			}
 
 			j += 2;
@@ -2791,8 +2803,17 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	private void applyStruct(int[] str) throws ExceptionFileFormatOrSyntax {
 		str = correctReciprocity(str);
 
-    int[] planarSubset =
-        dotBracket.isEmpty() ? RNAMLParser.planarize(str) : planarizeFromDotBracket(str);
+		int[] planarSubset;
+		int[] pseudoknotOrders;
+
+		if (dotBracket.isEmpty()) {
+			planarSubset = RNAMLParser.planarize(str);
+			pseudoknotOrders = new int[str.length];
+		} else {
+			planarSubset = planarizeFromDotBracket(str);
+			pseudoknotOrders = analyzePseudoknotOrders(str);
+		}
+
     if (treatIsolatedAsNonPlanar) {
       planarSubset = RNA.removeIsolatedFromMainStructure(planarSubset);
     }
@@ -2801,16 +2822,26 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		for (int i = 0; i < planarSubset.length; i++) {
 			if (str[i] > i) {
 				if (planarSubset[i] > i) {
-					addBPNow(i, planarSubset[i]);
+					addBPNow(i, planarSubset[i], pseudoknotOrders[i]);
 				} else if ((planarSubset[i] != str[i])) {
-					addBPAux(i, str[i]);
+					addBPAux(i, str[i], pseudoknotOrders[i]);
 				}
 			}
 		}
 
 	}
 
-  private int[] planarizeFromDotBracket(final int[] str) {
+  private int[] analyzePseudoknotOrders(final int[] str) {
+    assert dotBracket != null;
+    final int[] orders = new int[dotBracket.length()];
+    final String reference = "([{<ABCDE";
+    for (int i = 0; i < dotBracket.length(); i++) {
+			orders[i] = (i < str[i]) ? reference.indexOf(dotBracket.charAt(i)) : -1;
+		}
+		return orders;
+  }
+
+	private int[] planarizeFromDotBracket(final int[] str) {
     final int[] planarSubset = new int[dotBracket.length()];
     for (int i = 0; i < dotBracket.length(); i++) {
       final char c = dotBracket.charAt(i);
@@ -3227,11 +3258,11 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	/**
 	 * Register base-pair, no question asked. More precisely, this function will
 	 * not try to determine if the base-pairs crosses any other.
-	 *
-	 * @param i
+	 *  @param i
 	 * @param j
+	 * @param pseudoknotOrder
 	 */
-	private void addBPNow(int i, int j) {
+	private void addBPNow(int i, int j, final int pseudoknotOrder) {
 		if (j < i) {
 			int k = j;
 			j = i;
@@ -3241,6 +3272,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		ModeleBase part5 = _listeBases.get(i);
 		ModeleBase part3 = _listeBases.get(j);
 		ModeleBP msbp = new ModeleBP(part5, part3);
+		msbp.getStyle().setCustomColor(pseudoknotColors[pseudoknotOrder]);
 		addBPnow(i, j, msbp);
 	}
 
@@ -3266,10 +3298,11 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		part3.setElementStructure(i, msbp);
 	}
 
-	public void addBPAux(int i, int j) {
+	public void addBPAux(int i, int j, int pseudoknotOrder) {
 		ModeleBase part5 = _listeBases.get(i);
 		ModeleBase part3 = _listeBases.get(j);
 		ModeleBP msbp = new ModeleBP(part5, part3);
+		msbp.getStyle().setCustomColor(pseudoknotColors[pseudoknotOrder]);
 		addBPAux(i, j, msbp);
 	}
 

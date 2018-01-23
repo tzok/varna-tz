@@ -256,7 +256,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
   private String dotBracket = "";
   private final Color[] pseudoknotColors =
       new Color[] {
-        Color.decode("#808080"), // pk == 0 (
+        Color.black, // pk == 0 (
         Color.decode("#007200"), // pk == 1 [
         Color.decode("#052060"), // pk == 2 {
         Color.decode("#8F0000"), // pk == 3 <

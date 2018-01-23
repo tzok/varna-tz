@@ -36,18 +36,18 @@ import fr.orsay.lri.varna.utils.XMLUtils;
 public class ModeleBPStyle implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 3006493290669550139L;
 	/**
-	 * 
+	 *
 	 */
 	private boolean _isCustomColored = false;
 	private Color _color = VARNAConfig.DEFAULT_BOND_COLOR;
 
 	private double _thickness = -1.0;
 	private double _bent = 0.0;
-	
+
 	public static String XML_ELEMENT_NAME = "BPstyle";
 	public static String XML_VAR_CUSTOM_STYLED_NAME = "custom";
 	public static String XML_VAR_COLOR_NAME = "color";
@@ -65,13 +65,13 @@ public class ModeleBPStyle implements Serializable {
 		hd.endElement("","",XML_ELEMENT_NAME);
 	}
 
-	
+
 	public double getBent()
 	{
 		return _bent;
 	}
 
-	
+
 	public boolean isBent()
 	{
 		return (_bent!=0.0);
@@ -82,7 +82,7 @@ public class ModeleBPStyle implements Serializable {
 		_bent = b;
 	}
 
-	
+
 	public ModeleBPStyle() {
 	}
 
@@ -107,7 +107,7 @@ public class ModeleBPStyle implements Serializable {
 	/**
 	 * Returns the current custom color if such a color is defined to be used
 	 * (through setCustomColor), or returns the default color.
-	 * 
+	 *
 	 * @param def
 	 *            - The default color is no custom color is defined
 	 * @return The color to be used to draw this base-pair

@@ -305,15 +305,8 @@ public final class AlternativeLeontisWesthofDrawing {
    */
   private static double calculateRotationAngle(
       final Point2D.Double orig, final Point2D.Double dest) {
-    final Point2D.Double vectorHorizontal = new Point2D.Double(1, 0);
     final Point2D.Double vector = new Point2D.Double(dest.x - orig.x, dest.y - orig.y);
-    final double dotProduct = (vector.x * vectorHorizontal.x) + (vector.y * vectorHorizontal.y);
-    final double magnitudeHorizontal =
-        Math.sqrt(
-            (vectorHorizontal.x * vectorHorizontal.x) + (vectorHorizontal.y * vectorHorizontal.y));
-    final double magnitude = Math.sqrt((vector.x * vector.x) + (vector.y * vector.y));
-    final double cosine = dotProduct / (magnitudeHorizontal * magnitude);
-    return StrictMath.acos(cosine);
+    return StrictMath.atan2(vector.y, vector.x);
   }
 
   /**

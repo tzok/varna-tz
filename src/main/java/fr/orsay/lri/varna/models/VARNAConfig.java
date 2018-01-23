@@ -109,7 +109,7 @@ public class VARNAConfig implements Serializable, Cloneable {
 
 	public static final Color DEFAULT_TITLE_COLOR = Color.black;
 	public static final Color DEFAULT_BACKBONE_COLOR = Color.DARK_GRAY.brighter();
-	public static final Color DEFAULT_BOND_COLOR = Color.blue;
+	public static final Color DEFAULT_BOND_COLOR = Color.BLACK;
 	public static final Color DEFAULT_SPECIAL_BASE_COLOR = Color.green.brighter();
 	public static final Color DEFAULT_DASH_BASE_COLOR = Color.yellow.brighter();
 	public static final double DEFAULT_BASE_OUTLINE_THICKNESS = 1.5;
@@ -238,7 +238,7 @@ public class VARNAConfig implements Serializable, Cloneable {
 	public Color _backboneColor      = DEFAULT_BACKBONE_COLOR;
 	public Color _hoverColor         = DEFAULT_HOVER_COLOR;
 	public Color _backgroundColor    = DEFAULT_BACKGROUND_COLOR;
-	public Color _bondColor          = DEFAULT_BACKBONE_COLOR;
+	public Color _bondColor          = DEFAULT_BOND_COLOR;
 	public Color _titleColor         = DEFAULT_TITLE_COLOR;
 	public Color _specialBasesColor  = DEFAULT_SPECIAL_BASE_COLOR;
 	public Color _dashBasesColor     = DEFAULT_DASH_BASE_COLOR;

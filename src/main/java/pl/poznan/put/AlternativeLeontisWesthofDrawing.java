@@ -14,7 +14,7 @@ public final class AlternativeLeontisWesthofDrawing {
    * @param dest Coordinates of the nucleotide.
    * @param basePair Metadata about base pair type.
    * @param thickness Thickness of lines.
-   * @param baseSymbolSize Base size of the symbol.
+   * @param circleDiameter Base size of the symbol.
    * @param isCis True if the base pairing is cis, false if trans.
    * @param sugarTriangleOuter If true, for (cis|trans)-Sugar-(WatsonCrick|Hoogsteen) the triangle
    *     will be big and outer. If false, the triangle will be inscribed, but its direction
@@ -26,7 +26,7 @@ public final class AlternativeLeontisWesthofDrawing {
       final Point2D.Double dest,
       final ModeleBP basePair,
       final double thickness,
-      final double baseSymbolSize,
+      final double circleDiameter,
       final boolean isCis,
       final boolean sugarTriangleOuter) {
     final ModeleBP.Edge edge5 = basePair.getEdgePartner5();
@@ -36,38 +36,43 @@ public final class AlternativeLeontisWesthofDrawing {
     final Point2D.Double center =
         new Point2D.Double((orig.x + dest.x) / 2.0, (orig.y + dest.y) / 2.0);
 
+    // below is calculated so that all figures have the same area
+    final double radius = circleDiameter / 2.0;
+    final double squareSide = Math.sqrt(Math.PI) * radius;
+    final double triangleSide = 2.0 * Math.sqrt(Math.PI / Math.sqrt(3)) * radius;
+
     if (edge5 == ModeleBP.Edge.WC) {
       if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
         AlternativeLeontisWesthofDrawing.drawSquareInCircle(
-            out, orig, dest, center, thickness, baseSymbolSize, isCis);
+            out, orig, dest, center, thickness, squareSide, isCis);
       } else if (edge3 == ModeleBP.Edge.SUGAR) {
         AlternativeLeontisWesthofDrawing.drawTriangleInCircle(
-            out, orig, dest, center, thickness, baseSymbolSize, isCis);
+            out, orig, dest, center, thickness, triangleSide, isCis);
       }
     } else if (edge5 == ModeleBP.Edge.HOOGSTEEN) {
       if (edge3 == ModeleBP.Edge.WC) {
         AlternativeLeontisWesthofDrawing.drawCircleInSquare(
-            out, orig, dest, center, thickness, baseSymbolSize, isCis);
+            out, orig, dest, center, thickness, radius, isCis);
       } else if (edge3 == ModeleBP.Edge.SUGAR) {
         AlternativeLeontisWesthofDrawing.drawTriangleInSquare(
-            out, orig, dest, center, thickness, baseSymbolSize, isCis);
+            out, orig, dest, center, thickness, triangleSide, isCis);
       }
     } else if (edge5 == ModeleBP.Edge.SUGAR) {
       if (sugarTriangleOuter) {
         if (edge3 == ModeleBP.Edge.WC) {
           AlternativeLeontisWesthofDrawing.drawCircleInTriangle(
-              out, orig, dest, center, thickness, baseSymbolSize, isCis);
+              out, orig, dest, center, thickness, radius, isCis);
         } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
           AlternativeLeontisWesthofDrawing.drawSquareInTriangle(
-              out, orig, dest, center, thickness, baseSymbolSize, isCis);
+              out, orig, dest, center, thickness, squareSide, isCis);
         }
       } else {
         if (edge3 == ModeleBP.Edge.WC) {
           AlternativeLeontisWesthofDrawing.drawTriangleInCircle(
-              out, dest, orig, center, thickness, baseSymbolSize, isCis);
+              out, dest, orig, center, thickness, triangleSide, isCis);
         } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
           AlternativeLeontisWesthofDrawing.drawTriangleInSquare(
-              out, dest, orig, center, thickness, baseSymbolSize, isCis);
+              out, dest, orig, center, thickness, triangleSide, isCis);
         }
       }
     }
@@ -143,10 +148,10 @@ public final class AlternativeLeontisWesthofDrawing {
       final Point2D.Double dest,
       final Point2D.Double center,
       final double thickness,
-      final double diameter,
+      final double radius,
       final boolean isCis) {
     // calculate side
-    final double side = diameter + (3.0 * thickness);
+    final double side = (radius * 2.0) + (3.0 * thickness);
 
     // initial coordinates = half the side along the (0,0) point
     final Point2D.Double[] square = {
@@ -164,7 +169,6 @@ public final class AlternativeLeontisWesthofDrawing {
         out, square, thickness, false, out.getCurrentColor());
 
     // draw the circle
-    final double radius = diameter / 2.0;
     final double normalizedRadius = isCis ? radius : (radius - thickness);
     if (isCis) {
       out.fillCircle(center.x, center.y, normalizedRadius, thickness, out.getCurrentColor());
@@ -220,10 +224,9 @@ public final class AlternativeLeontisWesthofDrawing {
       final Point2D.Double dest,
       final Point2D.Double center,
       final double thickness,
-      final double diameter,
+      final double radius,
       final boolean isCis) {
     // calculate side
-    final double radius = (diameter / 2.0) + thickness;
     final double height = 3.0 * radius;
     final double side = (2.0 * height) / Math.sqrt(3.0);
 

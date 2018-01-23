@@ -401,67 +401,80 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		return thickness;
 	}
 
-	private void drawSymbol(SecStrDrawingProducer out, double posx,
-			double posy, double normx, double normy, double radius,
-			boolean isCIS, ModeleBP.Edge e, double thickness) {
-		Color bck = out.getCurrentColor();
-		switch (e) {
-		case WC:
-			if (isCIS) {
-				out.fillCircle(posx, posy, (radius / 2.0), thickness, bck);
-			} else {
-				out.fillCircle(posx, posy, (radius / 2.0), thickness,
-						Color.white);
-				out.setColor(bck);
-				out.drawCircle(posx, posy, (radius / 2.0), thickness);
-			}
-			break;
-		case HOOGSTEEN: {
-			double xtab[] = new double[4];
-			double ytab[] = new double[4];
-			xtab[0] = posx - radius * normx / 2.0 - radius * normy / 2.0;
-			ytab[0] = posy - radius * normy / 2.0 + radius * normx / 2.0;
-			xtab[1] = posx + radius * normx / 2.0 - radius * normy / 2.0;
-			ytab[1] = posy + radius * normy / 2.0 + radius * normx / 2.0;
-			xtab[2] = posx + radius * normx / 2.0 + radius * normy / 2.0;
-			ytab[2] = posy + radius * normy / 2.0 - radius * normx / 2.0;
-			xtab[3] = posx - radius * normx / 2.0 + radius * normy / 2.0;
-			ytab[3] = posy - radius * normy / 2.0 - radius * normx / 2.0;
-			if (isCIS) {
-				out.fillPolygon(xtab, ytab, bck);
-			} else {
-				out.fillPolygon(xtab, ytab, Color.white);
-				out.setColor(bck);
-				out.drawPolygon(xtab, ytab, thickness);
-			}
-		}
-			break;
-		case SUGAR: {
-			double ix = radius * normx / 2.0;
-			double iy = radius * normy / 2.0;
-			double jx = radius * normy / 2.0;
-			double jy = -radius * normx / 2.0;
-			double xtab[] = new double[3];
-			double ytab[] = new double[3];
-			xtab[0] = posx - ix + jx;
-			ytab[0] = posy - iy + jy;
-			xtab[1] = posx + ix + jx;
-			ytab[1] = posy + iy + jy;
-			xtab[2] = posx - jx;
-			ytab[2] = posy - jy;
+  private void drawSymbol(
+      SecStrDrawingProducer out,
+      double posx,
+      double posy,
+      double normx,
+      double normy,
+      double circleDiameter,
+      boolean isCIS,
+      ModeleBP.Edge e,
+      double thickness) {
+    Color bck = out.getCurrentColor();
 
-			if (isCIS) {
-				out.fillPolygon(xtab, ytab, bck);
-			} else {
-				out.fillPolygon(xtab, ytab, Color.white);
-				out.setColor(bck);
-				out.drawPolygon(xtab, ytab, thickness);
-			}
-		}
-			break;
-		}
-		out.setColor(bck);
-	}
+		final double radius = circleDiameter / 2.0;
+		final double squareSide = Math.sqrt(Math.PI) * radius;
+		final double triangleSide = 2.0 * Math.sqrt(Math.PI / Math.sqrt(3)) * radius;
+
+    switch (e) {
+      case WC:
+        if (isCIS) {
+          out.fillCircle(posx, posy, radius, thickness, bck);
+        } else {
+          out.fillCircle(posx, posy, radius, thickness, Color.white);
+        }
+        out.setColor(bck);
+        out.drawCircle(posx, posy, radius, thickness);
+        break;
+      case HOOGSTEEN:
+        {
+          double xtab[] = new double[4];
+          double ytab[] = new double[4];
+          xtab[0] = posx - squareSide * normx / 2.0 - squareSide * normy / 2.0;
+          ytab[0] = posy - squareSide * normy / 2.0 + squareSide * normx / 2.0;
+          xtab[1] = posx + squareSide * normx / 2.0 - squareSide * normy / 2.0;
+          ytab[1] = posy + squareSide * normy / 2.0 + squareSide * normx / 2.0;
+          xtab[2] = posx + squareSide * normx / 2.0 + squareSide * normy / 2.0;
+          ytab[2] = posy + squareSide * normy / 2.0 - squareSide * normx / 2.0;
+          xtab[3] = posx - squareSide * normx / 2.0 + squareSide * normy / 2.0;
+          ytab[3] = posy - squareSide * normy / 2.0 - squareSide * normx / 2.0;
+          if (isCIS) {
+            out.fillPolygon(xtab, ytab, bck);
+          } else {
+            out.fillPolygon(xtab, ytab, Color.white);
+          }
+          out.setColor(bck);
+          out.drawPolygon(xtab, ytab, thickness);
+        }
+        break;
+      case SUGAR:
+        {
+          double ix = triangleSide * normx / 2.0;
+          double iy = triangleSide * normy / 2.0;
+          double jx = triangleSide * normy / 2.0;
+          double jy = -triangleSide * normx / 2.0;
+          double xtab[] = new double[3];
+          double ytab[] = new double[3];
+          xtab[0] = posx - ix + jx;
+          ytab[0] = posy - iy + jy;
+          xtab[1] = posx + ix + jx;
+          ytab[1] = posy + iy + jy;
+          xtab[2] = posx - jx;
+          ytab[2] = posy - jy;
+
+          if (isCIS) {
+            out.fillPolygon(xtab, ytab, bck);
+          } else {
+            out.fillPolygon(xtab, ytab, Color.white);
+          }
+          out.setColor(bck);
+          out.drawPolygon(xtab, ytab, thickness);
+        }
+        break;
+    }
+    out.setColor(bck);
+  }
 
 	private void drawBasePairArc(SecStrDrawingProducer out, int i, int j,
 			Point2D.Double orig, Point2D.Double dest, ModeleBP style,
@@ -537,7 +550,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 				- BASE_RADIUS * dy);
 		if (conf._mainBPStyle == VARNAConfig.BP_STYLE.LW) {
 			double thickness = getBasePairThickness(style, conf);
-			double radiusCircle = ((BASE_PAIR_DISTANCE - BASE_RADIUS) / 5.0);
+			double circleDiameter = ((BASE_PAIR_DISTANCE - BASE_RADIUS) / 5.0);
 
 			if (style.isCanonical()) {
 				if (style.isCanonicalGC()) {
@@ -557,7 +570,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 					double cy = (dest.y + orig.y) / 2.0;
 					out.drawLine(orig.x, orig.y, dest.x, dest.y,
 							conf._bpThickness);
-					drawSymbol(out, cx, cy, nx, ny, radiusCircle, false,
+					drawSymbol(out, cx, cy, nx, ny, circleDiameter, false,
 							ModeleBP.Edge.WC, thickness);
 				}
 
@@ -566,7 +579,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 					double cy = (dest.y + orig.y) / 2.0;
 					out.drawLine(orig.x, orig.y, dest.x, dest.y,
 							conf._bpThickness);
-					drawSymbol(out, cx, cy, nx, ny, radiusCircle,
+					drawSymbol(out, cx, cy, nx, ny, circleDiameter,
 							style.isCIS(), style.getEdgePartner5(), thickness);
 				}
 			} else {
@@ -576,19 +589,18 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 				double cy = (dest.y + orig.y) / 2.0;
 				out.drawLine(orig.x, orig.y, dest.x, dest.y, conf._bpThickness);
 				if (p1 == p2) {
-					drawSymbol(out, cx, cy, nx, ny, radiusCircle,
-							style.isCIS(), p1, thickness);
+          drawSymbol(out, cx, cy, nx, ny, circleDiameter, style.isCIS(), p1, thickness);
 				} else {
 					if (conf._drawAlternativeLW) {
             AlternativeLeontisWesthofDrawing.drawAlternativeSymbol(
-                out, orig, dest, style, thickness, radiusCircle, style.isCIS(), false);
+                out, orig, dest, style, thickness, circleDiameter, style.isCIS(), false);
 					} else {
 						double vdx = (dest.x - orig.x);
 						double vdy = (dest.y - orig.y);
 						vdx /= 6.0;
 						vdy /= 6.0;
-						drawSymbol(out, cx + vdx, cy + vdy, nx, ny, radiusCircle, style.isCIS(), p2, thickness);
-						drawSymbol(out, cx - vdx, cy - vdy, nx, ny, radiusCircle, style.isCIS(), p1, thickness);
+						drawSymbol(out, cx + vdx, cy + vdy, nx, ny, circleDiameter, style.isCIS(), p2, thickness);
+						drawSymbol(out, cx - vdx, cy - vdy, nx, ny, circleDiameter, style.isCIS(), p1, thickness);
 					}
 				}
 			}
@@ -814,70 +826,6 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 			}
 		}
 
-		// Drawing bonds
-		for (int i = 0; i < _listeBases.size(); i++) {
-			if (_listeBases.get(i).getElementStructure() > i) {
-				ModeleBP style = _listeBases.get(i).getStyleBP();
-				if (style.isCanonical() || conf._drawnNonCanonicalBP) {
-					Color bpcol = getBasePairColor(style, conf);
-					out.setColor(bpcol);
-
-					int j = _listeBases.get(i).getElementStructure();
-					x0 = coords[i].x;
-					y0 = coords[i].y;
-					x1 = coords[j].x;
-					y1 = coords[j].y;
-					dx = x1 - x0;
-					dy = y1 - y0;
-					norm = Math.sqrt(dx * dx + dy * dy);
-					dx /= norm;
-					dy /= norm;
-
-					if (_drawMode == DRAW_MODE_CIRCULAR
-							|| _drawMode == DRAW_MODE_RADIATE
-							|| _drawMode == DRAW_MODE_NAVIEW) {
-						drawBasePair(out, new Point2D.Double(x0, y0),
-								new Point2D.Double(x1, y1), style, conf);
-					} else if (_drawMode == DRAW_MODE_LINEAR) {
-						drawBasePairArc(out, i, j, new Point2D.Double(x0, y0),
-								new Point2D.Double(x1, y1), style, conf);
-					}
-				}
-			}
-		}
-
-		// Drawing additional bonds
-		if (conf._drawnNonPlanarBP) {
-			for (int i = 0; i < _structureAux.size(); i++) {
-				ModeleBP bp = _structureAux.get(i);
-				out.setColor(getBasePairColor(bp, conf));
-
-				int a = bp.getPartner5().getIndex();
-				int b = bp.getPartner3().getIndex();
-
-				if (bp.isCanonical() || conf._drawnNonCanonicalBP) {
-					x0 = coords[a].x;
-					y0 = coords[a].y;
-					x1 = coords[b].x;
-					y1 = coords[b].y;
-					dx = x1 - x0;
-					dy = y1 - y0;
-					norm = Math.sqrt(dx * dx + dy * dy);
-					dx /= norm;
-					dy /= norm;
-					if ((_drawMode == DRAW_MODE_CIRCULAR)
-							|| (_drawMode == DRAW_MODE_RADIATE)
-							|| _drawMode == DRAW_MODE_NAVIEW) {
-						drawBasePair(out, new Point2D.Double(x0, y0),
-								new Point2D.Double(x1, y1), bp, conf);
-					} else if (_drawMode == DRAW_MODE_LINEAR) {
-						drawBasePairArc(out, a, b, new Point2D.Double(x0, y0),
-								new Point2D.Double(x1, y1), bp, conf);
-					}
-				}
-			}
-		}
-
 		// Drawing Bases
 		double baseFontSize = (1.5 * BASE_RADIUS);
 		out.setFont(PSExport.FONT_HELVETICA_BOLD, baseFontSize);
@@ -915,6 +863,70 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 				out.setColor(getBaseNameColor(i, conf));
 				out.drawText(x0, y0, _listeBases.get(i).getContent());
 
+			}
+		}
+
+		// Drawing bonds
+		for (int i = 0; i < _listeBases.size(); i++) {
+			if (_listeBases.get(i).getElementStructure() > i) {
+				ModeleBP style = _listeBases.get(i).getStyleBP();
+				if (style.isCanonical() || conf._drawnNonCanonicalBP) {
+					Color bpcol = getBasePairColor(style, conf);
+					out.setColor(bpcol);
+
+					int j = _listeBases.get(i).getElementStructure();
+					x0 = coords[i].x;
+					y0 = coords[i].y;
+					x1 = coords[j].x;
+					y1 = coords[j].y;
+					dx = x1 - x0;
+					dy = y1 - y0;
+					norm = Math.sqrt(dx * dx + dy * dy);
+					dx /= norm;
+					dy /= norm;
+
+					if (_drawMode == DRAW_MODE_CIRCULAR
+							|| _drawMode == DRAW_MODE_RADIATE
+							|| _drawMode == DRAW_MODE_NAVIEW) {
+						drawBasePair(out, new Point2D.Double(x0, y0),
+												 new Point2D.Double(x1, y1), style, conf);
+					} else if (_drawMode == DRAW_MODE_LINEAR) {
+						drawBasePairArc(out, i, j, new Point2D.Double(x0, y0),
+														new Point2D.Double(x1, y1), style, conf);
+					}
+				}
+			}
+		}
+
+		// Drawing additional bonds
+		if (conf._drawnNonPlanarBP) {
+			for (int i = 0; i < _structureAux.size(); i++) {
+				ModeleBP bp = _structureAux.get(i);
+				out.setColor(getBasePairColor(bp, conf));
+
+				int a = bp.getPartner5().getIndex();
+				int b = bp.getPartner3().getIndex();
+
+				if (bp.isCanonical() || conf._drawnNonCanonicalBP) {
+					x0 = coords[a].x;
+					y0 = coords[a].y;
+					x1 = coords[b].x;
+					y1 = coords[b].y;
+					dx = x1 - x0;
+					dy = y1 - y0;
+					norm = Math.sqrt(dx * dx + dy * dy);
+					dx /= norm;
+					dy /= norm;
+					if ((_drawMode == DRAW_MODE_CIRCULAR)
+							|| (_drawMode == DRAW_MODE_RADIATE)
+							|| _drawMode == DRAW_MODE_NAVIEW) {
+						drawBasePair(out, new Point2D.Double(x0, y0),
+												 new Point2D.Double(x1, y1), bp, conf);
+					} else if (_drawMode == DRAW_MODE_LINEAR) {
+						drawBasePairArc(out, a, b, new Point2D.Double(x0, y0),
+														new Point2D.Double(x1, y1), bp, conf);
+					}
+				}
 			}
 		}
 
@@ -1150,7 +1162,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	public void saveRNASVG(String path, VARNAConfig conf)
 			throws ExceptionWritingForbidden {
 		SVGExport out = new SVGExport();
-		saveRNA(path, conf, 0.5, out);
+		saveRNA(path, conf, 0.75, out);
 	}
 
 	public Rectangle2D.Double getBBox() {

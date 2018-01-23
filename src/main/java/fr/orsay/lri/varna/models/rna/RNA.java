@@ -74,6 +74,7 @@ import java.util.Vector;
 import javax.xml.transform.sax.TransformerHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
+import pl.poznan.put.AlternativeLeontisWesthofDrawing;
 
 /**
  * The RNA model which contain the base list and the draw algorithm mode
@@ -566,7 +567,8 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 							style.isCIS(), p1, thickness);
 				} else {
 					if (conf._drawAlternativeLW) {
-            drawAlternativeLW(out, orig, dest, style, thickness, radiusCircle);
+            AlternativeLeontisWesthofDrawing.drawAlternativeSymbol(
+                out, orig, dest, style, thickness, radiusCircle, style.isCIS());
 					} else {
 						double vdx = (dest.x - orig.x);
 						double vdy = (dest.y - orig.y);
@@ -587,130 +589,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 	}
 
-  private void drawAlternativeLW(
-      final SecStrDrawingProducer out,
-      final Point2D.Double orig,
-      final Point2D.Double dest,
-      final ModeleBP style,
-      final double thickness,
-      final double unit) {
-    final ModeleBP.Edge edge5 = style.getEdgePartner5();
-    final ModeleBP.Edge edge3 = style.getEdgePartner3();
-    assert edge5 != edge3;
 
-    if (edge5 == ModeleBP.Edge.WC) {
-      if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
-        drawSquareInCircle(out, orig, dest, thickness, unit);
-      } else if (edge3 == ModeleBP.Edge.SUGAR) {
-        drawTriangleInCircle(out, orig, dest, thickness, unit);
-      }
-    } else if (edge5 == ModeleBP.Edge.HOOGSTEEN) {
-      if (edge3 == ModeleBP.Edge.WC) {
-        drawCircleInSquare(out, orig, dest, thickness, unit);
-      } else if (edge3 == ModeleBP.Edge.SUGAR) {
-        drawTriangleInSquare(out, orig, dest, thickness, unit);
-      }
-    } else if (edge5 == ModeleBP.Edge.SUGAR) {
-      if (edge3 == ModeleBP.Edge.WC) {
-        drawCircleInTriangle(out, orig, dest, thickness, unit);
-      } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
-        drawSquareInTriangle(out, orig, dest, thickness, unit);
-      }
-    }
-  }
-
-  private void drawSquareInCircle(
-      final SecStrDrawingProducer out,
-      final Point2D.Double orig,
-      final Point2D.Double dest,
-      final double thickness,
-      final double side) {
-    // draw a circle
-    final Point2D.Double center =
-        new Point2D.Double((orig.x + dest.x) / 2.0, (orig.y + dest.y) / 2.0);
-    final double diameter = (side * Math.sqrt(2)) + thickness;
-    final double radius = diameter / 2.0;
-    out.drawCircle(center.x, center.y, radius, thickness);
-
-    // calculate rotation of regular coordinate system and vector between points
-    final Point2D.Double vectorHorizontal = new Point2D.Double(1, 0);
-    final Point2D.Double vector = new Point2D.Double(dest.x - orig.x, dest.y - orig.y);
-    final double dotProduct = (vector.x * vectorHorizontal.x) + (vector.y * vectorHorizontal.y);
-    final double magnitudeHorizontal =
-        Math.sqrt(
-            (vectorHorizontal.x * vectorHorizontal.x) + (vectorHorizontal.y * vectorHorizontal.y));
-    final double magnitude = Math.sqrt((vector.x * vector.x) + (vector.y * vector.y));
-    final double cosine = dotProduct / (magnitudeHorizontal * magnitude);
-    final double angleRadians = StrictMath.acos(cosine);
-
-    // initial coordinates = half the side along the (0,0) point
-    final Point2D.Double[] square = {
-      new Point2D.Double(-side / 2.0, -side / 2.0),
-      new Point2D.Double(-side / 2.0, side / 2.0),
-      new Point2D.Double(side / 2.0, side / 2.0),
-      new Point2D.Double(side / 2.0, -side / 2.0),
-    };
-
-    // rotate & translate coordinates
-    for (final Point2D.Double point : square) {
-      rotate(point, angleRadians);
-			translate(point, center);
-    }
-
-    // draw square
-		final double[] x = {square[0].x, square[1].x, square[2].x, square[3].x};
-		final double[] y = {square[0].y, square[1].y, square[2].y, square[3].y};
-    out.fillPolygon(x, y, out.getCurrentColor());
-  }
-
-  private void drawTriangleInCircle(
-      final SecStrDrawingProducer out,
-      final Point2D.Double orig,
-      final Point2D.Double dest,
-      final double thickness,
-      final double unit) {}
-
-  private void drawCircleInSquare(
-      final SecStrDrawingProducer out,
-      final Point2D.Double orig,
-      final Point2D.Double dest,
-      final double thickness,
-      final double unit) {}
-
-  private void drawTriangleInSquare(
-      final SecStrDrawingProducer out,
-      final Point2D.Double orig,
-      final Point2D.Double dest,
-      final double thickness,
-      final double unit) {}
-
-  private void drawCircleInTriangle(
-      final SecStrDrawingProducer out,
-      final Point2D.Double orig,
-      final Point2D.Double dest,
-      final double thickness,
-      final double unit) {}
-
-  private void drawSquareInTriangle(
-      final SecStrDrawingProducer out,
-      final Point2D.Double orig,
-      final Point2D.Double dest,
-      final double thickness,
-      final double unit) {}
-
-  private void rotate(final Point2D.Double point, final double angleRadians) {
-    final double cosine = StrictMath.cos(angleRadians);
-    final double sine = StrictMath.sin(angleRadians);
-    final double x = (point.x * cosine) - (point.y * sine);
-    final double y = (point.x * sine) + (point.y * cosine);
-    point.x = x;
-    point.y = y;
-  }
-
-  private void translate(final Point2D.Double point, final Point2D.Double vector) {
-    point.x += vector.x;
-    point.y += vector.y;
-  }
 
 	private void drawColorMap(VARNAConfig _conf, SecStrDrawingProducer out) {
 		double v1 = _conf._cm.getMinValue();
@@ -3339,7 +3218,6 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	 *
 	 * @param i
 	 * @param j
-	 * @param msbp
 	 */
 	private void addBPNow(int i, int j) {
 		if (j < i) {

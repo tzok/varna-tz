@@ -18,29 +18,32 @@ public final class AlternativeLeontisWesthofDrawing {
     final ModeleBP.Edge edge3 = style.getEdgePartner3();
     assert edge5 != edge3;
 
+    final Point2D.Double center =
+        new Point2D.Double((orig.x + dest.x) / 2.0, (orig.y + dest.y) / 2.0);
+
     if (edge5 == ModeleBP.Edge.WC) {
       if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
         AlternativeLeontisWesthofDrawing.drawSquareInCircle(
-            out, orig, dest, thickness, unit, isCis);
+            out, orig, dest, center, thickness, unit, isCis);
       } else if (edge3 == ModeleBP.Edge.SUGAR) {
         AlternativeLeontisWesthofDrawing.drawTriangleInCircle(
-            out, orig, dest, thickness, unit, isCis);
+            out, orig, dest, center, thickness, unit, isCis);
       }
     } else if (edge5 == ModeleBP.Edge.HOOGSTEEN) {
       if (edge3 == ModeleBP.Edge.WC) {
         AlternativeLeontisWesthofDrawing.drawCircleInSquare(
-            out, orig, dest, thickness, unit, isCis);
+            out, orig, dest, center, thickness, unit, isCis);
       } else if (edge3 == ModeleBP.Edge.SUGAR) {
         AlternativeLeontisWesthofDrawing.drawTriangleInSquare(
-            out, orig, dest, thickness, unit, isCis);
+            out, orig, dest, center, thickness, unit, isCis);
       }
     } else if (edge5 == ModeleBP.Edge.SUGAR) {
       if (edge3 == ModeleBP.Edge.WC) {
         AlternativeLeontisWesthofDrawing.drawCircleInTriangle(
-            out, orig, dest, thickness, unit, isCis);
+            out, orig, dest, center, thickness, unit, isCis);
       } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
         AlternativeLeontisWesthofDrawing.drawSquareInTriangle(
-            out, orig, dest, thickness, unit, isCis);
+            out, orig, dest, center, thickness, unit, isCis);
       }
     }
   }
@@ -49,18 +52,76 @@ public final class AlternativeLeontisWesthofDrawing {
       final SecStrDrawingProducer out,
       final Point2D.Double orig,
       final Point2D.Double dest,
+      final Point2D.Double center,
       final double thickness,
       final double side,
       final boolean isCis) {
     // calculate radius
-    final double diameter = (side * Math.sqrt(2)) + (2.0 * thickness);
-    final double radius = diameter / 2.0;
+    final double diameter = side * Math.sqrt(2);
+    final double radius = (diameter / 2.0) + (1.5 * thickness);
 
     // draw a circle
-    final Point2D.Double center =
-        new Point2D.Double((orig.x + dest.x) / 2.0, (orig.y + dest.y) / 2.0);
     out.fillCircle(center.x, center.y, radius, thickness, Color.WHITE);
     out.drawCircle(center.x, center.y, radius, thickness);
+
+    // initial square coordinates = half the side along the (0,0) point
+    final double normalizedSide = isCis ? side : (side - thickness);
+    final Point2D.Double[] square = {
+      new Point2D.Double(-normalizedSide / 2.0, -normalizedSide / 2.0),
+      new Point2D.Double(-normalizedSide / 2.0, normalizedSide / 2.0),
+      new Point2D.Double(normalizedSide / 2.0, normalizedSide / 2.0),
+      new Point2D.Double(normalizedSide / 2.0, -normalizedSide / 2.0),
+    };
+
+    // draw the square
+    final double angle = AlternativeLeontisWesthofDrawing.calculateRotationAngle(orig, dest);
+    AlternativeLeontisWesthofDrawing.transformPoints(angle, center, square);
+    AlternativeLeontisWesthofDrawing.drawPolygon(
+        out, square, thickness, isCis, out.getCurrentColor());
+  }
+
+  private static void drawTriangleInCircle(
+      final SecStrDrawingProducer out,
+      final Point2D.Double orig,
+      final Point2D.Double dest,
+      final Point2D.Double center,
+      final double thickness,
+      final double side,
+      final boolean isCis) {
+    // calculate radius
+    final double height = (side * Math.sqrt(3.0)) / 2.0;
+    final double radius = ((2.0 * height) / 3.0) + (1.5 * thickness);
+
+    // draw a circle
+    out.fillCircle(center.x, center.y, radius, thickness, Color.WHITE);
+    out.drawCircle(center.x, center.y, radius, thickness);
+
+    // initial triangle coordinates = center is in 2/3 of triangle height
+    final double normalizedSide = isCis ? side : (side - thickness);
+    final double normalizedHeight = isCis ? height : ((normalizedSide * Math.sqrt(3.0)) / 2.0);
+    final Point2D.Double[] triangle = {
+      new Point2D.Double(-normalizedHeight / 3.0, -normalizedSide / 2.0),
+      new Point2D.Double(-normalizedHeight / 3.0, normalizedSide / 2.0),
+      new Point2D.Double((2.0 * normalizedHeight) / 3.0, 0),
+    };
+
+    // draw the triangle
+    final double angle = AlternativeLeontisWesthofDrawing.calculateRotationAngle(orig, dest);
+    AlternativeLeontisWesthofDrawing.transformPoints(angle, center, triangle);
+    AlternativeLeontisWesthofDrawing.drawPolygon(
+        out, triangle, thickness, isCis, out.getCurrentColor());
+  }
+
+  private static void drawCircleInSquare(
+      final SecStrDrawingProducer out,
+      final Point2D.Double orig,
+      final Point2D.Double dest,
+      final Point2D.Double center,
+      final double thickness,
+      final double diameter,
+      final boolean isCis) {
+    // calculate side
+    final double side = diameter + (3.0 * thickness);
 
     // initial coordinates = half the side along the (0,0) point
     final Point2D.Double[] square = {
@@ -70,54 +131,28 @@ public final class AlternativeLeontisWesthofDrawing {
       new Point2D.Double(side / 2.0, -side / 2.0),
     };
 
-    // draw everything
+    // draw the square
     final double angle = AlternativeLeontisWesthofDrawing.calculateRotationAngle(orig, dest);
     AlternativeLeontisWesthofDrawing.transformPoints(angle, center, square);
-    AlternativeLeontisWesthofDrawing.drawPolygon(out, square, thickness, isCis);
+    AlternativeLeontisWesthofDrawing.drawPolygon(out, square, thickness, true, Color.WHITE);
+    AlternativeLeontisWesthofDrawing.drawPolygon(
+        out, square, thickness, false, out.getCurrentColor());
+
+    // draw the circle
+    final double radius = diameter / 2.0;
+    final double normalizedRadius = isCis ? radius : radius - thickness;
+    if (isCis) {
+      out.fillCircle(center.x, center.y, normalizedRadius, thickness, out.getCurrentColor());
+    } else {
+      out.drawCircle(center.x, center.y, normalizedRadius, thickness);
+    }
   }
-
-  private static void drawTriangleInCircle(
-      final SecStrDrawingProducer out,
-      final Point2D.Double orig,
-      final Point2D.Double dest,
-      final double thickness,
-      final double side,
-      final boolean isCis) {
-    // calculate radius
-    final double height = (side * Math.sqrt(3.0)) / 2.0;
-    final double radius = ((2.0 * height) / 3.0) + thickness;
-
-    // draw a circle
-    final Point2D.Double center =
-        new Point2D.Double((orig.x + dest.x) / 2.0, (orig.y + dest.y) / 2.0);
-    out.fillCircle(center.x, center.y, radius, thickness, Color.WHITE);
-    out.drawCircle(center.x, center.y, radius, thickness);
-
-    // initial coordinates = center is in 2/3 of triangle height
-    final Point2D.Double[] triangle = {
-      new Point2D.Double(-height / 3.0, -side / 2.0),
-      new Point2D.Double(-height / 3.0, side / 2.0),
-      new Point2D.Double((2.0 * height) / 3.0, 0),
-    };
-
-    // draw everything
-    final double angle = AlternativeLeontisWesthofDrawing.calculateRotationAngle(orig, dest);
-    AlternativeLeontisWesthofDrawing.transformPoints(angle, center, triangle);
-    AlternativeLeontisWesthofDrawing.drawPolygon(out, triangle, thickness, isCis);
-  }
-
-  private static void drawCircleInSquare(
-      final SecStrDrawingProducer out,
-      final Point2D.Double orig,
-      final Point2D.Double dest,
-      final double thickness,
-      final double unit,
-      final boolean isCis) {}
 
   private static void drawTriangleInSquare(
       final SecStrDrawingProducer out,
       final Point2D.Double orig,
       final Point2D.Double dest,
+      final Point2D.Double center,
       final double thickness,
       final double unit,
       final boolean isCis) {}
@@ -126,6 +161,7 @@ public final class AlternativeLeontisWesthofDrawing {
       final SecStrDrawingProducer out,
       final Point2D.Double orig,
       final Point2D.Double dest,
+      final Point2D.Double center,
       final double thickness,
       final double unit,
       final boolean isCis) {}
@@ -134,6 +170,7 @@ public final class AlternativeLeontisWesthofDrawing {
       final SecStrDrawingProducer out,
       final Point2D.Double orig,
       final Point2D.Double dest,
+      final Point2D.Double center,
       final double thickness,
       final double unit,
       final boolean isCis) {}
@@ -196,12 +233,14 @@ public final class AlternativeLeontisWesthofDrawing {
    * @param points A set of points.
    * @param thickness A parameter of line thickness.
    * @param isCis A parameter deciding if the polygon is filled (true) or just lines (false).
+   * @param color Color used to draw the symbol.
    */
   private static void drawPolygon(
       final SecStrDrawingProducer out,
       final Point2D.Double[] points,
       final double thickness,
-      final boolean isCis) {
+      final boolean isCis,
+      final Color color) {
     // draw square
     final double[] x = new double[points.length];
     final double[] y = new double[points.length];
@@ -212,7 +251,7 @@ public final class AlternativeLeontisWesthofDrawing {
     }
 
     if (isCis) {
-      out.fillPolygon(x, y, out.getCurrentColor());
+      out.fillPolygon(x, y, color);
     } else {
       out.drawPolygon(x, y, thickness);
     }

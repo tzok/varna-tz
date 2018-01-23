@@ -581,7 +581,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 				} else {
 					if (conf._drawAlternativeLW) {
             AlternativeLeontisWesthofDrawing.drawAlternativeSymbol(
-                out, orig, dest, style, thickness, radiusCircle, style.isCIS());
+                out, orig, dest, style, thickness, radiusCircle, style.isCIS(), false);
 					} else {
 						double vdx = (dest.x - orig.x);
 						double vdy = (dest.y - orig.y);
@@ -1125,12 +1125,15 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 	}
 
-	public boolean isNumberDrawn(ModeleBase mb, int numPeriod) {
-		if (numPeriod <= 0)
-			return false;
-		return ((mb.getIndex() == 0) || ((mb.getBaseNumber()) % numPeriod == 0) || (mb
-				.getIndex() == get_listeBases().size() - 1));
-	}
+  public boolean isNumberDrawn(ModeleBase mb, int numPeriod) {
+    if (numPeriod <= 0) return false;
+    int index = mb.getIndex();
+		return ((index == 0)
+        || (((mb.getBaseNumber()) % numPeriod) == 0)
+        || (index == (_listeBases.size() - 1))
+        || (_backbone.getTypeBefore(index) == BackboneType.DISCONTINUOUS_TYPE)
+        || (_backbone.getTypeAfter(index) == BackboneType.DISCONTINUOUS_TYPE));
+  }
 
 	public void saveRNAEPS(String path, VARNAConfig conf)
 			throws ExceptionWritingForbidden {
@@ -2105,7 +2108,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	public void setRNA(String seq, String str)
 			throws ExceptionFileFormatOrSyntax,
 			ExceptionUnmatchedClosingParentheses {
-		dotBracket = str;
+		dotBracket = str.replaceAll(DBNStrandSep, "");
 		ArrayList<String> al = RNA.explodeSequence(seq);
 		Set<Integer> sepPos = getSeparatorPositions(str);
 		ArrayList<String> alRes = new ArrayList<String>();

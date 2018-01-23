@@ -140,7 +140,7 @@ public final class AlternativeLeontisWesthofDrawing {
 
     // draw the circle
     final double radius = diameter / 2.0;
-    final double normalizedRadius = isCis ? radius : radius - thickness;
+    final double normalizedRadius = isCis ? radius : (radius - thickness);
     if (isCis) {
       out.fillCircle(center.x, center.y, normalizedRadius, thickness, out.getCurrentColor());
     } else {
@@ -154,8 +154,40 @@ public final class AlternativeLeontisWesthofDrawing {
       final Point2D.Double dest,
       final Point2D.Double center,
       final double thickness,
-      final double unit,
-      final boolean isCis) {}
+      final double triangleSide,
+      final boolean isCis) {
+    // calculate square side
+    final double squareSide = triangleSide + (3.0 * thickness);
+
+    // initial coordinates = half the squareSide along the (0,0) point
+    final Point2D.Double[] square = {
+      new Point2D.Double(-squareSide / 2.0, -squareSide / 2.0),
+      new Point2D.Double(-squareSide / 2.0, squareSide / 2.0),
+      new Point2D.Double(squareSide / 2.0, squareSide / 2.0),
+      new Point2D.Double(squareSide / 2.0, -squareSide / 2.0),
+    };
+
+    // draw the square
+    final double angle = AlternativeLeontisWesthofDrawing.calculateRotationAngle(orig, dest);
+    AlternativeLeontisWesthofDrawing.transformPoints(angle, center, square);
+    AlternativeLeontisWesthofDrawing.drawPolygon(out, square, thickness, true, Color.WHITE);
+    AlternativeLeontisWesthofDrawing.drawPolygon(
+        out, square, thickness, false, out.getCurrentColor());
+
+    // initial triangle coordinates = center is in 2/3 of triangle height
+    final double normalizedSide = isCis ? triangleSide : (triangleSide - (2.0 * thickness));
+    final double normalizedHeight = (normalizedSide * Math.sqrt(3.0)) / 2.0;
+    final Point2D.Double[] triangle = {
+      new Point2D.Double((-normalizedHeight / 3.0) - thickness, -normalizedSide / 2.0),
+      new Point2D.Double((-normalizedHeight / 3.0) - thickness, normalizedSide / 2.0),
+      new Point2D.Double(((2.0 * normalizedHeight) / 3.0) - thickness, 0),
+    };
+
+    // draw the triangle
+    AlternativeLeontisWesthofDrawing.transformPoints(angle, center, triangle);
+    AlternativeLeontisWesthofDrawing.drawPolygon(
+        out, triangle, thickness, isCis, out.getCurrentColor());
+  }
 
   private static void drawCircleInTriangle(
       final SecStrDrawingProducer out,

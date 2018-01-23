@@ -238,7 +238,7 @@ public class VARNAConfig implements Serializable, Cloneable {
 	public Color _backboneColor      = DEFAULT_BACKBONE_COLOR;
 	public Color _hoverColor         = DEFAULT_HOVER_COLOR;
 	public Color _backgroundColor    = DEFAULT_BACKGROUND_COLOR;
-	public Color _bondColor          = DEFAULT_BOND_COLOR;
+	public Color _bondColor          = DEFAULT_BACKBONE_COLOR;
 	public Color _titleColor         = DEFAULT_TITLE_COLOR;
 	public Color _specialBasesColor  = DEFAULT_SPECIAL_BASE_COLOR;
 	public Color _dashBasesColor     = DEFAULT_DASH_BASE_COLOR;

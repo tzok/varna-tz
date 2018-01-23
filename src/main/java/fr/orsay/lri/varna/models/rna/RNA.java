@@ -253,6 +253,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	transient private ArrayList<InterfaceVARNAListener> _listeVARNAListener = new ArrayList<InterfaceVARNAListener>();
 
 	private boolean treatIsolatedAsNonPlanar;
+	private String dotBracket = "";
 
 	public RNA(final boolean treatIsolatedAsNonPlanar) {
 		super();
@@ -2092,6 +2093,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	public void setRNA(String seq, String str)
 			throws ExceptionFileFormatOrSyntax,
 			ExceptionUnmatchedClosingParentheses {
+		dotBracket = str;
 		ArrayList<String> al = RNA.explodeSequence(seq);
 		Set<Integer> sepPos = getSeparatorPositions(str);
 		ArrayList<String> alRes = new ArrayList<String>();
@@ -2789,10 +2791,11 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 	private void applyStruct(int[] str) throws ExceptionFileFormatOrSyntax {
 		str = correctReciprocity(str);
 
-		int[] planarSubset = RNAMLParser.planarize(str);
-		if (treatIsolatedAsNonPlanar) {
-			planarSubset = RNA.removeIsolatedFromMainStructure(planarSubset);
-		}
+    int[] planarSubset =
+        dotBracket.isEmpty() ? RNAMLParser.planarize(str) : planarizeFromDotBracket(str);
+    if (treatIsolatedAsNonPlanar) {
+      planarSubset = RNA.removeIsolatedFromMainStructure(planarSubset);
+    }
 		_structureAux.clear();
 
 		for (int i = 0; i < planarSubset.length; i++) {
@@ -2806,6 +2809,15 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 		}
 
 	}
+
+  private int[] planarizeFromDotBracket(final int[] str) {
+    final int[] planarSubset = new int[dotBracket.length()];
+    for (int i = 0; i < dotBracket.length(); i++) {
+      final char c = dotBracket.charAt(i);
+			planarSubset[i] = ((c == '(') || (c == ')')) ? str[i] : -1;
+    }
+    return planarSubset;
+  }
 
 	private static int[] removeIsolatedFromMainStructure(final int[] structure) {
 		final int[] nonIsolatedSubset = structure.clone();

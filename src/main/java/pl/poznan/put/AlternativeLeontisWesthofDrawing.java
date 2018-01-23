@@ -209,7 +209,7 @@ public final class AlternativeLeontisWesthofDrawing {
       new Point2D.Double((2.0 * height) / 3.0, 0),
     };
 
-    // draw the square
+    // draw the triangle
     final double angle = AlternativeLeontisWesthofDrawing.calculateRotationAngle(orig, dest);
     AlternativeLeontisWesthofDrawing.transformPoints(angle, center, triangle);
     AlternativeLeontisWesthofDrawing.drawPolygon(out, triangle, thickness, true, Color.WHITE);
@@ -231,8 +231,42 @@ public final class AlternativeLeontisWesthofDrawing {
       final Point2D.Double dest,
       final Point2D.Double center,
       final double thickness,
-      final double unit,
-      final boolean isCis) {}
+      final double squareSide,
+      final boolean isCis) {
+    // calculate side
+    // https://math.stackexchange.com/questions/545594/
+    //     what-is-the-maximum-area-of-a-square-inscribed-in-an-equilateral-triangle
+    final double triangleSide = (squareSide * (2.0 + Math.sqrt(3.0))) / Math.sqrt(3.0);
+    final double triangleHeight = (triangleSide * Math.sqrt(3.0)) / 2.0;
+
+    // initial triangle coordinates = center is in 1/3 of triangle height
+    final Point2D.Double[] triangle = {
+      new Point2D.Double(-triangleHeight / 3.0, -triangleSide / 2.0),
+      new Point2D.Double(-triangleHeight / 3.0, triangleSide / 2.0),
+      new Point2D.Double((2.0 * triangleHeight) / 3.0, 0),
+    };
+
+    // draw the triangle
+    final double angle = AlternativeLeontisWesthofDrawing.calculateRotationAngle(orig, dest);
+    AlternativeLeontisWesthofDrawing.transformPoints(angle, center, triangle);
+    AlternativeLeontisWesthofDrawing.drawPolygon(out, triangle, thickness, true, Color.WHITE);
+    AlternativeLeontisWesthofDrawing.drawPolygon(
+        out, triangle, thickness, false, out.getCurrentColor());
+
+    // initial square coordinates = half the side along the (0,0) point
+    final double normalizedSide = isCis ? squareSide : (squareSide - thickness);
+    final Point2D.Double[] square = {
+      new Point2D.Double((-triangleHeight / 3.0) + thickness, -normalizedSide / 2.0),
+      new Point2D.Double((-triangleHeight / 3.0) + thickness, normalizedSide / 2.0),
+      new Point2D.Double((-triangleHeight / 3.0) + normalizedSide, normalizedSide / 2.0),
+      new Point2D.Double((-triangleHeight / 3.0) + normalizedSide, -normalizedSide / 2.0)
+    };
+
+    // draw the square
+    AlternativeLeontisWesthofDrawing.transformPoints(angle, center, square);
+    AlternativeLeontisWesthofDrawing.drawPolygon(
+        out, square, thickness, isCis, out.getCurrentColor());
+  }
 
   /**
    * Calculate rotation of regular coordinate system and a vector between given points.

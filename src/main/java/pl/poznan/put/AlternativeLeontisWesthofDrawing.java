@@ -195,8 +195,35 @@ public final class AlternativeLeontisWesthofDrawing {
       final Point2D.Double dest,
       final Point2D.Double center,
       final double thickness,
-      final double unit,
-      final boolean isCis) {}
+      final double diameter,
+      final boolean isCis) {
+    // calculate side
+    final double radius = (diameter / 2.0) + thickness;
+    final double height = 3.0 * radius;
+    final double side = (2.0 * height) / Math.sqrt(3.0);
+
+    // initial triangle coordinates = center is in 1/3 of triangle height
+    final Point2D.Double[] triangle = {
+      new Point2D.Double(-height / 3.0, -side / 2.0),
+      new Point2D.Double(-height / 3.0, side / 2.0),
+      new Point2D.Double((2.0 * height) / 3.0, 0),
+    };
+
+    // draw the square
+    final double angle = AlternativeLeontisWesthofDrawing.calculateRotationAngle(orig, dest);
+    AlternativeLeontisWesthofDrawing.transformPoints(angle, center, triangle);
+    AlternativeLeontisWesthofDrawing.drawPolygon(out, triangle, thickness, true, Color.WHITE);
+    AlternativeLeontisWesthofDrawing.drawPolygon(
+        out, triangle, thickness, false, out.getCurrentColor());
+
+    // draw the circle
+    final double normalizedRadius = isCis ? radius : (radius - thickness);
+    if (isCis) {
+      out.fillCircle(center.x, center.y, normalizedRadius, thickness, out.getCurrentColor());
+    } else {
+      out.drawCircle(center.x, center.y, normalizedRadius, thickness);
+    }
+  }
 
   private static void drawSquareInTriangle(
       final SecStrDrawingProducer out,

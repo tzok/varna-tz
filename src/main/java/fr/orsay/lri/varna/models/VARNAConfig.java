@@ -235,7 +235,7 @@ public class VARNAConfig implements Serializable, Cloneable {
 
 	public ModeleColorMap _cm = DEFAULT_COLOR_MAP;
 
-	public Color _backboneColor      = Color.GRAY;
+	public Color _backboneColor      = DEFAULT_BACKBONE_COLOR;
 	public Color _hoverColor         = DEFAULT_HOVER_COLOR;
 	public Color _backgroundColor    = DEFAULT_BACKGROUND_COLOR;
 	public Color _bondColor          = DEFAULT_BACKBONE_COLOR;

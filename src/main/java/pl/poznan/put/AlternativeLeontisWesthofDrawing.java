@@ -16,6 +16,9 @@ public final class AlternativeLeontisWesthofDrawing {
    * @param thickness Thickness of lines.
    * @param baseSymbolSize Base size of the symbol.
    * @param isCis True if the base pairing is cis, false if trans.
+   * @param sugarTriangleOuter If true, for (cis|trans)-Sugar-(WatsonCrick|Hoogsteen) the triangle
+   *     will be big and outer. If false, the triangle will be inscribed, but its direction
+   *     reversed.
    */
   public static void drawAlternativeSymbol(
       final SecStrDrawingProducer out,
@@ -24,7 +27,8 @@ public final class AlternativeLeontisWesthofDrawing {
       final ModeleBP basePair,
       final double thickness,
       final double baseSymbolSize,
-      final boolean isCis) {
+      final boolean isCis,
+      final boolean sugarTriangleOuter) {
     final ModeleBP.Edge edge5 = basePair.getEdgePartner5();
     final ModeleBP.Edge edge3 = basePair.getEdgePartner3();
     assert edge5 != edge3;
@@ -49,12 +53,22 @@ public final class AlternativeLeontisWesthofDrawing {
             out, orig, dest, center, thickness, baseSymbolSize, isCis);
       }
     } else if (edge5 == ModeleBP.Edge.SUGAR) {
-      if (edge3 == ModeleBP.Edge.WC) {
-        AlternativeLeontisWesthofDrawing.drawCircleInTriangle(
-            out, orig, dest, center, thickness, baseSymbolSize, isCis);
-      } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
-        AlternativeLeontisWesthofDrawing.drawSquareInTriangle(
-            out, orig, dest, center, thickness, baseSymbolSize, isCis);
+      if (sugarTriangleOuter) {
+        if (edge3 == ModeleBP.Edge.WC) {
+          AlternativeLeontisWesthofDrawing.drawCircleInTriangle(
+              out, orig, dest, center, thickness, baseSymbolSize, isCis);
+        } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
+          AlternativeLeontisWesthofDrawing.drawSquareInTriangle(
+              out, orig, dest, center, thickness, baseSymbolSize, isCis);
+        }
+      } else {
+        if (edge3 == ModeleBP.Edge.WC) {
+          AlternativeLeontisWesthofDrawing.drawTriangleInCircle(
+              out, dest, orig, center, thickness, baseSymbolSize, isCis);
+        } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
+          AlternativeLeontisWesthofDrawing.drawTriangleInSquare(
+              out, dest, orig, center, thickness, baseSymbolSize, isCis);
+        }
       }
     }
   }

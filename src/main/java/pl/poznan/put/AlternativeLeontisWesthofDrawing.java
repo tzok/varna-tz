@@ -6,16 +6,27 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 
 public final class AlternativeLeontisWesthofDrawing {
+  /**
+   * Draw a single symbol representing Leontis-Westhof notation.
+   *
+   * @param out The secondary structure drawer.
+   * @param orig Coordinates of the first nucleotide.
+   * @param dest Coordinates of the nucleotide.
+   * @param basePair Metadata about base pair type.
+   * @param thickness Thickness of lines.
+   * @param baseSymbolSize Base size of the symbol.
+   * @param isCis True if the base pairing is cis, false if trans.
+   */
   public static void drawAlternativeSymbol(
       final SecStrDrawingProducer out,
       final Point2D.Double orig,
       final Point2D.Double dest,
-      final ModeleBP style,
+      final ModeleBP basePair,
       final double thickness,
-      final double unit,
+      final double baseSymbolSize,
       final boolean isCis) {
-    final ModeleBP.Edge edge5 = style.getEdgePartner5();
-    final ModeleBP.Edge edge3 = style.getEdgePartner3();
+    final ModeleBP.Edge edge5 = basePair.getEdgePartner5();
+    final ModeleBP.Edge edge3 = basePair.getEdgePartner3();
     assert edge5 != edge3;
 
     final Point2D.Double center =
@@ -24,26 +35,26 @@ public final class AlternativeLeontisWesthofDrawing {
     if (edge5 == ModeleBP.Edge.WC) {
       if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
         AlternativeLeontisWesthofDrawing.drawSquareInCircle(
-            out, orig, dest, center, thickness, unit, isCis);
+            out, orig, dest, center, thickness, baseSymbolSize, isCis);
       } else if (edge3 == ModeleBP.Edge.SUGAR) {
         AlternativeLeontisWesthofDrawing.drawTriangleInCircle(
-            out, orig, dest, center, thickness, unit, isCis);
+            out, orig, dest, center, thickness, baseSymbolSize, isCis);
       }
     } else if (edge5 == ModeleBP.Edge.HOOGSTEEN) {
       if (edge3 == ModeleBP.Edge.WC) {
         AlternativeLeontisWesthofDrawing.drawCircleInSquare(
-            out, orig, dest, center, thickness, unit, isCis);
+            out, orig, dest, center, thickness, baseSymbolSize, isCis);
       } else if (edge3 == ModeleBP.Edge.SUGAR) {
         AlternativeLeontisWesthofDrawing.drawTriangleInSquare(
-            out, orig, dest, center, thickness, unit, isCis);
+            out, orig, dest, center, thickness, baseSymbolSize, isCis);
       }
     } else if (edge5 == ModeleBP.Edge.SUGAR) {
       if (edge3 == ModeleBP.Edge.WC) {
         AlternativeLeontisWesthofDrawing.drawCircleInTriangle(
-            out, orig, dest, center, thickness, unit, isCis);
+            out, orig, dest, center, thickness, baseSymbolSize, isCis);
       } else if (edge3 == ModeleBP.Edge.HOOGSTEEN) {
         AlternativeLeontisWesthofDrawing.drawSquareInTriangle(
-            out, orig, dest, center, thickness, unit, isCis);
+            out, orig, dest, center, thickness, baseSymbolSize, isCis);
       }
     }
   }

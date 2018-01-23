@@ -31,11 +31,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
-import fr.orsay.lri.varna.models.annotations.HighlightRegionAnnotation;
-import fr.orsay.lri.varna.models.annotations.TextAnnotation;
-import fr.orsay.lri.varna.models.rna.ModeleBP;
-import fr.orsay.lri.varna.models.rna.ModeleBPStyle;
-import fr.orsay.lri.varna.models.rna.ModeleBase;
 import fr.orsay.lri.varna.models.rna.ModeleColorMap;
 import fr.orsay.lri.varna.utils.XMLUtils;
 

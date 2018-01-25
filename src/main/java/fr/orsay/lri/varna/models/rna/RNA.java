@@ -456,12 +456,12 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
           double jy = -triangleSide * normx / 2.0;
           double xtab[] = new double[3];
           double ytab[] = new double[3];
-          xtab[0] = posx - ix + jx;
-          ytab[0] = posy - iy + jy;
-          xtab[1] = posx + ix + jx;
-          ytab[1] = posy + iy + jy;
-          xtab[2] = posx - jx;
-          ytab[2] = posy - jy;
+          xtab[0] = posx - ix - jx;
+          ytab[0] = posy - iy - jy;
+          xtab[1] = posx + ix - jx;
+          ytab[1] = posy + iy - jy;
+          xtab[2] = posx + jx;
+          ytab[2] = posy + jy;
 
           if (isCIS) {
             out.fillPolygon(xtab, ytab, bck);
@@ -593,7 +593,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 				} else {
 					if (conf._drawAlternativeLW) {
             AlternativeLeontisWesthofDrawing.drawAlternativeSymbol(
-                out, orig, dest, style, thickness, circleDiameter, style.isCIS(), false);
+                out, orig, dest, style, thickness, circleDiameter, style.isCIS(), true);
 					} else {
 						double vdx = (dest.x - orig.x);
 						double vdy = (dest.y - orig.y);

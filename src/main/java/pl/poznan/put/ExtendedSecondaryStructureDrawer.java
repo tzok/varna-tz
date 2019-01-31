@@ -1,6 +1,8 @@
 package pl.poznan.put;
 
+import fr.orsay.lri.varna.exceptions.ExceptionFileFormatOrSyntax;
 import fr.orsay.lri.varna.exceptions.ExceptionNAViewAlgorithm;
+import fr.orsay.lri.varna.exceptions.ExceptionUnmatchedClosingParentheses;
 import fr.orsay.lri.varna.exceptions.ExceptionWritingForbidden;
 import fr.orsay.lri.varna.models.VARNAConfig;
 import fr.orsay.lri.varna.models.rna.ModeleBP;
@@ -14,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +35,8 @@ public final class ExtendedSecondaryStructureDrawer {
   }
 
   public static void main(final String[] args)
-      throws IOException, ExceptionNAViewAlgorithm, ExceptionWritingForbidden {
+      throws IOException, ExceptionNAViewAlgorithm, ExceptionWritingForbidden, ExceptionFileFormatOrSyntax,
+             ExceptionUnmatchedClosingParentheses {
     if (args.length != 1) {
       System.err.println("Usage: extended-drawer FILE");
       System.err.println("FILE contains multiple lines in the following format:");
@@ -44,29 +48,66 @@ public final class ExtendedSecondaryStructureDrawer {
       return;
     }
 
-    final VARNAConfig config = new VARNAConfig();
-    final RNA rna = new RNA(true);
+    final File file = new File(args[0]);
+    final File outputFile = File.createTempFile("varna-tz", ".svg");
+    final List<String> lines = ExtendedSecondaryStructureDrawer.readLines(file);
+    ExtendedSecondaryStructureDrawer.draw(lines, outputFile);
+    System.out.println(outputFile);
+  }
 
-    try (final InputStream stream = new FileInputStream(args[0]);
+  private static List<String> readLines(final File file) throws IOException {
+    try (final InputStream stream = new FileInputStream(file);
         final Reader reader = new InputStreamReader(stream, Charset.defaultCharset());
         final BufferedReader lineReader = new BufferedReader(reader)) {
+      final List<String> lines = new ArrayList<>();
       String line;
       while ((line = lineReader.readLine()) != null) {
-        final String[] tokens = line.split("\\s+");
-        assert tokens.length == 2;
+        lines.add(line);
+      }
+      return lines;
+    }
+  }
 
-        if ("seq".equalsIgnoreCase(tokens[0])) {
-          rna.setRNA(tokens[1]);
-        } else {
-          ExtendedSecondaryStructureDrawer.addBasePairs(rna, tokens[0], tokens[1]);
+  public static void draw(final Collection<String> lines, final File outputFile)
+      throws ExceptionNAViewAlgorithm, ExceptionWritingForbidden,
+          ExceptionUnmatchedClosingParentheses, ExceptionFileFormatOrSyntax {
+    final VARNAConfig config = new VARNAConfig();
+    final RNA rna = new RNA(true);
+    String sequence = "";
+    String structure = "";
+    boolean isSequenceSet = false;
+
+    for (final String line : lines) {
+      final String[] tokens = line.split("\\s+");
+      assert tokens.length == 2;
+
+      if ("seq".equalsIgnoreCase(tokens[0])) {
+        sequence = tokens[1];
+
+        if (!isSequenceSet && !sequence.isEmpty() && !structure.isEmpty()) {
+          rna.setRNA(sequence, structure);
+          isSequenceSet = true;
         }
+      } else if ("cWW".equalsIgnoreCase(tokens[0])) {
+        structure = tokens[1];
+
+        if (isSequenceSet) {
+          ExtendedSecondaryStructureDrawer.addBasePairs(rna, tokens[0], tokens[1]);
+        } else if (!sequence.isEmpty() && !structure.isEmpty()) {
+          rna.setRNA(sequence, structure);
+          isSequenceSet = true;
+        }
+      } else {
+        ExtendedSecondaryStructureDrawer.addBasePairs(rna, tokens[0], tokens[1]);
       }
     }
 
+    if (!isSequenceSet) {
+      rna.setRNA(sequence);
+    }
+
     rna.drawRNANAView(config);
-    final File tempFile = File.createTempFile("varna-tz", ".svg");
-    rna.saveRNASVG(tempFile.getAbsolutePath(), config);
-    System.out.println(tempFile);
+    rna.saveRNASVG(outputFile.getAbsolutePath(), config);
   }
 
   private static void addBasePairs(

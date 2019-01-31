@@ -35,8 +35,8 @@ public final class ExtendedSecondaryStructureDrawer {
   }
 
   public static void main(final String[] args)
-      throws IOException, ExceptionNAViewAlgorithm, ExceptionWritingForbidden, ExceptionFileFormatOrSyntax,
-             ExceptionUnmatchedClosingParentheses {
+      throws IOException, ExceptionNAViewAlgorithm, ExceptionWritingForbidden,
+          ExceptionFileFormatOrSyntax, ExceptionUnmatchedClosingParentheses {
     if (args.length != 1) {
       System.err.println("Usage: extended-drawer FILE");
       System.err.println("FILE contains multiple lines in the following format:");
@@ -75,7 +75,6 @@ public final class ExtendedSecondaryStructureDrawer {
     final RNA rna = new RNA(true);
     String sequence = "";
     String structure = "";
-    boolean isSequenceSet = false;
 
     for (final String line : lines) {
       final String[] tokens = line.split("\\s+");
@@ -84,26 +83,17 @@ public final class ExtendedSecondaryStructureDrawer {
       if ("seq".equalsIgnoreCase(tokens[0])) {
         sequence = tokens[1];
 
-        if (!isSequenceSet && !sequence.isEmpty() && !structure.isEmpty()) {
+        if (structure.isEmpty()) {
+          rna.setRNA(sequence);
+        } else {
           rna.setRNA(sequence, structure);
-          isSequenceSet = true;
         }
       } else if ("cWW".equalsIgnoreCase(tokens[0])) {
         structure = tokens[1];
-
-        if (isSequenceSet) {
-          ExtendedSecondaryStructureDrawer.addBasePairs(rna, tokens[0], tokens[1]);
-        } else if (!sequence.isEmpty() && !structure.isEmpty()) {
-          rna.setRNA(sequence, structure);
-          isSequenceSet = true;
-        }
+        rna.setRNA(sequence, structure);
       } else {
         ExtendedSecondaryStructureDrawer.addBasePairs(rna, tokens[0], tokens[1]);
       }
-    }
-
-    if (!isSequenceSet) {
-      rna.setRNA(sequence);
     }
 
     rna.drawRNANAView(config);

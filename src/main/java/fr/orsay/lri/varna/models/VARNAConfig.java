@@ -210,6 +210,7 @@ public class VARNAConfig implements Serializable, Cloneable {
   public boolean _drawBackground = false;
   public boolean _drawColorMap = false;
   public boolean _drawBackbone = true;
+  public boolean _drawAlternativeLW = true;
 
   public double _colorMapHeight = DEFAULT_COLOR_MAP_HEIGHT;
   public double _colorMapWidth = DEFAULT_COLOR_MAP_WIDTH;

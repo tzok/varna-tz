@@ -1,4 +1,4 @@
-package pl.poznan.put;
+package pl.poznan.put.varna;
 
 import fr.orsay.lri.varna.models.export.SecStrDrawingProducer;
 import fr.orsay.lri.varna.models.rna.ModeleBP;

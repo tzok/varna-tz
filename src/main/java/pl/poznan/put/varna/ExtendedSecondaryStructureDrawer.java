@@ -1,4 +1,4 @@
-package pl.poznan.put;
+package pl.poznan.put.varna;
 
 import fr.orsay.lri.varna.exceptions.ExceptionFileFormatOrSyntax;
 import fr.orsay.lri.varna.exceptions.ExceptionNAViewAlgorithm;

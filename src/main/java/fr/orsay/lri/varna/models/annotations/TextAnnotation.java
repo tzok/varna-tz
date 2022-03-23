@@ -2,7 +2,7 @@
  VARNA is a tool for the automated drawing, visualization and annotation of the secondary structure of RNA, designed as a companion software for web servers and databases.
  Copyright (C) 2008  Kevin Darty, Alain Denise and Yann Ponty.
  electronic mail : Yann.Ponty@lri.fr
- paper mail : LRI, bat 490 Universit� Paris-Sud 91405 Orsay Cedex France
+ paper mail : LRI, bat 490 Universit Paris-Sud 91405 Orsay Cedex France
 
  This file is part of VARNA version 3.1.
  VARNA version 3.1 is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
@@ -32,6 +32,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 import fr.orsay.lri.varna.models.rna.ModeleBase;
+import fr.orsay.lri.varna.VARNAPanel;
+import fr.orsay.lri.varna.models.VARNAConfigLoader;
 import fr.orsay.lri.varna.models.rna.ModelBaseStyle;
 import fr.orsay.lri.varna.models.rna.VARNAPoint;
 import fr.orsay.lri.varna.utils.XMLUtils;
@@ -59,6 +61,8 @@ public class TextAnnotation implements Serializable {
 	};
 	
 
+	public static final String HEADER_TEXT = "TextAnnotation";
+	
 	/**
 	 * default text color
 	 */
@@ -429,5 +433,105 @@ public class TextAnnotation implements Serializable {
 	public void setAngleInRadians(double _angle) {
 		this._angle = _angle * 180 / Math.PI;
 	}
+	
+	
+	public static TextAnnotation parse(String thisAnn, VARNAPanel vp)
+	{
+		String[] data = thisAnn.split(":");
 
+		String text = "";
+		int anchor = -1;
+		int x = -1;
+		int y = -1;
+		TextAnnotation.AnchorType type = TextAnnotation.AnchorType.LOOP;
+		Font font = TextAnnotation.DEFAULTFONT;
+		Color color = TextAnnotation.DEFAULTCOLOR;
+		TextAnnotation ann = null;
+		try {
+			if (data.length == 2) {
+				text = data[0];
+				String[] data2 = data[1].split(",");
+				for (int j = 0; j < data2.length; j++) {
+					String opt = data2[j];
+					String[] data3 = opt.split("=");
+					if (data3.length == 2) {
+						String name = data3[0].toLowerCase();
+						String value = data3[1];
+						if (name.equals("type")) {
+							if (value.toUpperCase().equals("H")) {
+								type = TextAnnotation.AnchorType.HELIX;
+							} else if (value.toUpperCase().equals("L")) {
+								type = TextAnnotation.AnchorType.LOOP;
+							} else if (value.toUpperCase().equals("P")) {
+								type = TextAnnotation.AnchorType.POSITION;
+							} else if (value.toUpperCase().equals("B")) {
+								type = TextAnnotation.AnchorType.BASE;
+							}
+						} else if (name.equals("x")) {
+							x = Integer.parseInt(value);
+						} else if (name.equals("y")) {
+							y = Integer.parseInt(value);
+						} else if (name.equals("anchor")) {
+							anchor = Integer.parseInt(value);
+						} else if (name.equals("size")) {
+							font = font.deriveFont((float) Integer
+									.parseInt(value));
+						} else if (name.equals("color")) {
+							color = VARNAConfigLoader.getSafeColor(value, color);
+						}
+					}
+				}
+				switch (type) {
+				case POSITION:
+					if ((x != -1) && (y != -1)) {
+						Point2D.Double p = vp
+								.panelToLogicPoint(new Point2D.Double(x, y));
+						ann = new TextAnnotation(text, p.x, p.y);
+					}
+					break;
+				case BASE:
+					if (anchor != -1) {
+						int index = vp.getRNA().getIndexFromBaseNumber(
+								anchor);
+						ModeleBase mb = vp.getRNA().get_listeBases()
+								.get(index);
+						ann = new TextAnnotation(text, mb);
+					}
+					break;
+				case HELIX:
+					if (anchor != -1) {
+						ArrayList<ModeleBase> mbl = new ArrayList<ModeleBase>();
+						int index = vp.getRNA().getIndexFromBaseNumber(
+								anchor);
+						ArrayList<Integer> il = vp.getRNA()
+								.findHelix(index);
+						for (int k : il) {
+							mbl.add(vp.getRNA().get_listeBases().get(k));
+						}
+						ann = new TextAnnotation(text, mbl, type);
+					}
+					break;
+				case LOOP:
+					if (anchor != -1) {
+						ArrayList<ModeleBase> mbl = new ArrayList<ModeleBase>();
+						int index = vp.getRNA().getIndexFromBaseNumber(
+								anchor);
+						ArrayList<Integer> il = vp.getRNA().findLoop(index);
+						for (int k : il) {
+							mbl.add(vp.getRNA().get_listeBases().get(k));
+						}
+						ann = new TextAnnotation(text, mbl, type);
+					}
+					break;
+				}
+				if (ann != null) {
+					ann.setColor(color);
+					ann.setFont(font);
+				}
+			}
+		} catch (Exception e) {
+			System.err.println("Apply Annotations: " + e.toString());
+		}
+		return ann;
+		}
 }

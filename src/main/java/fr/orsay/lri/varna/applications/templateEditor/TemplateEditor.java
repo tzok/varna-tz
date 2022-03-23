@@ -408,7 +408,7 @@ public class TemplateEditor extends JFrame implements KeyListener, ActionListene
 			try {
 				DrawRNATemplateMethod method = (DrawRNATemplateMethod)applyMethodList.getSelectedItem();
 				DrawRNATemplateCurveMethod curveMethod = (DrawRNATemplateCurveMethod)ellipseMethodList.getSelectedItem();
-				RNATemplateMapping map =  _vp.getRNA().drawRNATemplate(_sk.getTemplate(),_vp.getConfig(), method, curveMethod);
+				RNATemplateMapping map =  _vp.getRNA().drawRNATemplate(_sk.getTemplate(),_vp.getConfig(), method, curveMethod, getStraightBulges());
 				for(int i: map.getSourceElemsAsSet())
 				{
 					RNATemplateElement t = map.getPartner(i);
@@ -474,6 +474,10 @@ public class TemplateEditor extends JFrame implements KeyListener, ActionListene
 	}
 	
 	
+	private boolean getStraightBulges() {
+		return false;
+	}
+
 	public void dragEnter(DropTargetDragEvent arg0) {
 	}
 

@@ -27,6 +27,8 @@ public class GradientEditorPanel extends JPanel implements MouseListener, MouseM
 		public void setColorMap(ModeleColorMap mcm)
 		{
 			_mcm = mcm;
+			repaint();
+			firePropertyChange("PaletteChanged","a","b");
 		}
 		
 		public ModeleColorMap getColorMap()

@@ -21,21 +21,21 @@ import java.awt.geom.Point2D;
 
 public class ArcCommand extends GraphicElement {
 
-	private Point2D.Double origine;
+	private Point2D.Double center;
 	private double width, height;
 	private double startAngle, endAngle;
 
 	public ArcCommand(Point2D.Double origine, double width, double height,
 			double startAngle, double endAngle) {
-		this.origine = origine;
+		this.center = origine;
 		this.width = width;
 		this.height = height;
 		this.startAngle = startAngle;
 		this.endAngle = endAngle;
 	}
 
-	public Point2D.Double getOrigine() {
-		return origine;
+	public Point2D.Double getCenter() {
+		return center;
 	}
 
 	public double getWidth() {

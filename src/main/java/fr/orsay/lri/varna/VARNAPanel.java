@@ -758,15 +758,15 @@ import fr.orsay.lri.varna.views.VueUI;
  * &nbsp;&nbsp;VARNAPanel _rna = new VARNAPanel("CCCCAUAUGGGGACC","((((....))))...");<br />
  * &nbsp;&nbsp;this.getContentPane().add(_rna);
  * </code>
- *
+ * 
  * @version 3.4
  * @author Yann Ponty & Kevin Darty
- *
+ * 
  */
 
 public class VARNAPanel extends JPanel {
 	/**
-	 *
+	 * 
 	 */
 	private static final long serialVersionUID = 8194421570308956001L;
 
@@ -833,9 +833,9 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Creates an RNA 2D panel with initially displays the empty structure.
-	 *
+	 * 
 	 * @throws ExceptionNonEqualLength
-	 *
+	 * 
 	 */
 	public VARNAPanel() {
 		init();
@@ -846,13 +846,14 @@ public class VARNAPanel extends JPanel {
 	 * Creates an RNA 2D panel, and creates and displays an RNA coupled with its
 	 * secondary structure formatted as a well-balanced parenthesis with dots
 	 * word (DBN format).
-	 *
+	 * 
 	 * @param seq
 	 *            The raw nucleotide sequence
 	 * @param str
 	 *            The secondary structure in DBN format
 	 * @throws ExceptionNonEqualLength
 	 */
+	
 
 	public VARNAPanel(String seq, String str) throws ExceptionNonEqualLength {
 		this(seq, str, RNA.DRAW_MODE_RADIATE);
@@ -863,7 +864,7 @@ public class VARNAPanel extends JPanel {
 	 * with its secondary structure formatted as a well-balanced parenthesis
 	 * with dots word (DBN format). Allows the user to choose the drawing
 	 * algorithm to be used.
-	 *
+	 * 
 	 * @param seq
 	 *            The raw nucleotide sequence
 	 * @param str
@@ -912,7 +913,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Creates a VARNAPanel instance, and displays an RNA.
-	 *
+	 * 
 	 * @param r
 	 *            The RNA to be displayed within this panel
 	 */
@@ -927,7 +928,7 @@ public class VARNAPanel extends JPanel {
 	 * with its secondary structure formatted as a well-balanced parenthesis
 	 * with dots word (DBN format). Allows the user to choose the drawing
 	 * algorithm to be used. Additionally, sets the panel's title.
-	 *
+	 * 
 	 * @param seq
 	 *            The raw nucleotide sequence
 	 * @param str
@@ -1007,7 +1008,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the new style of the title font.
-	 *
+	 * 
 	 * @param newStyle
 	 *            An int that describes the new font style ("PLAIN","BOLD",
 	 *            "BOLDITALIC", or "ITALIC")
@@ -1019,7 +1020,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the new size of the title font.
-	 *
+	 * 
 	 * @param newSize
 	 *            The new size of the title font
 	 */
@@ -1033,7 +1034,7 @@ public class VARNAPanel extends JPanel {
 	 * Sets the new font family to be used for the title. Available fonts are
 	 * system-specific, yet it seems that "Arial", "Dialog", and "MonoSpaced"
 	 * are almost always available.
-	 *
+	 * 
 	 * @param newFamily
 	 *            New font family used for the title
 	 */
@@ -1045,7 +1046,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the color to be used for the title.
-	 *
+	 * 
 	 * @param newColor
 	 *            A color used to draw the title
 	 */
@@ -1056,7 +1057,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the font size for displaying bases
-	 *
+	 * 
 	 * @param size
 	 *            Font size for base caption
 	 */
@@ -1067,18 +1068,19 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the font size for displaying base numbers
-	 *
+	 * 
 	 * @param size
-	 *            Font size for base caption
+	 *            Font size for base numbers
 	 */
 
 	public void setNumbersFontSize(Float size) {
 		_conf._numbersFont = _conf._numbersFont.deriveFont(size);
 	}
 
+	
 	/**
 	 * Sets the font style for displaying bases
-	 *
+	 * 
 	 * @param style
 	 *            An int that describes the new font style ("PLAIN","BOLD",
 	 *            "BOLDITALIC", or "ITALIC")
@@ -1102,7 +1104,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Sets the panel's title, giving a short description of the RNA secondary
 	 * structure.
-	 *
+	 * 
 	 * @param title
 	 *            The new title
 	 */
@@ -1122,7 +1124,7 @@ public class VARNAPanel extends JPanel {
 	 * period of 10 and bases numbered from 1 to 52, the base numbers
 	 * [1,10,20,30,40,50,52] will be drawn.</li>
 	 * </ul>
-	 *
+	 * 
 	 * @param n
 	 *            New numbering period
 	 */
@@ -1141,7 +1143,7 @@ public class VARNAPanel extends JPanel {
 	 * period of 10 and bases numbered from 1 to 52, the base numbers
 	 * [1,10,20,30,40,50,52] will be drawn.</li>
 	 * </ul>
-	 *
+	 * 
 	 * @return Current numbering period
 	 */
 	public int getNumPeriod() {
@@ -1381,7 +1383,7 @@ public class VARNAPanel extends JPanel {
 
 	public static double DISTANCE_FACT = 2.;
 
-
+	
 	private void drawBasePair(VueVARNAGraphics g2D, Point2D.Double orig,
 			Point2D.Double dest, ModeleBP style, double newRadius,
 			double scaleFactor) {
@@ -1541,7 +1543,7 @@ public class VARNAPanel extends JPanel {
 			return initialColor;
 	}
 
-	private Point2D.Double computeExcentricUnitVector(int i,
+	public static Point2D.Double computeExcentricUnitVector(int i,
 			Point2D.Double[] points, Point2D.Double[] centers) {
 		double dist = points[i].distance(centers[i]);
 		Point2D.Double byCenter = new Point2D.Double(
@@ -1569,7 +1571,7 @@ public class VARNAPanel extends JPanel {
 				vn.y = -vn.y;
 			}
 			return vn;
-		}
+		} 
 		else if (((i==0) || (i==points.length-1)) && (points.length>1)) {
 			int a = (i==0)?0:points.length-1;
 			int b = (i==0)?1:points.length-2;
@@ -1606,7 +1608,7 @@ public class VARNAPanel extends JPanel {
 		if (mb instanceof ModeleBaseNucleotide) {
 			ModeleBaseNucleotide mbn = (ModeleBaseNucleotide) mb;
 			String res = mbn.getBase();
-			if (_hoveredBase == mb && localView) {
+			if (_hoveredBase == mb && localView && isModifiable()) {
 				g2D.setColor(_conf._hoverColor);
 				g2D.fillCircle(p.getX() - 1.5 * newRadius, p.getY() - 1.5
 						* newRadius, 3.0 * newRadius);
@@ -1663,7 +1665,7 @@ public class VARNAPanel extends JPanel {
 
 			// On leur donne une couleur
 			g2D.setColor(getRNA().get_listeBases().get(i).getStyleBase()
-					.get_base_name_color());
+					.getBaseNameColor());
 
 			// Et on les dessine.
 			g2D.drawStringCentered(label1, p.getX() - (.75 * newRadius),
@@ -1676,7 +1678,7 @@ public class VARNAPanel extends JPanel {
 		if (_RNA.isNumberDrawn(mb, getNumPeriod())) {
 
 			Point2D.Double vn = computeExcentricUnitVector(i, points, centers);
-			g2D.setColor(mb.getStyleBase().get_base_number_color());
+			g2D.setColor(mb.getStyleBase().getBaseNumberColor());
 			g2D.setFont(_conf._numbersFont);
 			double factorMin = Math.min(.5, _conf._distNumbers);
 			double factorMax = Math.min(_conf._distNumbers - 1.5,
@@ -1867,7 +1869,7 @@ public class VARNAPanel extends JPanel {
 		if (getDrawBackbone()) {
 			g2D.setStrokeThickness(1.5 * _scaleFactor);
 			g2D.setColor(_conf._backboneColor);
-
+			
 			ModeleBackbone bck = _RNA.getBackbone();
 
 
@@ -1883,7 +1885,7 @@ public class VARNAPanel extends JPanel {
 					Point2D.Double vbp = new Point2D.Double();
 					vbp.x = (p2.x - p1.x) / dist;
 					vbp.y = (p2.y - p1.y) / dist;
-
+					
 					BackboneType bt = bck.getTypeBefore(i);
 					if (bt!=BackboneType.DISCONTINUOUS_TYPE)
 					{
@@ -1893,7 +1895,7 @@ public class VARNAPanel extends JPanel {
 							g2D.setPlainStroke();
 						}
 						g2D.setColor(bck.getColorBefore(i, _conf._backboneColor));
-
+						
 						if (consecutivePair
 								&& (_RNA.getDrawMode() != RNA.DRAW_MODE_LINEAR)
 								&& (_RNA.getDrawMode() != RNA.DRAW_MODE_CIRCULAR)) {
@@ -2325,12 +2327,12 @@ public class VARNAPanel extends JPanel {
 		NumberFormat nf = NumberFormat.getInstance();
 		nf.setMaximumFractionDigits(2);
 		nf.setMinimumFractionDigits(0);
-		g2D.drawStringCentered(nf.format(_conf._cm.getMinValue()), xBase,
+		g2D.drawStringCentered(nf.format(_conf._cm.getMinValue()), xBase, 
 				yBase
 				+ scaleFactor * (_conf._colorMapHeight+(VARNAConfig.DEFAULT_COLOR_MAP_FONT_SIZE / 1.7)));
 		g2D.drawStringCentered(nf.format(_conf._cm.getMaxValue()), xBase
 				+ VARNAConfig.DEFAULT_COLOR_MAP_STRIPE_WIDTH + scaleFactor
-				* _conf._colorMapWidth,
+				* _conf._colorMapWidth, 
 				yBase
 				+ scaleFactor * (_conf._colorMapHeight+(VARNAConfig.DEFAULT_COLOR_MAP_FONT_SIZE / 1.7)));
 		if (!_conf._colorMapCaption.equals(""))
@@ -2409,7 +2411,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Draws current RNA structure in a given Graphics "device".
-	 *
+	 * 
 	 * @param g2D
 	 *            A graphical device
 	 * @param transparentBackground
@@ -2505,7 +2507,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the color used to draw backbone bounds.
-	 *
+	 * 
 	 * @return The color used to draw backbone bounds
 	 */
 	public Color getBackboneColor() {
@@ -2514,7 +2516,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the color to be used for drawing backbone interactions.
-	 *
+	 * 
 	 * @param backbone_color
 	 *            The new color for the backbone bounds
 	 */
@@ -2524,7 +2526,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the color used to display hydrogen bonds (base pairings)
-	 *
+	 * 
 	 * @return The color of hydrogen bonds
 	 */
 	public Color getBondColor() {
@@ -2533,7 +2535,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the title of this panel
-	 *
+	 * 
 	 * @return The title
 	 */
 	public String getTitle() {
@@ -2542,7 +2544,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the new color to be used for hydrogen bonds (base pairings)
-	 *
+	 * 
 	 * @param bond_color
 	 *            The new color for hydrogen bonds
 	 */
@@ -2553,7 +2555,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Sets the size of the border, i.e. the empty space between the end of the
 	 * drawing area and the actual border.
-	 *
+	 * 
 	 * @param b
 	 *            The new border size
 	 */
@@ -2564,7 +2566,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Returns the size of the border, i.e. the empty space between the end of
 	 * the drawing area
-	 *
+	 * 
 	 * @return The border size
 	 */
 	public Dimension getBorderSize() {
@@ -2575,7 +2577,7 @@ public class VARNAPanel extends JPanel {
 	 * Sets the RNA to be displayed within this Panel. This method does not use
 	 * a drawing algorithm to reassigns base coordinates, rather assuming that
 	 * the RNA was previously drawn.
-	 *
+	 * 
 	 * @param r
 	 *            An already drawn RNA to display in this panel
 	 */
@@ -2594,7 +2596,7 @@ public class VARNAPanel extends JPanel {
 	 * Returns <code>true</code> if the sequence/structure couple could be
 	 * parsed into a valid secondary structure, and <code>false</code>
 	 * otherwise.
-	 *
+	 * 
 	 * @param seq
 	 *            The raw nucleotides sequence
 	 * @param str
@@ -2608,7 +2610,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Sets the RNA secondary structure to be drawn in this panel, using a given
 	 * layout algorithm.
-	 *
+	 * 
 	 * @param r
 	 *            The new secondary structure
 	 * @param drawMode
@@ -2637,7 +2639,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Sets the RNA secondary structure to be drawn in this panel, using the
 	 * current drawing algorithm.
-	 *
+	 * 
 	 * @param r
 	 *            The new secondary structure
 	 */
@@ -2658,7 +2660,7 @@ public class VARNAPanel extends JPanel {
 	 * Returns <code>true</code> if the sequence/structure couple could be
 	 * parsed into a valid secondary structure, and <code>false</code>
 	 * otherwise.
-	 *
+	 * 
 	 * @param seq
 	 *            The raw nucleotides sequence
 	 * @param str
@@ -2699,7 +2701,7 @@ public class VARNAPanel extends JPanel {
 	 * between the two successive RNAs, are assumed to initiate from the middle
 	 * of the sequence. In other words, both prefixes and suffixes of the RNAs
 	 * are assumed to match, and what remains is an insertion.
-	 *
+	 * 
 	 * @param seq
 	 *            Sequence
 	 * @param str
@@ -2719,7 +2721,7 @@ public class VARNAPanel extends JPanel {
 	 * successive RNAs, are assumed to initiate from the middle of the sequence.
 	 * In other words, both prefixes and suffixes of the RNAs are assumed to
 	 * match, and what remains is an insertion.
-	 *
+	 * 
 	 * @param seq
 	 *            Sequence
 	 * @param str
@@ -2740,7 +2742,7 @@ public class VARNAPanel extends JPanel {
 	 * and displays it, using an interpolated transition between the previous
 	 * one and the new one. Here, a mapping between those bases of the new
 	 * structure and the previous one is explicitly provided.
-	 *
+	 * 
 	 * @param seq
 	 *            Sequence
 	 * @param str
@@ -2760,7 +2762,7 @@ public class VARNAPanel extends JPanel {
 	 * displays it, using an interpolated transition between the previous one
 	 * and the new one. Here, a mapping between those bases of the new structure
 	 * and the previous one is provided.
-	 *
+	 * 
 	 * @param seq
 	 *            Sequence
 	 * @param str
@@ -2789,7 +2791,7 @@ public class VARNAPanel extends JPanel {
 	 * and displays it, using an interpolated transition between the previous
 	 * one and the new one. Here, a mapping between those bases of the new
 	 * structure and the previous one is explicitly provided.
-	 *
+	 * 
 	 * @param target
 	 *            Secondary structure
 	 */
@@ -2804,7 +2806,7 @@ public class VARNAPanel extends JPanel {
 	 * and displays it, using an interpolated transition between the previous
 	 * one and the new one. Here, a mapping between those bases of the new
 	 * structure and the previous one is explicitly provided.
-	 *
+	 * 
 	 * @param target
 	 *            Secondary structure
 	 * @param m
@@ -2820,7 +2822,7 @@ public class VARNAPanel extends JPanel {
 	 * displays it, using an interpolated transition between the previous one
 	 * and the new one. Here, a mapping between those bases of the new structure
 	 * and the previous one is provided.
-	 *
+	 * 
 	 * @param target
 	 *            Secondary structure of RNA
 	 * @param drawMode
@@ -2842,7 +2844,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the current algorithm used for drawing the structure
-	 *
+	 * 
 	 * @return The current drawing algorithm
 	 */
 	public int getDrawMode() {
@@ -2859,7 +2861,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Checks whether an interpolated transition bewteen two RNAs is occurring.
-	 *
+	 * 
 	 * @return True if an interpolated transition is occurring, false otherwise
 	 */
 
@@ -2875,7 +2877,7 @@ public class VARNAPanel extends JPanel {
 	 * interpolated transition between the previous one and the new one. A
 	 * default mapping between those bases of the new structure and the previous
 	 * one is used.
-	 *
+	 * 
 	 * @param target
 	 *            Secondary structure of RNA
 	 */
@@ -2888,7 +2890,7 @@ public class VARNAPanel extends JPanel {
 	 * Simply displays (does not redraw) a secondary structure , using an
 	 * interpolated transition between the previous one and the new one. Here, a
 	 * mapping between bases of the new structure and the previous one is given.
-	 *
+	 * 
 	 * @param target
 	 *            Secondary structure of RNA
 	 * @param m
@@ -2912,7 +2914,7 @@ public class VARNAPanel extends JPanel {
 	 * so-called "Dot-bracket notation" (DBN) format. This format is a
 	 * well-parenthesized word over the alphabet '(',')','.'.<br/>
 	 * Ex: <code>((((((((....))))..(((((...))).))))))</code><br />
-	 *
+	 * 
 	 * @param firstSeq
 	 *            The first RNA raw nucleotides sequence
 	 * @param firstStruct
@@ -3064,31 +3066,31 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Returns the currently selected base index, obtained through a mouse-left
 	 * click
-	 *
+	 * 
 	 * @return Selected base
-	 *
+	 * 
 	 *         public int getSelectedBaseIndex() { return _selectedBase; }
-	 *
+	 * 
 	 *         /** Returns the currently selected base, obtained through a
 	 *         mouse-left click
-	 *
+	 * 
 	 * @return Selected base
-	 *
+	 * 
 	 *         public ModeleBase getSelectedBase() { return
 	 *         _RNA.get_listeBases().get(_selectedBase); }
-	 *
+	 * 
 	 *         /** Sets the selected base index
-	 *
+	 * 
 	 * @param base
 	 *            New selected base index
-	 *
+	 * 
 	 *            public void setSelectedBase(int base) { _selectedBase = base;
 	 *            }
 	 */
 
 	/**
 	 * Returns the coordinates of the currently displayed RNA
-	 *
+	 * 
 	 * @return Coordinates array
 	 */
 	public Point2D.Double[] getRealCoords() {
@@ -3097,7 +3099,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the coordinates of the currently displayed RNA
-	 *
+	 * 
 	 * @param coords
 	 *            New coordinates
 	 */
@@ -3107,7 +3109,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the popup menu used for user mouse iteractions
-	 *
+	 * 
 	 * @return Popup menu
 	 */
 	public VueMenu getPopup() {
@@ -3116,7 +3118,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the color used to display hydrogen bonds (base pairings)
-	 *
+	 * 
 	 * @param bond_color
 	 *            The color of hydrogen bonds
 	 */
@@ -3126,7 +3128,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the color used to draw the title
-	 *
+	 * 
 	 * @return The color used to draw the title
 	 */
 	public Color getTitleColor() {
@@ -3135,7 +3137,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the color used to draw the title
-	 *
+	 * 
 	 * @param title_color
 	 *            The new color used to draw the title
 	 */
@@ -3145,7 +3147,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the height taken by the title
-	 *
+	 * 
 	 * @return The height taken by the title
 	 */
 	private int getTitleHeight() {
@@ -3154,7 +3156,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the height taken by the title
-	 *
+	 * 
 	 * @param title_height
 	 *            The height taken by the title
 	 */
@@ -3165,7 +3167,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the current state of auto centering mode.
-	 *
+	 * 
 	 * @return True if autocentered, false otherwise
 	 */
 	public boolean isAutoCentered() {
@@ -3174,7 +3176,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the current state of auto centering mode.
-	 *
+	 * 
 	 * @param center
 	 *            New auto-centered state
 	 */
@@ -3184,7 +3186,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the font currently used for rendering the title.
-	 *
+	 * 
 	 * @return Current title font
 	 */
 	public Font getTitleFont() {
@@ -3193,7 +3195,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the font used for rendering the title.
-	 *
+	 * 
 	 * @param font
 	 *            New title font
 	 */
@@ -3205,7 +3207,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * For the LINE_MODE drawing algorithm, sets the base pair height increment,
 	 * i.e. the vertical distance between two nested arcs.
-	 *
+	 * 
 	 * @return The current base pair increment
 	 */
 	public double getBPHeightIncrement() {
@@ -3215,7 +3217,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Sets the base pair height increment, i.e. the vertical distance between
 	 * two arcs to be used in LINE_MODE.
-	 *
+	 * 
 	 * @param inc
 	 *            New height increment
 	 */
@@ -3225,7 +3227,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the shifting of the origin of the Panel in zoom mode
-	 *
+	 * 
 	 * @return The logical coordinate of the top-left panel point
 	 */
 	public Point2D.Double getOffsetPanel() {
@@ -3235,7 +3237,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Returns the vector bringing the logical coordinate of left-top-most point
 	 * in the panel to the left-top-most point of the RNA.
-	 *
+	 * 
 	 * @return The logical coordinate of the top-left panel point
 	 */
 	private Point2D.Double getRNAOffset() {
@@ -3244,7 +3246,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns this panel's UI menu
-	 *
+	 * 
 	 * @return Applet's UI popupmenu
 	 */
 	public VueMenu getPopupMenu() {
@@ -3253,7 +3255,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the atomic zoom factor step, or increment.
-	 *
+	 * 
 	 * @return Atomic zoom factor increment
 	 */
 	public double getZoomIncrement() {
@@ -3262,7 +3264,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the atomic zoom factor step, or increment.
-	 *
+	 * 
 	 * @param amount
 	 *            Atomic zoom factor increment
 	 */
@@ -3272,7 +3274,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the atomic zoom factor step, or increment.
-	 *
+	 * 
 	 * @param amount
 	 *            Atomic zoom factor increment
 	 */
@@ -3282,7 +3284,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the current zoom factor
-	 *
+	 * 
 	 * @return Current zoom factor
 	 */
 	public double getZoom() {
@@ -3291,7 +3293,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the current zoom factor
-	 *
+	 * 
 	 * @param _zoom
 	 *            New zoom factor
 	 */
@@ -3305,7 +3307,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the translation used for zooming in and out
-	 *
+	 * 
 	 * @return A vector describing the translation
 	 */
 	public Point getTranslation() {
@@ -3314,7 +3316,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the translation used for zooming in and out
-	 *
+	 * 
 	 * @param trans
 	 *            A vector describing the new translation
 	 */
@@ -3326,7 +3328,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the current RNA model
-	 *
+	 * 
 	 * @return Current RNA model
 	 */
 	public RNA getRNA() {
@@ -3336,7 +3338,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Checks whether the drawn RNA is too large to be displayed, allowing for
 	 * shifting mouse interactions.
-	 *
+	 * 
 	 * @return true if the RNA is too large to be displayed, false otherwise
 	 */
 	public boolean isOutOfFrame() {
@@ -3345,7 +3347,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Pops up an error Dialog displaying an exception in an human-readable way.
-	 *
+	 * 
 	 * @param error
 	 *            The exception to display within the Dialog
 	 */
@@ -3356,7 +3358,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Pops up an error Dialog displaying an exception in an human-readable way
 	 * if errors are set to be displayed.
-	 *
+	 * 
 	 * @see #setErrorsOn(boolean)
 	 * @param error
 	 *            The exception to display within the Dialog
@@ -3372,7 +3374,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Pops up an error Dialog displaying an exception in an human-readable way.
-	 *
+	 * 
 	 * @param error
 	 *            The exception to display within the Dialog
 	 * @param c
@@ -3390,7 +3392,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Displays a warning message through a modal dialog if warnings are set to
 	 * be displayed.
-	 *
+	 * 
 	 * @see #setShowWarnings(boolean)
 	 * @param warning
 	 *            A message expliciting the warning
@@ -3416,7 +3418,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Toggles modifications on and off
-	 *
+	 * 
 	 * @param modifiable
 	 *            Modification status
 	 */
@@ -3426,7 +3428,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns current modification status
-	 *
+	 * 
 	 * @return current modification status
 	 */
 	public boolean isModifiable() {
@@ -3445,7 +3447,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the color used to draw non-standard bases
-	 *
+	 * 
 	 * @return The color used to draw non-standard bases
 	 */
 	public Color getNonStandardBasesColor() {
@@ -3454,7 +3456,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the color used to draw non-standard bases
-	 *
+	 * 
 	 * @param basesColor
 	 *            The color used to draw non-standard bases
 	 */
@@ -3527,7 +3529,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the "real pixels" x-coordinate of the RNA.
-	 *
+	 * 
 	 * @return X-coordinate of the translation
 	 */
 	public int getLeftOffset() {
@@ -3538,7 +3540,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the "real pixels" width of the drawing surface for our RNA.
-	 *
+	 * 
 	 * @return Width of the drawing surface for our RNA
 	 */
 	public int getInnerWidth() {
@@ -3549,7 +3551,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the "real pixels" y-coordinate of the RNA.
-	 *
+	 * 
 	 * @return Y-coordinate of the translation
 	 */
 	public int getTopOffset() {
@@ -3560,7 +3562,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the "real pixels" height of the drawing surface for our RNA.
-	 *
+	 * 
 	 * @return Height of the drawing surface for our RNA
 	 */
 	public int getInnerHeight() {
@@ -3571,7 +3573,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Checks if the current mode is the "comparison" mode
-	 *
+	 * 
 	 * @return True if comparison, false otherwise
 	 */
 	public boolean isComparisonMode() {
@@ -3580,7 +3582,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Rotates the RNA coordinates by a certain angle
-	 *
+	 * 
 	 * @param angleDegres
 	 *            Rotation angle, in degrees
 	 */
@@ -3593,7 +3595,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Returns the index of the currently selected base, defaulting to the
 	 * closest base to the last mouse-click.
-	 *
+	 * 
 	 * @return Index of the currently selected base
 	 */
 	public Integer getNearestBase() {
@@ -3602,7 +3604,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the index of the currently selected base.
-	 *
+	 * 
 	 * @param base
 	 *            Index of the new selected base
 	 */
@@ -3612,7 +3614,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the color used to draw 'Gaps' bases in comparison mode
-	 *
+	 * 
 	 * @return Color used for 'Gaps'
 	 */
 	public Color getGapsBasesColor() {
@@ -3621,7 +3623,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the color to use for 'Gaps' bases in comparison mode
-	 *
+	 * 
 	 * @param c
 	 *            Color used for 'Gaps'
 	 */
@@ -3648,7 +3650,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Checks whether errors are to be displayed
-	 *
+	 * 
 	 * @return Error display status
 	 */
 	public boolean isErrorsOn() {
@@ -3657,7 +3659,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets whether errors are to be displayed
-	 *
+	 * 
 	 * @param on
 	 *            New error display status
 	 */
@@ -3667,7 +3669,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the view associated with user interactions
-	 *
+	 * 
 	 * @return A view associated with user interactions
 	 */
 	public VueUI getVARNAUI() {
@@ -3676,7 +3678,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Toggles on/off using base inner color for drawing base-pairs
-	 *
+	 * 
 	 * @param on
 	 *            True for using base inner color for drawing base-pairs, false
 	 *            for classic mode
@@ -3688,7 +3690,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Returns true if current base color is used as inner color for drawing
 	 * base-pairs
-	 *
+	 * 
 	 * @return True for using base inner color for drawing base-pairs, false for
 	 *         classic mode
 	 */
@@ -3699,7 +3701,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Toggles on/off using a special color used for drawing "non-standard"
 	 * bases
-	 *
+	 * 
 	 * @param on
 	 *            True for using a special color used for drawing "non-standard"
 	 *            bases, false for classic mode
@@ -3711,7 +3713,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Returns true if a special color is used as inner color for non-standard
 	 * base
-	 *
+	 * 
 	 * @return True for using a special color used for drawing "non-standard"
 	 *         bases, false for classic mode
 	 */
@@ -3722,7 +3724,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Toggles on/off using a special color used for drawing "Gaps" bases in
 	 * comparison mode
-	 *
+	 * 
 	 * @param on
 	 *            True for using a special color used for drawing "Gaps" bases
 	 *            in comparison mode, false for classic mode
@@ -3734,7 +3736,7 @@ public class VARNAPanel extends JPanel {
 	/**
 	 * Returns true if a special color is used for drawing "Gaps" bases in
 	 * comparison mode
-	 *
+	 * 
 	 * @return True for using a special color used for drawing "Gaps" bases in
 	 *         comparison mode, false for classic mode
 	 */
@@ -3744,7 +3746,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Toggles on/off displaying warnings
-	 *
+	 * 
 	 * @param on
 	 *            True to display warnings, false otherwise
 	 */
@@ -3754,7 +3756,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Get current warning display status
-	 *
+	 * 
 	 * @return True to display warnings, false otherwise
 	 */
 	public boolean getShowWarnings() {
@@ -3763,7 +3765,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Toggles on/off displaying non-canonical base-pairs
-	 *
+	 * 
 	 * @param on
 	 *            True to display NC base-pairs, false otherwise
 	 */
@@ -3773,7 +3775,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Return the current display status for non-canonical base-pairs
-	 *
+	 * 
 	 * @return True if NC base-pairs are displayed, false otherwise
 	 */
 	public boolean getShowNonCanonicalBP() {
@@ -3782,7 +3784,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Toggles on/off displaying "non-planar" base-pairs
-	 *
+	 * 
 	 * @param on
 	 *            True to display "non-planar" base-pairs, false otherwise
 	 */
@@ -3792,7 +3794,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Return the current display status for non-planar base-pairs
-	 *
+	 * 
 	 * @return True if non-planars base-pairs are displayed, false otherwise
 	 */
 	public boolean getShowNonPlanarBP() {
@@ -3801,7 +3803,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the base-pair representation style
-	 *
+	 * 
 	 * @param st
 	 *            The new base-pair style
 	 */
@@ -3811,7 +3813,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Returns the base-pair representation style
-	 *
+	 * 
 	 * @return The current base-pair style
 	 */
 	public VARNAConfig.BP_STYLE getBPStyle() {
@@ -3822,7 +3824,7 @@ public class VARNAPanel extends JPanel {
 	 * Returns the current VARNA Panel configuration. The returned instance
 	 * should not be modified directly, but rather through the getters/setters
 	 * from the VARNAPanel class.
-	 *
+	 * 
 	 * @return Current configuration
 	 */
 	public VARNAConfig getConfig() {
@@ -3831,7 +3833,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Sets the background color
-	 *
+	 * 
 	 * @param c
 	 *            New background color
 	 */
@@ -4003,7 +4005,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Toggles on/off a rectangular outline of the bounding box.
-	 *
+	 * 
 	 * @param on
 	 *            True to draw the bounding box, false otherwise
 	 */
@@ -4013,7 +4015,7 @@ public class VARNAPanel extends JPanel {
 
 	/**
 	 * Toggles on/off a rectangular outline of the border.
-	 *
+	 * 
 	 * @param on
 	 *            True to draw the bounding box, false otherwise
 	 */
@@ -4035,6 +4037,7 @@ public class VARNAPanel extends JPanel {
 
 	public void setBaseOutlineColor(Color c) {
 		_RNA.setBaseOutlineColor(c);
+		
 	}
 
 	public ArrayList<TextAnnotation> getListeAnnotations() {
@@ -4145,6 +4148,10 @@ public class VARNAPanel extends JPanel {
 			return h;
 		} catch (FileNotFoundException e) {
 			throw (new ExceptionLoadingFailed("File not found.", path));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw (new ExceptionLoadingFailed(
+					"I/O error while loading session.", path));
 		}
 	}
 
@@ -4202,11 +4209,11 @@ public class VARNAPanel extends JPanel {
 			double radius) {
 		_RNA.addHighlightRegion(i, j, fill, outline, radius);
 	}
-
+	
 	public void loadRNA(String path) {
 		loadRNA(path, false);
 	}
-
+	
 	public void loadRNA(String path, boolean interpolate) {
 		try {
 			Collection<RNA> rnas = RNAFactory.loadSecStr(path);

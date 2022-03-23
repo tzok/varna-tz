@@ -143,7 +143,10 @@ public class ModeleBP implements Serializable, Comparable<ModeleBP> {
 		if ((si.length() >= 1) && (sj.length() >= 1)) {
 			char ci = si.toUpperCase().charAt(0);
 			char cj = sj.toUpperCase().charAt(0);
-			if (((ci == 'A') && (cj == 'U')) || ((ci == 'U') && (cj == 'A'))) {
+			if (((ci == 'A') && (cj == 'U')) 
+					|| ((ci == 'U') && (cj == 'A'))
+					|| ((ci == 'U') && (cj == 'T'))
+					|| ((ci == 'T') && (cj == 'U'))) {
 				return isCanonical();
 			}
 		}

@@ -23,6 +23,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D.Double;
 import java.util.Hashtable;
 
+import fr.orsay.lri.varna.models.rna.ModeleBP;
+
 public class XFIGExport extends SecStrDrawingProducer {
 
 	private int _font = SecStrDrawingProducer.FONT_TIMES_ROMAN;
@@ -200,6 +202,36 @@ public class XFIGExport extends SecStrDrawingProducer {
 		} else {
 			return "";
 		}
+	}
+
+	@Override
+	public String drawBaseStartS(int index) {
+		return "";
+	}
+
+	@Override
+	public String drawBaseEndS(int index) {
+		return "";
+	}
+
+	@Override
+	public String drawBasePairStartS(int i, int j, ModeleBP bps) {
+		return "";
+	}
+
+	@Override
+	public String drawBasePairEndS(int index) {
+		return "";
+	}
+
+	@Override
+	public String drawBackboneStartS(int i, int j) {
+		return "";
+	}
+
+	@Override
+	public String drawBackboneEndS(int index) {
+		return "";
 	}
 
 }

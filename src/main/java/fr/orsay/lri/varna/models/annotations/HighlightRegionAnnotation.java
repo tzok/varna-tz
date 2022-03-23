@@ -25,6 +25,9 @@ import fr.orsay.lri.varna.views.VueHighlightRegionEdit;
 import fr.orsay.lri.varna.views.VueUI;
 
 public class HighlightRegionAnnotation implements Serializable {
+	
+	public static final String HEADER_TEXT = "HighlightRegionAnnotation";
+
 	private static final long serialVersionUID = 7087014168028684775L;
 	public static final Color DEFAULT_OUTLINE_COLOR = Color.decode("#6ed86e");
 	public static final Color DEFAULT_FILL_COLOR = Color.decode("#bcffdd");

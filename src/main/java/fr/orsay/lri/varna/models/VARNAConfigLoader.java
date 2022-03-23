@@ -41,6 +41,9 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -1111,18 +1114,31 @@ public class VARNAConfigLoader {
 
 	private void applyColorMapValues(VARNAPanel vp) {
 		if (!_colorMapValues.equals("")) {
-			String[] values = _colorMapValues.split("[;,]");
-			ArrayList<Double> vals = new ArrayList<Double>();
-			for (int i = 0; i < values.length; i++) {
+			File f = new File(_colorMapValues);
+			if(f.exists() && !f.isDirectory()) { 
 				try {
-					vals.add(Double.parseDouble(values[i]));
-				} catch (Exception e) {
-
+					vp.readValues(new FileReader(f));
+					vp.drawColorMap(true);
+					System.err.println("Loaded "+_colorMapValues);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
 				}
 			}
-			Double[] result = new Double[vals.size()];
-			vals.toArray(result);
-			vp.setColorMapValues(result);
+			else
+			{
+				String[] values = _colorMapValues.split("[;,]");
+				ArrayList<Double> vals = new ArrayList<Double>();
+				for (int i = 0; i < values.length; i++) {
+					try {
+						vals.add(Double.parseDouble(values[i]));
+					} catch (Exception e) {
+	
+					}
+				}
+				Double[] result = new Double[vals.size()];
+				vals.toArray(result);
+				vp.setColorMapValues(result);
+			}
 			ModeleColorMap cm = vp.getColorMap();
 			if (_colorMapMin != Double.MIN_VALUE) {
 				// System.out.println("[A]"+_colorMapMin);
@@ -1164,16 +1180,14 @@ public class VARNAConfigLoader {
 		String[] regions = _highlightRegion.split(";");
 		for (int i = 0; i < regions.length; i++) {
 			String region = regions[i];
-			// System.out.println(region);
 			try {
 				HighlightRegionAnnotation nt = HighlightRegionAnnotation
 						.parseHighlightRegionAnnotation(region, vp);
 				if (nt != null) {
-					// System.out.println(nt);
 					vp.addHighlightRegion(nt);
 				}
 			} catch (Exception e) {
-				System.err.println("applyHighlightRegion: " + e.toString());
+				System.err.println("Error in applyHighlightRegion: " + e.toString());
 			}
 		}
 	}
@@ -1332,102 +1346,12 @@ public class VARNAConfigLoader {
 		String[] annotations = _annotations.split(";");
 		for (int i = 0; i < annotations.length; i++) {
 			String thisAnn = annotations[i];
-			String[] data = thisAnn.split(":");
-
-			String text = "";
-			int anchor = -1;
-			int x = -1;
-			int y = -1;
-			TextAnnotation.AnchorType type = TextAnnotation.AnchorType.LOOP;
-			Font font = TextAnnotation.DEFAULTFONT;
-			Color color = TextAnnotation.DEFAULTCOLOR;
-			TextAnnotation ann = null;
-			try {
-				if (data.length == 2) {
-					text = data[0];
-					String[] data2 = data[1].split(",");
-					for (int j = 0; j < data2.length; j++) {
-						String opt = data2[j];
-						String[] data3 = opt.split("=");
-						if (data3.length == 2) {
-							String name = data3[0].toLowerCase();
-							String value = data3[1];
-							if (name.equals("type")) {
-								if (value.toUpperCase().equals("H")) {
-									type = TextAnnotation.AnchorType.HELIX;
-								} else if (value.toUpperCase().equals("L")) {
-									type = TextAnnotation.AnchorType.LOOP;
-								} else if (value.toUpperCase().equals("P")) {
-									type = TextAnnotation.AnchorType.POSITION;
-								} else if (value.toUpperCase().equals("B")) {
-									type = TextAnnotation.AnchorType.BASE;
-								}
-							} else if (name.equals("x")) {
-								x = Integer.parseInt(value);
-							} else if (name.equals("y")) {
-								y = Integer.parseInt(value);
-							} else if (name.equals("anchor")) {
-								anchor = Integer.parseInt(value);
-							} else if (name.equals("size")) {
-								font = font.deriveFont((float) Integer
-										.parseInt(value));
-							} else if (name.equals("color")) {
-								color = getSafeColor(value, color);
-							}
-						}
-					}
-					switch (type) {
-					case POSITION:
-						if ((x != -1) && (y != -1)) {
-							Point2D.Double p = vp
-									.panelToLogicPoint(new Point2D.Double(x, y));
-							ann = new TextAnnotation(text, p.x, p.y);
-						}
-						break;
-					case BASE:
-						if (anchor != -1) {
-							int index = vp.getRNA().getIndexFromBaseNumber(
-									anchor);
-							ModeleBase mb = vp.getRNA().get_listeBases()
-									.get(index);
-							ann = new TextAnnotation(text, mb);
-						}
-						break;
-					case HELIX:
-						if (anchor != -1) {
-							ArrayList<ModeleBase> mbl = new ArrayList<ModeleBase>();
-							int index = vp.getRNA().getIndexFromBaseNumber(
-									anchor);
-							ArrayList<Integer> il = vp.getRNA()
-									.findHelix(index);
-							for (int k : il) {
-								mbl.add(vp.getRNA().get_listeBases().get(k));
-							}
-							ann = new TextAnnotation(text, mbl, type);
-						}
-						break;
-					case LOOP:
-						if (anchor != -1) {
-							ArrayList<ModeleBase> mbl = new ArrayList<ModeleBase>();
-							int index = vp.getRNA().getIndexFromBaseNumber(
-									anchor);
-							ArrayList<Integer> il = vp.getRNA().findLoop(index);
-							for (int k : il) {
-								mbl.add(vp.getRNA().get_listeBases().get(k));
-							}
-							ann = new TextAnnotation(text, mbl, type);
-						}
-						break;
-					}
-					if (ann != null) {
-						ann.setColor(color);
-						ann.setFont(font);
-						vp.addAnnotation(ann);
-					}
-				}
-			} catch (Exception e) {
-				System.err.println("Apply Annotations: " + e.toString());
-			}
+			TextAnnotation ann = TextAnnotation.parse(thisAnn, vp);
+			vp.addAnnotation(ann);
 		}
 	}
+
+
 }
+
+

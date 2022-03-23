@@ -31,21 +31,26 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
+import fr.orsay.lri.varna.models.annotations.HighlightRegionAnnotation;
+import fr.orsay.lri.varna.models.annotations.TextAnnotation;
+import fr.orsay.lri.varna.models.rna.ModeleBP;
+import fr.orsay.lri.varna.models.rna.ModeleBPStyle;
+import fr.orsay.lri.varna.models.rna.ModeleBase;
 import fr.orsay.lri.varna.models.rna.ModeleColorMap;
 import fr.orsay.lri.varna.utils.XMLUtils;
 
 public class VARNAConfig implements Serializable, Cloneable {
 
 	/**
-	 *
+	 * 
 	 */
 	private static final long serialVersionUID = 2853916694420964233L;
 	/**
-	 *
+	 * 
 	 */
 	public static final int MAJOR_VERSION = 3;
 	public static final int MINOR_VERSION = 9;
-
+	
 	public static String getFullName()
 	{
 		return "VARNA "+MAJOR_VERSION+"."+MINOR_VERSION;
@@ -109,7 +114,7 @@ public class VARNAConfig implements Serializable, Cloneable {
 
 	public static final Color DEFAULT_TITLE_COLOR = Color.black;
 	public static final Color DEFAULT_BACKBONE_COLOR = Color.DARK_GRAY.brighter();
-	public static final Color DEFAULT_BOND_COLOR = Color.BLACK;
+	public static final Color DEFAULT_BOND_COLOR = Color.blue;
 	public static final Color DEFAULT_SPECIAL_BASE_COLOR = Color.green.brighter();
 	public static final Color DEFAULT_DASH_BASE_COLOR = Color.yellow.brighter();
 	public static final double DEFAULT_BASE_OUTLINE_THICKNESS = 1.5;
@@ -117,7 +122,7 @@ public class VARNAConfig implements Serializable, Cloneable {
 	public static final Color BASE_INNER_COLOR_DEFAULT = new Color(242, 242,242);
 	public static final Color BASE_NUMBER_COLOR_DEFAULT = Color.DARK_GRAY;
 	public static final Color BASE_NAME_COLOR_DEFAULT = Color.black;
-
+	
 	public static final Color DEFAULT_HOVER_COLOR  =  new Color(230, 230,230);
 
 	public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
@@ -135,20 +140,20 @@ public class VARNAConfig implements Serializable, Cloneable {
 	public static final Color DEFAULT_COLOR_MAP_OUTLINE = Color.gray;
 	public static final double DEFAULT_BP_INCREMENT = 0.65;
 
-	public static double DEFAULT_COLOR_MAP_WIDTH = 120;
-	public static double DEFAULT_COLOR_MAP_HEIGHT = 30;
-	public static double DEFAULT_COLOR_MAP_X_OFFSET = 40;
-	public static double DEFAULT_COLOR_MAP_Y_OFFSET = 0;
-	public static int DEFAULT_COLOR_MAP_STRIPE_WIDTH = 2;
-	public static int DEFAULT_COLOR_MAP_FONT_SIZE = 20;
-	public static Color DEFAULT_COLOR_MAP_FONT_COLOR = Color.gray.darker();
+	public static double DEFAULT_COLOR_MAP_WIDTH = 120; 
+	public static double DEFAULT_COLOR_MAP_HEIGHT = 30; 
+	public static double DEFAULT_COLOR_MAP_X_OFFSET = 40; 
+	public static double DEFAULT_COLOR_MAP_Y_OFFSET = 0; 
+	public static int DEFAULT_COLOR_MAP_STRIPE_WIDTH = 2; 
+	public static int DEFAULT_COLOR_MAP_FONT_SIZE = 20; 
+	public static Color DEFAULT_COLOR_MAP_FONT_COLOR = Color.gray.darker(); 
 
-	public static double DEFAULT_SPACE_BETWEEN_BASES = 1.0;
+	public static double DEFAULT_SPACE_BETWEEN_BASES = 1.0; 
 
 	/**
 	 * Various options.
 	 */
-
+	
 	public static String XML_VAR_DRAW_OUTLINE = "drawoutline";
 	public static String XML_VAR_FILL_BASE = "fillbase";
 	public static String XML_VAR_AUTO_FIT = "autofit";
@@ -166,7 +171,7 @@ public class VARNAConfig implements Serializable, Cloneable {
 	public static String XML_VAR_DRAW_BACKGROUND = "drawbackground";
 	public static String XML_VAR_COLOR_MAP = "drawcm";
 	public static String XML_VAR_DRAW_BACKBONE = "drawbackbone";
-
+	
 	public static String XML_VAR_CM_HEIGHT = "cmh";
 	public static String XML_VAR_CM_WIDTH = "cmw";
 	public static String XML_VAR_CM_X_OFFSET = "cmx";
@@ -176,13 +181,13 @@ public class VARNAConfig implements Serializable, Cloneable {
 	public static String XML_VAR_BP_THICKNESS = "bpthick";
 	public static String XML_VAR_BASE_THICKNESS = "basethick";
 	public static String XML_VAR_DIST_NUMBERS = "distnumbers";
-
+	
 	public static String XML_VAR_NUM_PERIOD = "numperiod";
-
+	
 	public static String XML_VAR_MAIN_BP_STYLE = "bpstyle";
 
 	public static String XML_VAR_CM = "cm";
-
+	
 	public static String XML_VAR_BACKBONE_COLOR = "backbonecol";
 	public static String XML_VAR_HOVER_COLOR = "hovercol";
 	public static String XML_VAR_BACKGROUND_COLOR = "backgroundcol";
@@ -191,15 +196,15 @@ public class VARNAConfig implements Serializable, Cloneable {
 	public static String XML_VAR_SPECIAL_BASES_COLOR = "specialco";
 	public static String XML_VAR_DASH_BASES_COLOR = "dashcol";
 	public static String XML_VAR_SPACE_BETWEEN_BASES = "spacebetweenbases";
-
+	
 	public static String XML_VAR_TITLE_FONT = "titlefont";
 	public static String XML_VAR_NUMBERS_FONT = "numbersfont";
 	public static String XML_VAR_FONT_BASES = "basefont";
-
+	
 	public static String XML_VAR_CM_CAPTION = "cmcaption";
 	public static String XML_VAR_TITLE = "title";
-
-
+	
+    
 	public boolean _drawOutlineBases = true;
 	public boolean _fillBases = true;
 	public boolean _autoFit = true;
@@ -217,23 +222,22 @@ public class VARNAConfig implements Serializable, Cloneable {
 	public boolean _drawBackground = false;
 	public boolean _drawColorMap = false;
 	public boolean _drawBackbone = true;
-	public boolean _drawAlternativeLW = true;
-
-	public double _colorMapHeight  = DEFAULT_COLOR_MAP_HEIGHT;
-	public double _colorMapWidth   = DEFAULT_COLOR_MAP_WIDTH;
-	public double _colorMapXOffset = DEFAULT_COLOR_MAP_X_OFFSET;
-	public double _colorMapYOffset = DEFAULT_COLOR_MAP_Y_OFFSET;
+	
+	public double _colorMapHeight  = DEFAULT_COLOR_MAP_HEIGHT; 
+	public double _colorMapWidth   = DEFAULT_COLOR_MAP_WIDTH; 
+	public double _colorMapXOffset = DEFAULT_COLOR_MAP_X_OFFSET; 
+	public double _colorMapYOffset = DEFAULT_COLOR_MAP_Y_OFFSET; 
 	public double _zoom            = DEFAULT_ZOOM;
 	public double _zoomAmount      = DEFAULT_AMOUNT;
 	public double _bpThickness     = 1.0;
 	public double _baseThickness   = DEFAULT_BASE_OUTLINE_THICKNESS;
 	public double _distNumbers     = DEFAULT_DIST_NUMBERS;
 	public double _spaceBetweenBases = DEFAULT_SPACE_BETWEEN_BASES;
-
+	
 	public int _numPeriod = DEFAULT_PERIOD;
 	public BP_STYLE _mainBPStyle = DEFAULT_BP_STYLE;
-
-	public ModeleColorMap _cm = DEFAULT_COLOR_MAP;
+	
+	public ModeleColorMap _cm = DEFAULT_COLOR_MAP;	
 
 	public Color _backboneColor      = DEFAULT_BACKBONE_COLOR;
 	public Color _hoverColor         = DEFAULT_HOVER_COLOR;
@@ -242,17 +246,17 @@ public class VARNAConfig implements Serializable, Cloneable {
 	public Color _titleColor         = DEFAULT_TITLE_COLOR;
 	public Color _specialBasesColor  = DEFAULT_SPECIAL_BASE_COLOR;
 	public Color _dashBasesColor     = DEFAULT_DASH_BASE_COLOR;
-
+	
 	public Font _titleFont           = DEFAULT_TITLE_FONT;
 	public Font _numbersFont         = DEFAULT_NUMBERS_FONT;
 	public Font _fontBasesGeneral    = DEFAULT_BASE_FONT;
-
+	
 	public String _colorMapCaption = "";
 	//public String _title = "";
 
-
+	
 	public static String XML_ELEMENT_NAME = "config";
-
+	
 	public void toXML(TransformerHandler hd) throws SAXException
 	{
 		AttributesImpl atts = new AttributesImpl();
@@ -284,55 +288,55 @@ public class VARNAConfig implements Serializable, Cloneable {
 		atts.addAttribute("","",XML_VAR_BASE_THICKNESS,"CDATA", ""+_baseThickness);
 		atts.addAttribute("","",XML_VAR_DIST_NUMBERS,"CDATA",   ""+_distNumbers);
 		atts.addAttribute("","",XML_VAR_SPACE_BETWEEN_BASES,"CDATA",   ""+_spaceBetweenBases);
-
-
+		
+			
 		atts.addAttribute("","",XML_VAR_NUM_PERIOD,"CDATA",     ""+_numPeriod);
-
+			
 		atts.addAttribute("","",XML_VAR_MAIN_BP_STYLE,"CDATA",  ""+_mainBPStyle.getOpt());
-
+			
 		atts.addAttribute("","",XML_VAR_BACKBONE_COLOR,"CDATA",     XMLUtils.toHTMLNotation(_backboneColor));
 		atts.addAttribute("","",XML_VAR_HOVER_COLOR,"CDATA",        XMLUtils.toHTMLNotation(_hoverColor));
 		atts.addAttribute("","",XML_VAR_BACKGROUND_COLOR,"CDATA",   XMLUtils.toHTMLNotation(_backgroundColor));
 		atts.addAttribute("","",XML_VAR_BOND_COLOR,"CDATA",         XMLUtils.toHTMLNotation(_bondColor));
 		atts.addAttribute("","",XML_VAR_TITLE_COLOR,"CDATA",        XMLUtils.toHTMLNotation(_titleColor));
 		atts.addAttribute("","",XML_VAR_SPECIAL_BASES_COLOR,"CDATA",XMLUtils.toHTMLNotation(_specialBasesColor));
-		atts.addAttribute("","",XML_VAR_DASH_BASES_COLOR,"CDATA",   XMLUtils.toHTMLNotation(_dashBasesColor));
+		atts.addAttribute("","",XML_VAR_DASH_BASES_COLOR,"CDATA",   XMLUtils.toHTMLNotation(_dashBasesColor)); 
 
-		atts.addAttribute("","",XML_VAR_CM,"CDATA",   				_cm.getParamEncoding());
-
-
+		atts.addAttribute("","",XML_VAR_CM,"CDATA",   				_cm.getParamEncoding()); 
+		
+		
 		hd.startElement("","",XML_ELEMENT_NAME,atts);
 		XMLUtils.toXML(hd, _titleFont,XML_VAR_TITLE_FONT);
 		XMLUtils.toXML(hd, _numbersFont,XML_VAR_NUMBERS_FONT);
 		XMLUtils.toXML(hd, _fontBasesGeneral,XML_VAR_FONT_BASES);
-
+		
 		XMLUtils.exportCDATAElem(hd,XML_VAR_CM_CAPTION, _colorMapCaption);
 		hd.endElement("","",XML_ELEMENT_NAME);
 	}
-
-
-
+	
+	
+	
 
 	public void loadFromXMLAttributes(Attributes attributes)
 	{
-		_drawOutlineBases      = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_OUTLINE));
-		_fillBases             = Boolean.parseBoolean(attributes.getValue(XML_VAR_FILL_BASE));
-		_autoFit              = Boolean.parseBoolean(attributes.getValue(XML_VAR_AUTO_FIT));
-		_autoCenter           = Boolean.parseBoolean(attributes.getValue(XML_VAR_AUTO_CENTER));
-		_modifiable           = Boolean.parseBoolean(attributes.getValue(XML_VAR_MODIFIABLE));
-		_errorsOn             = Boolean.parseBoolean(attributes.getValue(XML_VAR_ERRORS));
-		_colorSpecialBases    = Boolean.parseBoolean(attributes.getValue(XML_VAR_SPECIAL_BASES));
-		_colorDashBases       = Boolean.parseBoolean(attributes.getValue(XML_VAR_DASH_BASES));
-		_useBaseColorsForBPs  = Boolean.parseBoolean(attributes.getValue(XML_VAR_USE_BASE_BPS));
-		_drawnNonCanonicalBP  = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_NC));
-		_drawnNonPlanarBP     = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_NON_PLANAR));
-		_showWarnings         = Boolean.parseBoolean(attributes.getValue(XML_VAR_SHOW_WARNINGS));
-		_comparisonMode       = Boolean.parseBoolean(attributes.getValue(XML_VAR_COMPARISON_MODE));
-		_flatExteriorLoop     = Boolean.parseBoolean(attributes.getValue(XML_VAR_FLAT));
-		_drawBackground       = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_BACKGROUND));
-		_drawColorMap         = Boolean.parseBoolean(attributes.getValue(XML_VAR_COLOR_MAP));
-		_drawBackbone         = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_BACKBONE));
-
+		_drawOutlineBases      = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_OUTLINE));                             
+		_fillBases             = Boolean.parseBoolean(attributes.getValue(XML_VAR_FILL_BASE));                                
+		_autoFit              = Boolean.parseBoolean(attributes.getValue(XML_VAR_AUTO_FIT));                                 
+		_autoCenter           = Boolean.parseBoolean(attributes.getValue(XML_VAR_AUTO_CENTER));                              
+		_modifiable           = Boolean.parseBoolean(attributes.getValue(XML_VAR_MODIFIABLE));                               
+		_errorsOn             = Boolean.parseBoolean(attributes.getValue(XML_VAR_ERRORS));                                   
+		_colorSpecialBases    = Boolean.parseBoolean(attributes.getValue(XML_VAR_SPECIAL_BASES));                            
+		_colorDashBases       = Boolean.parseBoolean(attributes.getValue(XML_VAR_DASH_BASES));                               
+		_useBaseColorsForBPs  = Boolean.parseBoolean(attributes.getValue(XML_VAR_USE_BASE_BPS));                             
+		_drawnNonCanonicalBP  = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_NC));                                  
+		_drawnNonPlanarBP     = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_NON_PLANAR));                          
+		_showWarnings         = Boolean.parseBoolean(attributes.getValue(XML_VAR_SHOW_WARNINGS));                            
+		_comparisonMode       = Boolean.parseBoolean(attributes.getValue(XML_VAR_COMPARISON_MODE));                          
+		_flatExteriorLoop     = Boolean.parseBoolean(attributes.getValue(XML_VAR_FLAT));                                     
+		_drawBackground       = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_BACKGROUND));                          
+		_drawColorMap         = Boolean.parseBoolean(attributes.getValue(XML_VAR_COLOR_MAP));                                
+		_drawBackbone         = Boolean.parseBoolean(attributes.getValue(XML_VAR_DRAW_BACKBONE));     
+		
 		_colorMapHeight       = Double.parseDouble(attributes.getValue(XML_VAR_CM_HEIGHT));
 		_colorMapWidth        = Double.parseDouble(attributes.getValue(XML_VAR_CM_WIDTH));
 		_colorMapXOffset      = Double.parseDouble(attributes.getValue(XML_VAR_CM_X_OFFSET));
@@ -343,24 +347,24 @@ public class VARNAConfig implements Serializable, Cloneable {
 		_baseThickness        = Double.parseDouble(attributes.getValue(XML_VAR_BASE_THICKNESS));
 		_distNumbers          = Double.parseDouble(attributes.getValue(XML_VAR_DIST_NUMBERS));
 		_spaceBetweenBases    = XMLUtils.getDouble(attributes, XML_VAR_SPACE_BETWEEN_BASES, DEFAULT_SPACE_BETWEEN_BASES);
-
+		                                     			
 		_numPeriod            = Integer.parseInt(attributes.getValue(XML_VAR_NUM_PERIOD));
-
-		_mainBPStyle          = BP_STYLE.getStyle(attributes.getValue(XML_VAR_MAIN_BP_STYLE));
-
-		_backboneColor        = Color.decode(attributes.getValue(XML_VAR_BACKBONE_COLOR));
-		_hoverColor           = Color.decode(attributes.getValue(XML_VAR_HOVER_COLOR));
-		_backgroundColor      = Color.decode(attributes.getValue(XML_VAR_BACKGROUND_COLOR));
-		_bondColor            = Color.decode(attributes.getValue(XML_VAR_BOND_COLOR));
-		_titleColor           = Color.decode(attributes.getValue(XML_VAR_TITLE_COLOR));
-		_specialBasesColor    = Color.decode(attributes.getValue(XML_VAR_SPECIAL_BASES_COLOR));
-		_dashBasesColor       = Color.decode(attributes.getValue(XML_VAR_DASH_BASES_COLOR));
-
-		_cm                   = ModeleColorMap.parseColorMap(attributes.getValue(XML_VAR_CM));
+		                                     			
+		_mainBPStyle          = BP_STYLE.getStyle(attributes.getValue(XML_VAR_MAIN_BP_STYLE));           
+		                                     			
+		_backboneColor        = Color.decode(attributes.getValue(XML_VAR_BACKBONE_COLOR));                     
+		_hoverColor           = Color.decode(attributes.getValue(XML_VAR_HOVER_COLOR));                        
+		_backgroundColor      = Color.decode(attributes.getValue(XML_VAR_BACKGROUND_COLOR));                   
+		_bondColor            = Color.decode(attributes.getValue(XML_VAR_BOND_COLOR));                         
+		_titleColor           = Color.decode(attributes.getValue(XML_VAR_TITLE_COLOR));                        
+		_specialBasesColor    = Color.decode(attributes.getValue(XML_VAR_SPECIAL_BASES_COLOR));                
+		_dashBasesColor       = Color.decode(attributes.getValue(XML_VAR_DASH_BASES_COLOR));                   
+                                                                             
+		_cm                   = ModeleColorMap.parseColorMap(attributes.getValue(XML_VAR_CM)); 
 	}
-
-
-
+	
+	
+	
     public VARNAConfig clone ()
     {
         try
@@ -368,7 +372,7 @@ public class VARNAConfig implements Serializable, Cloneable {
             ByteArrayOutputStream out = new ByteArrayOutputStream ();
             ObjectOutputStream oout = new ObjectOutputStream (out);
             oout.writeObject (this);
-
+            
             ObjectInputStream in = new ObjectInputStream (
                 new ByteArrayInputStream (out.toByteArray ()));
             return (VARNAConfig)in.readObject ();

@@ -61,12 +61,13 @@ public class DrawRNATemplate {
 	 * The helixLengthAdjustmentMethod argument tells what to do in case
 	 * some helices are of a different length in the template and the
 	 * actual helix. See class DrawRNATemplateMethod above for possible values.
+	 * @param straightBulges 
 	 */
 	public void drawRNATemplate(
 			RNATemplate template,
 			VARNAConfig conf,
 			DrawRNATemplateMethod helixLengthAdjustmentMethod,
-			DrawRNATemplateCurveMethod curveMethod)
+			DrawRNATemplateCurveMethod curveMethod, boolean straightBulges)
 	throws RNATemplateDrawingAlgorithmException {
 		
 		// debug
@@ -108,7 +109,7 @@ public class DrawRNATemplate {
 					RNATemplateHelix helix = (RNATemplateHelix) element;
 					int[] basesInHelixArray = RNATemplateAlign.intArrayFromList(mapping.getAncestor(helix));
 					Arrays.sort(basesInHelixArray);
-					double l = computeLengthIncreaseFactor(basesInHelixArray, helix);
+					double l = computeLengthIncreaseFactor(basesInHelixArray, helix, straightBulges);
 					lengthIncreaseFactor.put(helix, l);
 					if (l > maxLengthIncreaseFactor) {
 						maxLengthIncreaseFactor = l;
@@ -126,7 +127,7 @@ public class DrawRNATemplate {
 			try {
 				// Now we need to propagate this helices translations
 				Tree<RNANodeValueTemplate> templateAsTree = template.toTree();
-				translateVectors = computeHelixTranslations(templateAsTree, mapping);
+				translateVectors = computeHelixTranslations(templateAsTree, mapping, straightBulges);
 			
 			} catch (ExceptionInvalidRNATemplate e) {
 				throw (new RNATemplateDrawingAlgorithmException("ExceptionInvalidRNATemplate: " + e.getMessage()));
@@ -170,7 +171,7 @@ public class DrawRNATemplate {
 					// Draw this helix if it has not already been done
 					if (!alreadyDrawnHelixes.contains(helix)) {
 						firstTimeWeMeetThisHelix = true;
-						drawHelixLikeTemplateHelix(basesInHelixArray, helix, coords, centers,angles, globalIncreaseFactor, translateVectors);
+						drawHelixLikeTemplateHelix(basesInHelixArray, helix, coords, centers,angles, globalIncreaseFactor, translateVectors, straightBulges);
 						alreadyDrawnHelixes.add(helix);
 					} else {
 						firstTimeWeMeetThisHelix = false;
@@ -220,7 +221,8 @@ public class DrawRNATemplate {
 									 angle,
 									 coords,
 									 centers,
-									 angles);
+									 angles,
+									 straightBulges);
 							// If the helix is flipped, we need to compute the symmetric
 							// of the whole loop.
 							if (helix.isFlipped()) {
@@ -253,7 +255,7 @@ public class DrawRNATemplate {
 								P2 = null;
 							}
 							
-							drawAlongCurve(b1, b2, P0, P1, P2, P3, coords, centers, angles, curveMethod, lastMappedHelix.isFlipped());
+							drawAlongCurve(b1, b2, P0, P1, P2, P3, coords, centers, angles, curveMethod, lastMappedHelix.isFlipped(), straightBulges);
 						}
 						
 					} else if (basesInHelixArray[0] > 0) {
@@ -314,7 +316,7 @@ public class DrawRNATemplate {
 							P2 = null;
 						}
 						
-						drawAlongCurve(b1, b2, P0, P1, P2, P3, coords, centers, angles, curveMethod, false);
+						drawAlongCurve(b1, b2, P0, P1, P2, P3, coords, centers, angles, curveMethod, false, straightBulges);
 					}
 					
 					lastMappedHelix = helix;
@@ -433,7 +435,7 @@ public class DrawRNATemplate {
 					P2 = null;
 				}
 				
-				drawAlongCurve(b1, b2, P0, P1, P2, P3, coords, centers, angles, curveMethod, lastMappedHelix != null ? lastMappedHelix.isFlipped() : false);
+				drawAlongCurve(b1, b2, P0, P1, P2, P3, coords, centers, angles, curveMethod, lastMappedHelix != null ? lastMappedHelix.isFlipped() : false, straightBulges);
 			
 			}
 			
@@ -629,13 +631,15 @@ public class DrawRNATemplate {
 
 	/**
 	 * Compute (actual helix length / helix length in template).
+	 * @param straightBulges 
 	 */
 	private double computeLengthIncreaseFactor(
 			int[] basesInHelixArray,  // IN
-			RNATemplateHelix helix    // IN
+			RNATemplateHelix helix,    // IN
+			boolean straightBulges
 			) {
 		double templateLength = computeHelixTemplateLength(helix);
-		double realLength = computeHelixRealLength(basesInHelixArray);
+		double realLength = computeHelixRealLength(basesInHelixArray,straightBulges);
 		return realLength / templateLength;
 	}
 	
@@ -644,10 +648,11 @@ public class DrawRNATemplate {
 	 */
 	private Point2D.Double computeLengthIncreaseDelta(
 			int[] basesInHelixArray,  // IN
-			RNATemplateHelix helix    // IN
+			RNATemplateHelix helix,   // IN
+			boolean straightBulges
 			) {
 		double templateLength = computeHelixTemplateLength(helix);
-		double realLength = computeHelixRealLength(basesInHelixArray);
+		double realLength = computeHelixRealLength(basesInHelixArray,straightBulges);
 		Point2D.Double i = new Point2D.Double();
 		computeTemplateHelixVectors(helix, null, i, null);
 		return new Point2D.Double(i.x*(realLength-templateLength), i.y*(realLength-templateLength));
@@ -748,8 +753,8 @@ public class DrawRNATemplate {
 	/**
 	 * Compute helix actual length (as drawHelixLikeTemplateHelix() would draw it).
 	 */
-	private double computeHelixRealLength(int[] basesInHelixArray) {
-		return drawHelixLikeTemplateHelix(basesInHelixArray, null, null, null, null, 0, null);
+	private double computeHelixRealLength(int[] basesInHelixArray, boolean straightBulges) {
+		return drawHelixLikeTemplateHelix(basesInHelixArray, null, null, null, null, 0, null,straightBulges);
 	}
 	
 	
@@ -803,6 +808,7 @@ public class DrawRNATemplate {
 	 *      and translateVectors.get(helix) is added.
 	 * RETURN VALUE:
 	 *      The length of the drawn helix.
+	 * @param straightBulges 
 	 * 
 	 */
 	private double drawHelixLikeTemplateHelix(
@@ -813,6 +819,7 @@ public class DrawRNATemplate {
 			double[] angles,  // OUT 
 			double scaleHelixOrigin,  // IN
 			Map<RNATemplateHelix, Point2D.Double> translateVectors // IN (optional, ie. may be null)
+, boolean straightBulges
 			) {
 		int n = basesInHelixArray.length / 2;
 		if (n == 0)
@@ -964,7 +971,8 @@ public class DrawRNATemplate {
 												 beta,
 												 coords,
 												 centers,
-												 angles);
+												 angles,
+												 straightBulges);
 										// If the helix is flipped, we need to compute the symmetric
 										// of the whole loop.
 										if (helix.isFlipped()) {
@@ -1272,7 +1280,8 @@ public class DrawRNATemplate {
 			Point2D.Double[] centers,
 			double[] angles,
 			DrawRNATemplateCurveMethod curveMethod,
-			boolean reverse) {
+			boolean reverse,
+			boolean straightBulges) {
 		
 		// First we find the bases which are directly on the Bezier curve
 		ArrayList<Integer> alongBezierCurve = new ArrayList<Integer>();
@@ -1333,7 +1342,8 @@ public class DrawRNATemplate {
 						 alpha - Math.PI / 2,
 						 coords,
 						 centers,
-						 angles);
+						 angles,
+						 straightBulges);
 				if (reverse) {
 					Point2D.Double symAxisVect = new Point2D.Double(coords[b2].x - coords[b1].x, coords[b2].y - coords[b1].y); 
 					symmetric(coords[b1], symAxisVect, coords, b1, b2);
@@ -1374,7 +1384,8 @@ public class DrawRNATemplate {
 			Tree<RNANodeValueTemplate> tree, // IN
 			Map<RNATemplateHelix, Point2D.Double> translateVectors, // OUT (must be initialized)
 			RNATemplateMapping mapping,      // IN
-			Point2D.Double parentDeltaVector // IN
+			Point2D.Double parentDeltaVector, // IN
+			boolean straightBulges
 	) {
 		RNANodeValueTemplate nvt = tree.getValue();
 		Point2D.Double newDeltaVector = parentDeltaVector;
@@ -1389,21 +1400,22 @@ public class DrawRNATemplate {
 				} else {
 					basesInHelixArray = new int[0];
 				}
-				Point2D.Double helixDeltaVector = computeLengthIncreaseDelta(basesInHelixArray, helix);
+				Point2D.Double helixDeltaVector = computeLengthIncreaseDelta(basesInHelixArray, helix, straightBulges);
 				newDeltaVector = new Point2D.Double(parentDeltaVector.x+helixDeltaVector.x, parentDeltaVector.y+helixDeltaVector.y);
 			} 
 		}
 		for (Tree<RNANodeValueTemplate> subtree: tree.getChildren()) {
-			computeHelixTranslations(subtree, translateVectors, mapping, newDeltaVector);
+			computeHelixTranslations(subtree, translateVectors, mapping, newDeltaVector, straightBulges);
 		}
 	}
 	
 	private Map<RNATemplateHelix, Point2D.Double> computeHelixTranslations(
 			Tree<RNANodeValueTemplate> tree, // IN
-			RNATemplateMapping mapping       // IN
+			RNATemplateMapping mapping,       // IN
+			boolean straightBulges
 	) {
 		Map<RNATemplateHelix, Point2D.Double> translateVectors = new HashMap<RNATemplateHelix, Point2D.Double>();
-		computeHelixTranslations(tree, translateVectors, mapping, new Point2D.Double(0,0));
+		computeHelixTranslations(tree, translateVectors, mapping, new Point2D.Double(0,0), straightBulges);
 		return translateVectors;
 	}
 }

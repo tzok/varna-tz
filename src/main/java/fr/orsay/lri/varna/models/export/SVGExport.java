@@ -22,6 +22,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D.Double;
 
+import fr.orsay.lri.varna.models.rna.ModeleBP;
+
 public class SVGExport extends SecStrDrawingProducer {
 
 	private double _fontsize = 10.0;
@@ -106,21 +108,27 @@ public class SVGExport extends SecStrDrawingProducer {
 		return "";
 	}
 
+	
+	private Point2D.Double polarToCartesian(Point2D.Double center, double radiusX, double radiusY, double angleInDegrees) {
+		  double angleInRadians = (angleInDegrees) * Math.PI / 180.0;
+
+		  return new Point2D.Double(center.x + (radiusX * Math.cos(angleInRadians)),
+				  _bb.height - (center.y + (radiusY * Math.sin(angleInRadians))));
+		}
+
+	
 	public String drawArcS(Point2D.Double o, double width, double height,
 			double startAngle, double endAngle) {
-		// TODO: This hack assumes a (0,180) type of angle. Needs to be
-		// corrected for further usage.
 		double rx = width / 2.0;
 		double ry = height / 2.0;
-		double xs = o.x;
-		double ys = (_bb.height - o.y);
-		double xe = o.x + width;
-		double ye = (_bb.height - o.y);
-
-		String d = "<path d=\"M " + xs + "," + ys + " A " + rx + "," + ry
-				+ " 0 0,1 " + xe + "," + ye + "\" style=\"fill:none; stroke:"
+		
+		Point2D.Double ps = polarToCartesian(o,rx,ry,startAngle);
+		Point2D.Double pe = polarToCartesian(o,rx,ry,endAngle);
+		
+		String d = "<path d=\"M " + ps.x + "," +  ps.y + " A " + rx + "," + ry
+				+ " 0 1,1 " +  pe.x + "," + pe.y + "\" style=\"fill:none; stroke:"
 				+ getRGBString(_curColor) + "; stroke-width:" + _thickness
-				+ "\"/>\n";
+				+ "\"/>\n";		
 		return d;
 	}
 
@@ -155,4 +163,35 @@ public class SVGExport extends SecStrDrawingProducer {
 		result += "z\" fill=\""+getRGBString(col)+"\" style=\"stroke:none;\"/>\n";
 		return result;
 	}
+	
+	@Override
+	public String drawBaseStartS(int index) {
+		return "";
+	}
+
+	@Override
+	public String drawBaseEndS(int index) {
+		return "";
+	}
+
+	@Override
+	public String drawBasePairStartS(int i, int j, ModeleBP bps) {
+		return "";
+	}
+
+	@Override
+	public String drawBasePairEndS(int index) {
+		return "";
+	}
+
+	@Override
+	public String drawBackboneStartS(int i, int j) {
+		return "";
+	}
+
+	@Override
+	public String drawBackboneEndS(int index) {
+		return "";
+	}
+
 }

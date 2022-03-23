@@ -222,16 +222,12 @@ public class RNAFactory
       {
         current.setRNA(seqTmp, strTmp);
         current.setName(title);
-        loadOk = true;
+        result.add(current);
       }
     }
     catch (IOException e)
     {
       throw new ExceptionLoadingFailed(e.getMessage(), "");
-    }
-    if (loadOk)
-    {
-      result.add(current);
     }
     return result;
   }

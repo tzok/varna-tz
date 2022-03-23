@@ -89,7 +89,7 @@ public class BaseList {
 	{
 		ArrayList<Color> cols = new ArrayList<Color>(); 
 		for (ModeleBase mb : _bases)
-		{  cols.add(mb.getStyleBase().get_base_outline_color()); }
+		{  cols.add(mb.getStyleBase().getBaseOutlineColor()); }
 		return getAverageColor(cols);
 	}
 
@@ -97,7 +97,7 @@ public class BaseList {
 	{
 		ArrayList<Color> cols = new ArrayList<Color>(); 
 		for (ModeleBase mb : _bases)
-		{  cols.add(mb.getStyleBase().get_base_name_color()); }
+		{  cols.add(mb.getStyleBase().getBaseNameColor()); }
 		return getAverageColor(cols);
 	}
 
@@ -105,7 +105,7 @@ public class BaseList {
 	{
 		ArrayList<Color> cols = new ArrayList<Color>(); 
 		for (ModeleBase mb : _bases)
-		{  cols.add(mb.getStyleBase().get_base_number_color()); }
+		{  cols.add(mb.getStyleBase().getBaseNumberColor()); }
 		return getAverageColor(cols);
 	}
 
@@ -113,7 +113,7 @@ public class BaseList {
 	{
 		ArrayList<Color> cols = new ArrayList<Color>(); 
 		for (ModeleBase mb : _bases)
-		{  cols.add(mb.getStyleBase().get_base_inner_color()); }
+		{  cols.add(mb.getStyleBase().getBaseInnerColor()); }
 		return getAverageColor(cols);
 	}
 

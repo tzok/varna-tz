@@ -22,6 +22,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D.Double;
 
+import fr.orsay.lri.varna.models.rna.ModeleBP;
+
 /**
  * @author ponty
  * 
@@ -104,14 +106,14 @@ public class PSExport extends SecStrDrawingProducer {
 	private String PSArc(double x, double y, double radiusX, double radiusY,
 			double angleFrom, double angleTo) {
 
-		double centerX = x + radiusX / 2.0;
+		double centerX = x;
 		double centerY = y;
 
 		// return (centerX + " " + centerY + " "+ radiusX/2.0+" " + angleFrom +
 		// " " + angleTo + "  arc\n");
 
 		return (centerX + " " + centerY + " " + radiusX / 2.0 + " " + radiusY
-				/ 2.0 + " " + angleFrom + " " + angleTo + " ellipse\n");
+				/ 2.0 + " " + angleTo + " " + angleFrom + " ellipse\n");
 
 	}
 
@@ -297,5 +299,35 @@ public class PSExport extends SecStrDrawingProducer {
 		tmp += PSFill();
 		tmp += PSSetColor(bck);
 		return tmp;
+	}
+
+	@Override
+	public String drawBaseStartS(int index) {
+		return "";
+	}
+
+	@Override
+	public String drawBaseEndS(int index) {
+		return "";
+	}
+
+	@Override
+	public String drawBasePairStartS(int i, int j, ModeleBP bps) {
+		return "";
+	}
+
+	@Override
+	public String drawBasePairEndS(int index) {
+		return "";
+	}
+
+	@Override
+	public String drawBackboneStartS(int i, int j) {
+		return "";
+	}
+
+	@Override
+	public String drawBackboneEndS(int index) {
+		return "";
 	}
 }

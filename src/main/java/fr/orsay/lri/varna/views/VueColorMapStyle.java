@@ -20,16 +20,26 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
 
 import fr.orsay.lri.varna.VARNAPanel;
 import fr.orsay.lri.varna.components.GradientEditorPanel;
@@ -43,6 +53,27 @@ public class VueColorMapStyle extends JPanel implements ActionListener, ItemList
 	private JComboBox _cb; 
 	private JTextField _code; 
 	private ModeleColorMap _backup;
+	private static JFileChooser fc = new JFileChooser(){
+	    public void approveSelection(){
+	        File f = getSelectedFile();
+	        if(f.exists() && getDialogType() == SAVE_DIALOG){
+	            int result = JOptionPane.showConfirmDialog(this,"The file exists, overwrite?","Existing file",JOptionPane.YES_NO_OPTION);
+	            switch(result){
+	                case JOptionPane.YES_OPTION:
+	                    super.approveSelection();
+	                    return;
+	                case JOptionPane.NO_OPTION:
+	                    return;
+	                case JOptionPane.CLOSED_OPTION:
+	                    return;
+	                case JOptionPane.CANCEL_OPTION:
+	                    cancelSelection();
+	                    return;
+	            }
+	        }
+	        super.approveSelection();
+	    }        
+	};
 	
 	public VueColorMapStyle(VARNAPanel vp)
 	{
@@ -61,9 +92,10 @@ public class VueColorMapStyle extends JPanel implements ActionListener, ItemList
 
 		JPanel codePanel = new JPanel();
 		JLabel codeCaption = new JLabel("Param. code: ");
+		codeCaption.setVisible(true);
 		_code = new JTextField("");
 		_code.setFont(Font.decode("Monospaced-PLAIN-12"));
-		_code.setEditable(false);
+		_code.setEditable(true);
 		_code.addFocusListener(new FocusListener(){
 
 			public void focusGained(FocusEvent arg0) {
@@ -74,6 +106,7 @@ public class VueColorMapStyle extends JPanel implements ActionListener, ItemList
 			public void focusLost(FocusEvent arg0) {
 			}			
 		});		
+		_code.setVisible(false);
 		
 		NamedColorMapTypes[] palettes =  ModeleColorMap.NamedColorMapTypes.values();
 		Arrays.sort(palettes,new Comparator<ModeleColorMap.NamedColorMapTypes>(){
@@ -98,25 +131,109 @@ public class VueColorMapStyle extends JPanel implements ActionListener, ItemList
 		if (selected!=-1)
 		{
 			_cb.setSelectedIndex(selected);
-			_code.setText(palettes[selected].getId());
 		}
 		else
 		{
 			_cb.setSelectedItem(finalArray.length-1);
-			_code.setText(_gp.getColorMap().getParamEncoding());
 		}
 		_cb.addItemListener(this);
+
+		_code.setText(getTextRepresentation());
 		
+		
+		
+		FileFilter CMSFiles = new FileFilter(){
+			public boolean accept(File f) {
+				return f.getName().toLowerCase().endsWith(".cms") || f.isDirectory();
+			}
+
+			public String getDescription() {
+				return "Color Map (*.cms) Files";
+			}
+			
+		};
+		fc.addChoosableFileFilter(CMSFiles);
+		fc.setFileFilter(CMSFiles);
 		
 		codePanel.setLayout(new BoxLayout(codePanel,BoxLayout.LINE_AXIS));
+		
 		codePanel.add(codeCaption);
 		codePanel.add(_code);
+		JButton loadStyleButton = new JButton("Load");
+		loadStyleButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if (fc.showOpenDialog(VueColorMapStyle.this)==JFileChooser.APPROVE_OPTION)
+				{
+					File file = fc.getSelectedFile();
+					try {
+						FileInputStream fis = new FileInputStream(file);
+						byte[] data = new byte[(int) file.length()];
+						fis.read(data);
+						fis.close();
+						String str = new String(data).trim();
+						ModeleColorMap ns = ModeleColorMap.parseColorMap(str);
+						_gp.setColorMap(ns);
+						refreshCode();
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			
+		});
+		JButton saveStyleButton = new JButton("Save");
+		saveStyleButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if (fc.showSaveDialog(VueColorMapStyle.this)==JFileChooser.APPROVE_OPTION)
+				{
+					try {
+						PrintWriter out = new PrintWriter(fc.getSelectedFile());
+						out.println(_gp.getColorMap().getParamEncoding());
+						out.close();
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			
+		});
+		saveStyleButton.setAlignmentX(CENTER_ALIGNMENT);
+		loadStyleButton.setAlignmentX(CENTER_ALIGNMENT);
+
+		JPanel jp = new JPanel(new BorderLayout());
+		jp.add(_cb,BorderLayout.CENTER);
+		JPanel jp2 = new JPanel();
+		jp2.setLayout(new BoxLayout(jp2,BoxLayout.X_AXIS));
+		jp2.add(Box.createRigidArea(new Dimension(5,0)));
+		jp2.add(loadStyleButton);
+		jp2.add(Box.createRigidArea(new Dimension(5,0)));
+		jp2.add(saveStyleButton);
+		jp.add(jp2,BorderLayout.EAST);
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(_cb);
-		add(gradientCaption);
+		add(jp);
+		add(Box.createVerticalStrut(10));
 		add(_gp);
-		add(codePanel);
+		add(gradientCaption);
+		//add(Box.createVerticalStrut(10));
+		//add(codePanel);
+	}
+	
+	public String getTextRepresentation()
+	{
+		int selected = _cb.getSelectedIndex();
+		if ((selected!=-1) && (selected<_cb.getItemCount()-1))
+		{
+			return ((NamedColorMapTypes) _cb.getSelectedItem()).getId(); 
+		}
+		else
+		{
+			return _gp.getColorMap().getParamEncoding();
+		}
 	}
 	
 	public void cancelChanges()
@@ -154,12 +271,8 @@ public class VueColorMapStyle extends JPanel implements ActionListener, ItemList
 		if (selected!=-1)
 		{
 			_code.setText(n.getId());
-			_cb.setSelectedIndex(selected);
 		}
-		else
-		{
-			_code.setText(_gp.getColorMap().getParamEncoding());
-		}
+		_code.setText(getTextRepresentation());
 		_vp.setColorMap(_gp.getColorMap());
 		_gp.repaint();
 	}

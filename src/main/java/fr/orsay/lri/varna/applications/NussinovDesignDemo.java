@@ -56,12 +56,12 @@ import fr.orsay.lri.varna.exceptions.ExceptionParameterError;
 import fr.orsay.lri.varna.exceptions.ExceptionUnmatchedClosingParentheses;
 import fr.orsay.lri.varna.exceptions.MappingException;
 import fr.orsay.lri.varna.models.VARNAConfig;
+import fr.orsay.lri.varna.models.VARNAConfig.BP_STYLE;
 import fr.orsay.lri.varna.models.rna.Mapping;
 import fr.orsay.lri.varna.models.rna.ModeleBP;
 import fr.orsay.lri.varna.models.rna.ModeleBase;
 import fr.orsay.lri.varna.models.rna.ModelBaseStyle;
 import fr.orsay.lri.varna.models.rna.RNA;
-
 import fr.orsay.lri.varna.interfaces.InterfaceVARNABasesListener;
 import fr.orsay.lri.varna.interfaces.InterfaceVARNAListener;;
 
@@ -102,15 +102,14 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 	private JLabel _actions = new JLabel();
 	private JComboBox _struct = new JComboBox();
 	private JLabel _seq1 = new JLabel();
-	private JLabel _structLabel = new JLabel("Structure Secondaire Cible");
+	private JLabel _structLabel = new JLabel("Structure Cible");
 	private JLabel _seqLabel = new JLabel("Sequence d'ARN");
 	private JButton _switchButton = new JButton("Reset");
 
 
 	private Color _backgroundColor = Color.white;
-	private Color _targetColor = new Color(200,200,250);
 
-	private Color _okColor = new Color(100,100,250);
+	private Color _okColor = Color.decode("#E33729");
 	private Color _koColor = new Color(250,200,200);
 
 
@@ -156,30 +155,23 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 		_vpTarget.setPreferredSize(new Dimension(600, 600));
 		RNAPanelDemoInit();
 	}
+	
+	static Font labelsFont = Font.decode("Dialog-BOLD-25");
 
 	private void RNAPanelDemoInit() {
 		int marginTools = 250;
 		Font textFieldsFont = Font.decode("MonoSpaced-BOLD-16");
-		Font labelsFont = _seqLabel.getFont().deriveFont(16f);
+		
 		
 
 		_seq1.setFont(textFieldsFont.deriveFont(25f));
 		
 
 		setBackground(_backgroundColor);
-		_vpMaster.setBackground(_backgroundColor);
-		_vpMaster.addVARNAListener(this);
-		_vpMaster.setTitle("Meilleur repliement - Squence courante");
+
 		
-		_vpTarget.setBackground(_targetColor);
-		_vpTarget.setModifiable(false);
-		_vpTarget.setTitle("Repliement cible");
+		_structLabel.setFont(labelsFont.deriveFont(Font.PLAIN));
 
-
-		_seqLabel.setHorizontalTextPosition(JLabel.LEFT);
-		_seqLabel.setPreferredSize(new Dimension(marginTools, 15));
-		_seqLabel.setFont(labelsFont);
-		_structLabel.setFont(labelsFont);
 		
 		String[] secstr = {TARGET_STRUCTURE_1,TARGET_STRUCTURE_2,TARGET_STRUCTURE_3,TARGET_STRUCTURE_4,TARGET_STRUCTURE_5};
 		DefaultComboBoxModel cm = new DefaultComboBoxModel(secstr); 
@@ -204,6 +196,7 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 		_seqPanel.setLayout(new BorderLayout());
 		_seqPanel.add(_seqLabel, BorderLayout.WEST);
 		_seqPanel.add(_seq1, BorderLayout.CENTER);
+
 		_seqPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
 		_structLabel.setPreferredSize(new Dimension(marginTools, 15));
@@ -219,6 +212,10 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 		goPanel.setLayout(new BorderLayout());
 
 		_infos.setFont(labelsFont);
+
+
+		formatLabel(_seqLabel);
+		formatLabel(_seq1);
 
 		
 		_tools.setLayout(new BorderLayout());
@@ -246,23 +243,47 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 		mast.add(_vpMaster, BorderLayout.CENTER);
 		mast.add(mast2,BorderLayout.SOUTH);
 		
-		VARNAs.add(_vpTarget);
 		VARNAs.add(mast);
+		VARNAs.add(_vpTarget);
 		VARNAs.doLayout();
 		VARNAs.setDividerSize(5);
 		
 		getContentPane().add(VARNAs, BorderLayout.CENTER);
-		getContentPane().add(_tools, BorderLayout.SOUTH);
+		getContentPane().add(_tools, BorderLayout.NORTH);
 
 		setVisible(true);
 
+
+		_vpMaster.setBackground(_backgroundColor);
+		_vpMaster.addVARNAListener(this);
+		_vpMaster.setTitle("Meilleur repliement - Séquence courante");
+		_vpMaster.setBPStyle(BP_STYLE.SIMPLE);
 		_vpMaster.getVARNAUI().UIRadiate();
 		_vpMaster.setTitleFontSize(26f);
 		_vpMaster.setTitleFontStyle(Font.PLAIN);
+		
+		_vpTarget.setBackground(Color.decode("#308099"));
+		_vpTarget.setModifiable(false);
+		_vpTarget.setTitle("Repliement cible");
+		_vpTarget.setBPStyle(BP_STYLE.SIMPLE);
+		_vpTarget.setBackboneColor(Color.white);
+		_vpTarget.setDefaultBPColor(Color.white);
+		_vpTarget.setBaseNumbersColor(Color.white);
+		_vpTarget.setBaseOutlineColor(Color.white);
+		_vpTarget.setTitleColor(Color.white);		
 		_vpTarget.setTitleFontSize(26f);
-		_vpTarget.setTitleFontStyle(Font.PLAIN);
+
+		
+		_okColor = Color.decode("#F39126");
+		_koColor = new Color(250,200,200);
+		
+		_seqPanel.setBackground(Color.decode("#E33729"));
+		_infos.setBackground(Color.decode("#E33729"));
+
+
+		
 		_vpMaster.addVARNABasesListener(this);
-		setTitle("Nuit des Chercheurs - INRIA AMIB - Design d'ARN");
+		setTitle("Fête de la science 2015 - Inria AMIB - Design d'ARN");
 		
 		setTarget(secstr[0]);
 		
@@ -274,25 +295,26 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 		_infos.setInfo(sols, count(getSeq()));
 		if ((sols.size()==1)&&(sols.get(0).equals(_struct.getSelectedItem().toString())))
 		{
-			this._vpMaster.setTitle("Flicitations !");
 			/*JOptionPane.showMessageDialog(null, 
-					"Vous avez trouv une squence pour cette structure !!!\n Saurez vous faire le design de molcules plus complexes ?",
-					"Flicitations !", 
+					"Vous avez trouvé une séquence pour cette structure !!!\n Saurez vous faire le design de molécules plus complexes ?",
+					"Félicitations !", 
 					JOptionPane.INFORMATION_MESSAGE);*/
 			
 		}
 		else
 		{
-			this._vpMaster.setTitle("Meilleur repliement - Squence courante");
+			this._vpMaster.setTitle("Meilleur repliement - Séquence courante");
 		}
 	}
 	
 
 	public void setTarget(String target)
 	{
-		RNA r = new RNA();
 		try {
 			_vpTarget.drawRNA(String.format("%"+target.length()+"s", ""),target);
+			_vpTarget.setBaseNumbersColor(Color.white);
+			_vpTarget.setBaseOutlineColor(Color.white);
+			//_vpTarget.toggleDrawOutlineBases();
 			createDummySeq();
 			showSolution();
 			onStructureRedrawn();
@@ -783,18 +805,33 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 		System.out.println();
 	}
 
+	
+	public static void formatLabel(JLabel j)
+	{
+		j.setHorizontalTextPosition(JLabel.LEFT);
+		j.setPreferredSize(new Dimension(NussinovDemo.marginTools, 25));
+		j.setFont(labelsFont);
+		j.setForeground(Color.white);
+	}
+	
+	public static void formatLabel(JTextArea j)
+	{
+		j.setPreferredSize(new Dimension(NussinovDemo.marginTools, 25));
+		j.setFont(labelsFont);
+		j.setForeground(Color.white);
+	}
 
 	public class InfoPanel extends JPanel
 	{
 		ArrayList<String> _sols = new ArrayList<String>();
 		BigInteger _nbFolds = BigInteger.ZERO;
-		JTextArea _text = new JTextArea("");
-		JTextArea _subopts = new JTextArea("");
+		JLabel _text = new JLabel("");
+		JLabel _subopts = new JLabel("");
 		JPanel _suboptBrowser = new JPanel();
 		JPanel _suboptCount = new JPanel();
 		int _selectedIndex = 0;
-		JButton next = new JButton("Precedent");
-		JButton previous = new JButton("Suivant");
+		JButton next = new JButton(">");
+		JButton previous = new JButton("<");
 		
 		InfoPanel()
 		{
@@ -822,31 +859,39 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 			});
 			next.setEnabled(false);
 			previous.setEnabled(false);
-			
 
 			JLabel nbLab = new JLabel("#Repliements");
-			NussinovDemo.formatLabel(nbLab);
+			NussinovDesignDemo.formatLabel(nbLab);
+			
 
+			JLabel cooptlab = new JLabel("#Co-optimaux");
+			NussinovDesignDemo.formatLabel(cooptlab);
+			
+			NussinovDesignDemo.formatLabel(_text);
+			NussinovDesignDemo.formatLabel(_subopts);
+
+			
 			_suboptCount.setLayout(new BorderLayout());
 			_suboptCount.add(nbLab,BorderLayout.WEST);
 			_suboptCount.add(_text,BorderLayout.CENTER);
+			_suboptCount.setBackground(Color.decode("#E33729"));
 
-			JLabel cooptlab = new JLabel("#Co-optimaux");
-			NussinovDemo.formatLabel(cooptlab);
 			
 			JPanel commands = new JPanel();
 			commands.add(previous);
 			commands.add(next);
+			commands.setBackground(Color.decode("#E33729"));
 			
 			JPanel jp = new JPanel();
 			jp.setLayout(new BorderLayout());
 			jp.add(_subopts,BorderLayout.WEST);
 			jp.add(commands,BorderLayout.CENTER);
+			jp.setBackground(Color.decode("#E33729"));
 
 			_suboptBrowser.setLayout(new BorderLayout());
 			_suboptBrowser.add(cooptlab,BorderLayout.WEST);
 			_suboptBrowser.add(jp,BorderLayout.CENTER);
-			
+			_suboptBrowser.setBackground(Color.decode("#E33729"));
 			
 		}
 			
@@ -899,6 +944,10 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 					}
 				}				
 				rfolded.drawRNARadiate(_vpMaster.getConfig());
+				if ((_sols.size()==1)&& (target.getStructDBN().equals(_sols.get(0))))					
+					rfolded.setName("Félicitations !");
+				else
+					rfolded.setName("Repliement stable - "+(i+1)+"/"+_sols.size());
 		        _vpMaster.showRNAInterpolated(rfolded);
 		        _vpTarget.repaint();
 			} catch (ExceptionUnmatchedClosingParentheses e) {
@@ -912,20 +961,20 @@ public class NussinovDesignDemo extends JFrame implements InterfaceVARNAListener
 			formatDescription();
 		}
 		
-		public void setFont(Font f)
-		{
-			super.setFont(f);
-			if(_text!=null)
-			{
-				_text.setFont(f);
-				_text.setOpaque(false);
-			}
-			if(_subopts!=null)
-			{
-			_subopts.setFont(f);
-			_subopts.setOpaque(false);
-			}
-		}
+//		public void setFont(Font f)
+//		{
+//			super.setFont(f);
+//			if(_text!=null)
+//			{
+//				_text.setFont(f);
+//				_text.setOpaque(false);
+//			}
+//			if(_subopts!=null)
+//			{
+//			_subopts.setFont(f);
+//			_subopts.setOpaque(false);
+//			}
+//		}
 		public void setInfo(ArrayList<String> sols, BigInteger nbFolds)
 		{
 			_sols = sols;

@@ -31,6 +31,8 @@ import fr.orsay.lri.varna.models.rna.RNA;
 public class BatchBenchmark {
 	private VARNAConfig conf = new VARNAConfig();
 	
+	final boolean DEFAULT_STRAIGHT_BULGES = false;
+	
 	public static RNA loadRNA(File file) throws ExceptionFileFormatOrSyntax, ExceptionUnmatchedClosingParentheses, FileNotFoundException, ExceptionExportFailed, ExceptionPermissionDenied, ExceptionLoadingFailed {
 		Collection<RNA> rnas = RNAFactory.loadSecStr(file.getPath());
 		if (rnas.isEmpty()) {
@@ -70,37 +72,37 @@ public class BatchBenchmark {
 				break;
 			case 10:
 				algoname = "Template/noadj";
-				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.NOADJUST, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE);
+				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.NOADJUST, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE, DEFAULT_STRAIGHT_BULGES);
 				break;
 			case 11:
 				algoname = "Template/noadj/ellipses";
-				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.NOADJUST, DrawRNATemplateCurveMethod.ALWAYS_REPLACE_BY_ELLIPSES);
+				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.NOADJUST, DrawRNATemplateCurveMethod.ALWAYS_REPLACE_BY_ELLIPSES, DEFAULT_STRAIGHT_BULGES);
 				break;
 			case 12:
 				algoname = "Template/noadj/smart";
-				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.NOADJUST, DrawRNATemplateCurveMethod.SMART);
+				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.NOADJUST, DrawRNATemplateCurveMethod.SMART, DEFAULT_STRAIGHT_BULGES);
 				break;
 				/*
 			case 5:
 				algoname = "Template/maxfactor";
-				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.MAXSCALINGFACTOR, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE);
+				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.MAXSCALINGFACTOR, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE, DEFAULT_STRAIGHT_BULGES);
 				break;
 				*/
 			case 6:
 				algoname = "Template/mininter";
-				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.NOINTERSECT, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE);
+				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.NOINTERSECT, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE, DEFAULT_STRAIGHT_BULGES);
 				break;
 			case 30:
 				algoname = "Template/translate";
-				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.HELIXTRANSLATE, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE);
+				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.HELIXTRANSLATE, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE, DEFAULT_STRAIGHT_BULGES);
 				break;
 			case 31:
 				algoname = "Template/translate/ellipses";
-				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.HELIXTRANSLATE, DrawRNATemplateCurveMethod.ALWAYS_REPLACE_BY_ELLIPSES);
+				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.HELIXTRANSLATE, DrawRNATemplateCurveMethod.ALWAYS_REPLACE_BY_ELLIPSES, DEFAULT_STRAIGHT_BULGES);
 				break;
 			case 32:
 				algoname = "Template/translate/smart";
-				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.HELIXTRANSLATE, DrawRNATemplateCurveMethod.SMART);
+				rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.HELIXTRANSLATE, DrawRNATemplateCurveMethod.SMART, DEFAULT_STRAIGHT_BULGES);
 				break;
 			default:
 				continue;

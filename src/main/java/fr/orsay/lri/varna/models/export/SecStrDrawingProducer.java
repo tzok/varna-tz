@@ -25,6 +25,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
+import fr.orsay.lri.varna.models.rna.ModeleBP;
+
 public abstract class SecStrDrawingProducer {
 	public static final int FONT_TIMES_ROMAN = 0;
 	public static final int FONT_TIMES_BOLD = 1;
@@ -66,9 +68,18 @@ public abstract class SecStrDrawingProducer {
 		return _font;
 	}
 	
-	public abstract String drawLineS(Point2D.Double orig, Point2D.Double dest,
-			double thickness);
 
+	public abstract String drawBaseStartS(int index);
+	public abstract String drawBaseEndS(int index);
+	public abstract String drawBasePairStartS(int i, int j, ModeleBP bps);
+	public abstract String drawBasePairEndS(int index);
+	public abstract String drawBackboneStartS(int i, int j);
+	public abstract String drawBackboneEndS(int index);
+
+	public abstract String drawLineS(Point2D.Double orig,
+			Point2D.Double dest, double thickness);
+
+	
 	public abstract String drawArcS(Point2D.Double origine, double width,
 			double height, double startAngle, double endAngle);
 
@@ -125,7 +136,8 @@ public abstract class SecStrDrawingProducer {
 
 	public void drawArc(Point2D.Double origine, double width, double height,
 			double startAngle, double endAngle) {
-		updateBoundingBox(origine.x + width, origine.y + height/2);
+		updateBoundingBox(origine.x + width/2., origine.y + height/2.);
+		updateBoundingBox(origine.x - width/2., origine.y - height/2.);
 		_commands.add(new ArcCommand(origine, width, height, startAngle,
 				endAngle));
 	}
@@ -273,6 +285,10 @@ public abstract class SecStrDrawingProducer {
 		_scale = sc;
 	}
 
+	public double getScale() {
+		return _scale;
+	}
+
 	public Rectangle2D.Double getBoundingBox() {
 		return (new Rectangle2D.Double(_xmin, _ymin, _xmax - _xmin, _ymax
 				- _ymin));
@@ -346,10 +362,10 @@ public abstract class SecStrDrawingProducer {
 				ColorCommand c = (ColorCommand) ge;
 				String tmp = setColorS(c.getColor());
 				buf.append(tmp);
-			} else if (ge instanceof ArcCommand) {
+			} else if (ge instanceof ArcCommand) {				
 				ArcCommand c = (ArcCommand) ge;
 				String tmp = drawArcS(
-						transform(c.getOrigine(), _scale, dx, dy), c.getWidth()
+						transform(c.getCenter(), _scale, dx, dy), c.getWidth()
 								* _scale, c.getHeight() * _scale, c
 								.getStartAngle(), c.getEndAngle());
 				buf.append(tmp);
@@ -379,4 +395,6 @@ public abstract class SecStrDrawingProducer {
 	public void reset() {
 
 	}
+	
+	
 }

@@ -321,29 +321,34 @@ public class VARNAcmd implements InterfaceParameterLoader {
 		ArrayList<FullBackup> confs = new ArrayList<FullBackup>();
 		try {
 			if (!_inFile.equals("")) {
-				Collection<RNA> rnas = RNAFactory.loadSecStr(_inFile);
-				 if (rnas.isEmpty())
-				 {
-					 FullBackup f = null;
-							try{
-							f = VARNAPanel.importSession(new FileInputStream(_inFile), _inFile);
-							confs.add(f);
-							}
-							catch(Exception e)
-							{
-								e.printStackTrace();
-							}
-					if (f==null)
-					{
-					 throw new ExceptionFileFormatOrSyntax("No RNA could be parsed from file '"+_inFile+"'.");
-					}
-				 }
-				 else{
-					 for (RNA r: rnas)
+				if (!_inFile.toLowerCase().endsWith(".varna")) {
+					Collection<RNA> rnas = RNAFactory.loadSecStr(_inFile);
+					 if (rnas.isEmpty())
 					 {
-						 confs.add(new FullBackup(r,_inFile));
+						 FullBackup f = null;
+								try{
+								f = VARNAPanel.importSession(new FileInputStream(_inFile), _inFile);
+								confs.add(f);
+								}
+								catch(Exception e)
+								{
+									e.printStackTrace();
+								}
+						if (f==null)
+						{
+						 throw new ExceptionFileFormatOrSyntax("No RNA could be parsed from file '"+_inFile+"'.");
+						}
 					 }
-				 }
+					 else{
+						 for (RNA r: rnas)
+						 {
+							 confs.add(new FullBackup(r,_inFile));
+						 }
+					 }
+				}
+				else{
+					confs.add(VARNAPanel.importSession(_inFile));
+				}
 			} else {
 				RNA r = new RNA();
 				r.setRNA(this.getParameterValue("sequenceDBN",

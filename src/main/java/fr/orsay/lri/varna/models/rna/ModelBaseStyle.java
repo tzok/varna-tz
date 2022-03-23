@@ -130,13 +130,13 @@ public class ModelBaseStyle implements Cloneable, Serializable {
 	}
 
 	public ModelBaseStyle(ModelBaseStyle msb) {
-		_base_outline_color = msb.get_base_outline_color();
-		_base_inner_color = msb.get_base_inner_color();
-		_base_number_color = msb.get_base_number_color();
-		_base_name_color = msb.get_base_name_color();
+		_base_outline_color = msb.getBaseOutlineColor();
+		_base_inner_color = msb.getBaseInnerColor();
+		_base_number_color = msb.getBaseNumberColor();
+		_base_name_color = msb.getBaseNameColor();
 	}
 
-	public Color get_base_outline_color() {
+	public Color getBaseOutlineColor() {
 		return _base_outline_color;
 	}
 
@@ -144,7 +144,7 @@ public class ModelBaseStyle implements Cloneable, Serializable {
 		this._base_outline_color = _base_outline_color;
 	}
 
-	public Color get_base_inner_color() {
+	public Color getBaseInnerColor() {
 		return _base_inner_color;
 	}
 
@@ -152,7 +152,7 @@ public class ModelBaseStyle implements Cloneable, Serializable {
 		this._base_inner_color = _base_inner_color;
 	}
 
-	public Color get_base_number_color() {
+	public Color getBaseNumberColor() {
 		return _base_number_color;
 	}
 
@@ -160,7 +160,7 @@ public class ModelBaseStyle implements Cloneable, Serializable {
 		this._base_number_color = _base_numbers_color;
 	}
 
-	public Color get_base_name_color() {
+	public Color getBaseNameColor() {
 		return _base_name_color;
 	}
 

@@ -89,7 +89,7 @@ public void actionPerformed(ActionEvent e) {
 	else if (e.getSource() instanceof JButton)
 	{
 		JFileChooser fc = new JFileChooser();
-		if (fc.showSaveDialog(_vp) == JFileChooser.APPROVE_OPTION)
+		if (fc.showOpenDialog(_vp) == JFileChooser.APPROVE_OPTION)
 		{
 			this.fileTxt.setText(fc.getSelectedFile().getAbsolutePath());
 		}

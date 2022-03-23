@@ -15,6 +15,8 @@ import fr.orsay.lri.varna.utils.XMLUtils;
 
 public class ChemProbAnnotation implements Serializable {
 
+	public static final String HEADER_TEXT = "ChemProbAnnotation";
+
 	/**
 	 * 
 	 */

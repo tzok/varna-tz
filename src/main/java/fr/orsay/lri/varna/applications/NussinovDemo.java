@@ -52,11 +52,11 @@ import fr.orsay.lri.varna.exceptions.ExceptionParameterError;
 import fr.orsay.lri.varna.exceptions.ExceptionUnmatchedClosingParentheses;
 import fr.orsay.lri.varna.exceptions.MappingException;
 import fr.orsay.lri.varna.models.VARNAConfig;
+import fr.orsay.lri.varna.models.VARNAConfig.BP_STYLE;
 import fr.orsay.lri.varna.models.rna.Mapping;
 import fr.orsay.lri.varna.models.rna.ModeleBase;
 import fr.orsay.lri.varna.models.rna.ModelBaseStyle;
 import fr.orsay.lri.varna.models.rna.RNA;
-
 import fr.orsay.lri.varna.interfaces.InterfaceVARNABasesListener;
 import fr.orsay.lri.varna.interfaces.InterfaceVARNAListener;;
 
@@ -101,9 +101,9 @@ public class NussinovDemo extends JFrame implements InterfaceVARNAListener,Inter
 	private Color _backgroundColor = Color.white;
 	
 	public static Font textFieldsFont = Font.decode("MonoSpaced-BOLD-16");
-	public static Font labelsFont = (new JLabel()).getFont().deriveFont(16f);
+	public static Font labelsFont = Font.decode("SansSerif-BOLD-20");
 	public static final int marginTools = 250;
-	public static String APP_TITLE = "Nuit des Chercheurs - INRIA AMIB - Repliement d'ARN";
+	public static String APP_TITLE = "Fête de la science 2015 - Inria AMIB - Repliement d'ARN";
 	
 
 	public static ModelBaseStyle createStyle(String txt) 
@@ -246,6 +246,17 @@ public class NussinovDemo extends JFrame implements InterfaceVARNAListener,Inter
 		_vpMaster.setTitleFontSize(26f);
 		_vpMaster.setTitleFontStyle(Font.PLAIN);
 		_vpMaster.addVARNABasesListener(this);
+		_vpMaster.setBackground(Color.decode("#308099"));
+		_vpMaster.setModifiable(false);
+		_vpMaster.setTitle("Repliement cible");
+		_vpMaster.setBPStyle(BP_STYLE.SIMPLE);
+		_vpMaster.setBackboneColor(Color.white);
+		_vpMaster.setDefaultBPColor(Color.white);
+		_vpMaster.setBaseNumbersColor(Color.white);
+		_vpMaster.setBaseOutlineColor(Color.white);
+		_vpMaster.setTitleColor(Color.white);		
+		_vpMaster.setTitleFontSize(26f);
+
 		
 		
 		this.setTitle(APP_TITLE);
@@ -688,8 +699,8 @@ public class NussinovDemo extends JFrame implements InterfaceVARNAListener,Inter
 		JPanel _suboptBrowser = new JPanel();
 		JPanel _suboptCount = new JPanel();
 		int _selectedIndex = 0;
-		JButton next = new JButton("Precedent");
-		JButton previous = new JButton("Suivant");
+		JButton next = new JButton(">");
+		JButton previous = new JButton("<");
 		
 		InfoPanel()
 		{
@@ -752,7 +763,15 @@ public class NussinovDemo extends JFrame implements InterfaceVARNAListener,Inter
 			try {
 				rfolded.setRNA(getSeq(), _sols.get(i));
 				rfolded.drawRNARadiate(_vpMaster.getConfig());
-		        _vpMaster.showRNAInterpolated(rfolded);
+				rfolded.setBaseNameColor(Color.white);
+				rfolded.setBaseOutlineColor(Color.white);
+				rfolded.setBaseNumbersColor(Color.white);
+				_vpMaster.setBaseNumbersColor(Color.white);
+				_vpMaster.setBaseOutlineColor(Color.white);
+				_vpMaster.setFillBases(false);
+				_vpMaster.setBaseNameColor(Color.white);
+				_vpMaster.showRNAInterpolated(rfolded);		        
+				
 			} catch (ExceptionUnmatchedClosingParentheses e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

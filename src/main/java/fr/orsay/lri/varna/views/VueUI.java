@@ -2,7 +2,7 @@
  VARNA is a tool for the automated drawing, visualization and annotation of the secondary structure of RNA, designed as a companion software for web servers and databases.
  Copyright (C) 2008  Kevin Darty, Alain Denise and Yann Ponty.
  electronic mail : Yann.Ponty@lri.fr
- paper mail : LRI, bat 490 Universit� Paris-Sud 91405 Orsay Cedex France
+ paper mail : LRI, bat 490 Universit Paris-Sud 91405 Orsay Cedex France
 
  This file is part of VARNA version 3.1.
  VARNA version 3.1 is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
@@ -88,17 +88,14 @@ public class VueUI {
 	private File _fileChooserDirectory = null;
 	private UndoableEditSupport _undoableEditSupport;
 
-
 	public VueUI(VARNAPanel vp) {
 		_vp = vp;
-		 _undoableEditSupport = new UndoableEditSupport(_vp);
+		_undoableEditSupport = new UndoableEditSupport(_vp);
 	}
 
-	public void addUndoableEditListener(UndoManager manager)
-	{
+	public void addUndoableEditListener(UndoManager manager) {
 		_undoableEditSupport.addUndoableEditListener(manager);
-	}	
-	
+	}
 
 	public void UIToggleColorMap() {
 		if (_vp.isModifiable()) {
@@ -106,32 +103,28 @@ public class VueUI {
 			_vp.repaint();
 		}
 	}
-	
+
 	public void UIToggleDrawBackbone() {
 		if (_vp.isModifiable()) {
 			_vp.setDrawBackbone(!_vp.getDrawBackbone());
 			_vp.repaint();
 		}
 	}
-	
-	
-	public Hashtable<Integer,Point2D.Double> backupAllCoords()
-	{
-		Hashtable<Integer,Point2D.Double> tmp = new Hashtable<Integer,Point2D.Double>();
-		for(int i=0;i<_vp.getRNA().getSize();i++)
-		{
+
+	public Hashtable<Integer, Point2D.Double> backupAllCoords() {
+		Hashtable<Integer, Point2D.Double> tmp = new Hashtable<Integer, Point2D.Double>();
+		for (int i = 0; i < _vp.getRNA().getSize(); i++) {
 			tmp.put(i, _vp.getRNA().getCoords(i));
 		}
 		return tmp;
 	}
 
-	
-	
 	public void UIToggleFlatExteriorLoop() {
 		if (_vp.isModifiable()
 				&& _vp.getRNA().get_drawMode() == RNA.DRAW_MODE_RADIATE) {
-			Hashtable<Integer,Point2D.Double> bck = backupAllCoords();
-			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(RNA.DRAW_MODE_RADIATE,_vp,!_vp.getFlatExteriorLoop()));
+			Hashtable<Integer, Point2D.Double> bck = backupAllCoords();
+			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(
+					RNA.DRAW_MODE_RADIATE, _vp, !_vp.getFlatExteriorLoop()));
 			_vp.setFlatExteriorLoop(!_vp.getFlatExteriorLoop());
 			_vp.reset();
 			_vp.drawRNA(_vp.getRNA(), RNA.DRAW_MODE_RADIATE);
@@ -142,8 +135,9 @@ public class VueUI {
 
 	public void UIRadiate() {
 		if (_vp.isModifiable()) {
-			Hashtable<Integer,Point2D.Double> bck = backupAllCoords();
-			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(RNA.DRAW_MODE_RADIATE,_vp));
+			Hashtable<Integer, Point2D.Double> bck = backupAllCoords();
+			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(
+					RNA.DRAW_MODE_RADIATE, _vp));
 			_vp.reset();
 			_vp.drawRNA(_vp.getRNA(), RNA.DRAW_MODE_RADIATE);
 			_vp.repaint();
@@ -153,8 +147,9 @@ public class VueUI {
 
 	public void UIMOTIFView() {
 		if (_vp.isModifiable()) {
-			Hashtable<Integer,Point2D.Double> bck = backupAllCoords();
-			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(RNA.DRAW_MODE_MOTIFVIEW,_vp));
+			Hashtable<Integer, Point2D.Double> bck = backupAllCoords();
+			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(
+					RNA.DRAW_MODE_MOTIFVIEW, _vp));
 			_vp.reset();
 			_vp.drawRNA(_vp.getRNA(), RNA.DRAW_MODE_MOTIFVIEW);
 			_vp.repaint();
@@ -164,8 +159,9 @@ public class VueUI {
 
 	public void UILine() {
 		if (_vp.isModifiable()) {
-			Hashtable<Integer,Point2D.Double> bck = backupAllCoords();
-			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(RNA.DRAW_MODE_LINEAR,_vp));			
+			Hashtable<Integer, Point2D.Double> bck = backupAllCoords();
+			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(
+					RNA.DRAW_MODE_LINEAR, _vp));
 			_vp.reset();
 			_vp.drawRNA(_vp.getRNA(), RNA.DRAW_MODE_LINEAR);
 			_vp.repaint();
@@ -175,10 +171,11 @@ public class VueUI {
 
 	public void UICircular() {
 		if (_vp.isModifiable()) {
-			Hashtable<Integer,Point2D.Double> bck = backupAllCoords();
-			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(RNA.DRAW_MODE_CIRCULAR,_vp));			
+			Hashtable<Integer, Point2D.Double> bck = backupAllCoords();
+			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(
+					RNA.DRAW_MODE_CIRCULAR, _vp));
 			_vp.reset();
-			_vp.drawRNA(_vp.getRNA(), RNA.DRAW_MODE_CIRCULAR);			
+			_vp.drawRNA(_vp.getRNA(), RNA.DRAW_MODE_CIRCULAR);
 			_vp.repaint();
 			_vp.fireLayoutChanged(bck);
 		}
@@ -186,8 +183,9 @@ public class VueUI {
 
 	public void UINAView() {
 		if (_vp.isModifiable()) {
-			Hashtable<Integer,Point2D.Double> bck = backupAllCoords();
-			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(RNA.DRAW_MODE_NAVIEW,_vp));			
+			Hashtable<Integer, Point2D.Double> bck = backupAllCoords();
+			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(
+					RNA.DRAW_MODE_NAVIEW, _vp));
 			_vp.reset();
 			_vp.drawRNA(_vp.getRNA(), RNA.DRAW_MODE_NAVIEW);
 			_vp.repaint();
@@ -197,8 +195,9 @@ public class VueUI {
 
 	public void UIVARNAView() {
 		if (_vp.isModifiable()) {
-			Hashtable<Integer,Point2D.Double> bck = backupAllCoords();
-			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(RNA.DRAW_MODE_VARNA_VIEW,_vp));			
+			Hashtable<Integer, Point2D.Double> bck = backupAllCoords();
+			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(
+					RNA.DRAW_MODE_VARNA_VIEW, _vp));
 			_vp.reset();
 			_vp.drawRNA(_vp.getRNA(), RNA.DRAW_MODE_VARNA_VIEW);
 			_vp.repaint();
@@ -208,41 +207,44 @@ public class VueUI {
 
 	public void UIReset() {
 		if (_vp.isModifiable()) {
-			Hashtable<Integer,Point2D.Double> bck = backupAllCoords();
-			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(_vp.getRNA().get_drawMode(),_vp));			
+			Hashtable<Integer, Point2D.Double> bck = backupAllCoords();
+			_undoableEditSupport.postEdit(new VARNAEdits.RedrawEdit(_vp
+					.getRNA().get_drawMode(), _vp));
 			_vp.reset();
 			_vp.drawRNA(_vp.getRNA(), _vp.getRNA().get_drawMode());
 			_vp.repaint();
 			_vp.fireLayoutChanged(bck);
 		}
 	}
-	
-	private void savePath(JFileChooser jfc)
-	{
+
+	private void savePath(JFileChooser jfc) {
 		_fileChooserDirectory = jfc.getCurrentDirectory();
 	}
 
-	private void loadPath(JFileChooser jfc)
-	{
-		if (_fileChooserDirectory != null)
-		{
+	private void loadPath(JFileChooser jfc) {
+		if (_fileChooserDirectory != null) {
 			jfc.setCurrentDirectory(_fileChooserDirectory);
 		}
 	}
-	
-	
-	public void UIChooseRNAs(ArrayList<RNA> rnas)
-	{
-		if (rnas.size()>5)
-		{
-			VueRNAList vl = new VueRNAList(rnas); 
-		if( JOptionPane.showConfirmDialog(_vp, 
-				 vl,	
-				 "Select imported sequence/structures", 
-				 JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
-		 {
-			for(RNA r: vl.getSelectedRNAs())
-			{
+
+	public void UIChooseRNAs(ArrayList<RNA> rnas) {
+		if (rnas.size() > 5) {
+			VueRNAList vl = new VueRNAList(rnas);
+			if (JOptionPane.showConfirmDialog(_vp, vl,
+					"Select imported sequence/structures",
+					JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+				for (RNA r : vl.getSelectedRNAs()) {
+					try {
+						r.drawRNA(_vp.getConfig());
+					} catch (ExceptionNAViewAlgorithm e) {
+						e.printStackTrace();
+					}
+					_vp.showRNA(r);
+				}
+				_vp.repaint();
+			}
+		} else {
+			for (RNA r : rnas) {
 				try {
 					r.drawRNA(_vp.getConfig());
 				} catch (ExceptionNAViewAlgorithm e) {
@@ -251,25 +253,9 @@ public class VueUI {
 				_vp.showRNA(r);
 			}
 			_vp.repaint();
-		 }
-		}
-		else
-		{
-			for(RNA r: rnas)
-			{
-        try {
-          r.drawRNA(_vp.getConfig());
-        } catch (ExceptionNAViewAlgorithm e) {
-          e.printStackTrace();
-        }
-        _vp.showRNA(r);
-			}
-			_vp.repaint();			
 		}
 	}
-	
 
-	
 	public void UIFile() throws ExceptionNonEqualLength {
 		if (_vp.isModifiable()) {
 			JFileChooser fc = new JFileChooser();
@@ -280,20 +266,15 @@ public class VueUI {
 				try {
 					savePath(fc);
 					String path = fc.getSelectedFile().getAbsolutePath();
-					if (!path.toLowerCase().endsWith(".varna"))
-					{
-						 ArrayList<RNA> rnas = RNAFactory.loadSecStr(path);
-						 if (rnas.isEmpty())
-						 {
-							 throw new ExceptionFileFormatOrSyntax("No RNA could be parsed from that source.");
-						 }
-						 else 
-						 {
-							 UIChooseRNAs(rnas);
-						 }
-					}
-					else
-					{
+					if (!path.toLowerCase().endsWith(".varna")) {
+						ArrayList<RNA> rnas = RNAFactory.loadSecStr(path);
+						if (rnas.isEmpty()) {
+							throw new ExceptionFileFormatOrSyntax(
+									"No RNA could be parsed from that source.");
+						} else {
+							UIChooseRNAs(rnas);
+						}
+					} else {
 						FullBackup bck = _vp.loadSession(path);
 					}
 				} catch (ExceptionExportFailed e1) {
@@ -314,21 +295,19 @@ public class VueUI {
 	}
 
 	public void UISetColorMapStyle() {
-			VueColorMapStyle cms = new VueColorMapStyle(_vp);
-			if (JOptionPane.showConfirmDialog(_vp, cms,
-					"Choose color map style", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-				_vp.setColorMap(cms.getColorMap());
-			}
-			else
-			{
-				cms.cancelChanges();
-			}
+		VueColorMapStyle cms = new VueColorMapStyle(_vp);
+		if (JOptionPane.showConfirmDialog(_vp, cms, "Choose color map style",
+				JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+			_vp.setColorMap(cms.getColorMap());
+		} else {
+			cms.cancelChanges();
+		}
 	}
 
 	public void UILoadColorMapValues() {
 		VueLoadColorMapValues cms = new VueLoadColorMapValues(_vp);
-		if (JOptionPane.showConfirmDialog(_vp, cms,
-				"Load base values", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+		if (JOptionPane.showConfirmDialog(_vp, cms, "Load base values",
+				JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
 			try {
 				_vp.setColorMapVisible(true);
 				_vp.readValues(cms.getReader());
@@ -338,19 +317,16 @@ public class VueUI {
 
 		}
 	}
-	
-	
+
 	public void UISetColorMapValues() {
 		VueBaseValues cms = new VueBaseValues(_vp);
-		if (JOptionPane.showConfirmDialog(_vp, cms,
-				"Choose base values", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {	
-		}
-		else
-		{
+		if (JOptionPane.showConfirmDialog(_vp, cms, "Choose base values",
+				JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+		} else {
 			cms.cancelChanges();
 		}
 	}
-	
+
 	public void UIManualInput() throws ParseException, ExceptionNonEqualLength {
 		if (_vp.isModifiable()) {
 			VueManualInput manualInput = new VueManualInput(_vp);
@@ -360,12 +336,13 @@ public class VueUI {
 
 				}
 				try {
-				RNA r = new RNA();
-				VARNAConfig cfg = new VARNAConfig();
-				r.setRNA(manualInput.getTseq().getText(),manualInput.getTstr().getText());
-				r.drawRNA(_vp.getRNA().get_drawMode(), cfg);
-				_vp.drawRNAInterpolated(r);
-				_vp.repaint();
+					RNA r = new RNA();
+					VARNAConfig cfg = new VARNAConfig();
+					r.setRNA(manualInput.getTseq().getText(), manualInput
+							.getTstr().getText());
+					r.drawRNA(_vp.getRNA().get_drawMode(), cfg);
+					_vp.drawRNAInterpolated(r);
+					_vp.repaint();
 				} catch (ExceptionFileFormatOrSyntax e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -379,8 +356,8 @@ public class VueUI {
 
 	public void UISetTitle() {
 		if (_vp.isModifiable()) {
-			String res = JOptionPane.showInputDialog(_vp, "Input title", _vp
-					.getTitle());
+			String res = JOptionPane.showInputDialog(_vp, "Input title",
+					_vp.getTitle());
 			if (res != null) {
 				_vp.setTitle(res);
 				_vp.repaint();
@@ -390,7 +367,8 @@ public class VueUI {
 
 	public void UISetColorMapCaption() {
 		if (_vp.isModifiable()) {
-			String res = JOptionPane.showInputDialog(_vp, "Input new color map caption", _vp.getColorMapCaption());
+			String res = JOptionPane.showInputDialog(_vp,
+					"Input new color map caption", _vp.getColorMapCaption());
 			if (res != null) {
 				_vp.setColorMapCaption(res);
 				_vp.repaint();
@@ -401,27 +379,29 @@ public class VueUI {
 	public void UISetBaseCharacter() {
 		if (_vp.isModifiable()) {
 			int i = _vp.getNearestBase();
-			
+
 			if (_vp.isComparisonMode()) {
 				String res = JOptionPane.showInputDialog(_vp, "Input base",
 						((ModeleBasesComparison) _vp.getRNA().get_listeBases()
 								.get(i)).getBases());
 				if (res != null) {
-					ModeleBasesComparison mb = (ModeleBasesComparison) _vp.getRNA().get_listeBases().get(i);
-					String bck = mb.getBase1()+"|"+mb.getBase2();
-					mb.setBase1(((res.length()>0)?res.charAt(0):' '));
-					mb.setBase2(((res.length()>1)?res.charAt(1):' '));
+					ModeleBasesComparison mb = (ModeleBasesComparison) _vp
+							.getRNA().get_listeBases().get(i);
+					String bck = mb.getBase1() + "|" + mb.getBase2();
+					mb.setBase1(((res.length() > 0) ? res.charAt(0) : ' '));
+					mb.setBase2(((res.length() > 1) ? res.charAt(1) : ' '));
 					_vp.repaint();
 					_vp.fireSequenceChanged(i, bck, res);
 				}
 
 			} else {
-				
+
 				String res = JOptionPane.showInputDialog(_vp, "Input base",
 						((ModeleBaseNucleotide) _vp.getRNA().get_listeBases()
 								.get(i)).getBase());
 				if (res != null) {
-					ModeleBaseNucleotide mb = (ModeleBaseNucleotide) _vp.getRNA().get_listeBases().get(i);
+					ModeleBaseNucleotide mb = (ModeleBaseNucleotide) _vp
+							.getRNA().get_listeBases().get(i);
 					String bck = mb.getBase();
 					mb.setBase(res);
 					_vp.repaint();
@@ -450,6 +430,8 @@ public class VueUI {
 			"SVG Picture", "svg", "SVG");
 	FileNameExtensionFilter _xfigFilter = new FileNameExtensionFilter(
 			"XFig Diagram", "fig", "xfig", "FIG", "XFIG");
+	FileNameExtensionFilter _tikzFilter = new FileNameExtensionFilter(
+			"PGF/Tikz diagram", "tex", "pgf");
 
 	public void UIExport() throws ExceptionExportFailed,
 			ExceptionPermissionDenied, ExceptionWritingForbidden,
@@ -457,6 +439,7 @@ public class VueUI {
 		ArrayList<FileNameExtensionFilter> v = new ArrayList<FileNameExtensionFilter>();
 		v.add(_epsFilter);
 		v.add(_svgFilter);
+		v.add(_tikzFilter);
 		v.add(_xfigFilter);
 		v.add(_jpgFilter);
 		v.add(_pngFilter);
@@ -469,11 +452,13 @@ public class VueUI {
 				_vp.getRNA().saveRNAEPS(dest, _vp.getConfig());
 			} else if (extLower.equals(".svg")) {
 				_vp.getRNA().saveRNASVG(dest, _vp.getConfig());
-			} else if (extLower.equals(".fig") || extLower.equals("xfig")) {
+			} else if (extLower.equals(".fig") || extLower.equals(".xfig")) {
 				_vp.getRNA().saveRNAXFIG(dest, _vp.getConfig());
+			} else if (extLower.equals(".pgf") || extLower.equals(".tex")) {
+				_vp.getRNA().saveRNATIKZ(dest, _vp.getConfig());
 			} else if (extLower.equals(".png")) {
 				saveToPNG(dest);
-			} else if (extLower.equals("jpg") || extLower.equals("jpeg")) {
+			} else if (extLower.equals(".jpg") || extLower.equals(".jpeg")) {
 				saveToJPEG(dest);
 			}
 		}
@@ -490,7 +475,7 @@ public class VueUI {
 	public void UIPrint() {
 		VARNAPrinter.printComponent(_vp);
 	}
-	
+
 	public void UIExportPNG() throws ExceptionExportFailed {
 		String dest = UIChooseOutputFile(_pngFilter);
 		if (dest != null) {
@@ -503,6 +488,14 @@ public class VueUI {
 		String dest = UIChooseOutputFile(_xfigFilter);
 		if (dest != null) {
 			_vp.getRNA().saveRNAXFIG(dest, _vp.getConfig());
+		}
+	}
+
+	public void UIExportTIKZ() throws ExceptionExportFailed,
+			ExceptionWritingForbidden {
+		String dest = UIChooseOutputFile(_tikzFilter);
+		if (dest != null) {
+			_vp.getRNA().saveRNATIKZ(dest, _vp.getConfig());
 		}
 	}
 
@@ -650,7 +643,7 @@ public class VueUI {
 		_vp.setTranslation(newTrans);
 		// verification que la translation ne pose pas de problemes
 		_vp.checkTranslation();
-		//System.out.println("Zoom in");
+		// System.out.println("Zoom in");
 		_vp.repaint();
 	}
 
@@ -685,30 +678,31 @@ public class VueUI {
 		_vp.repaint();
 	}
 
-
 	public void UIGlobalRescale() {
 		if (_vp.isModifiable()) {
 			if (_vp.getRNA().get_listeBases().size() > 0) {
 				VueGlobalRescale rescale = new VueGlobalRescale(_vp);
 				if (JOptionPane.showConfirmDialog(_vp, rescale.getPanel(),
-						"Rescales the whole RNA (No redraw)", JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) {
-					UIGlobalRescale(1./rescale.getScale());
+						"Rescales the whole RNA (No redraw)",
+						JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) {
+					UIGlobalRescale(1. / rescale.getScale());
 				}
 				_vp.drawBBox(false);
 				_vp.repaint();
 			}
 		}
 	}
-	
+
 	public void UIGlobalRescale(double d) {
 		if (_vp.isModifiable()) {
 			if (_vp.getRNA().get_listeBases().size() > 0) {
-					_vp.globalRescale(d);
-					_undoableEditSupport.postEdit(new VARNAEdits.RescaleRNAEdit(d,_vp));
+				_vp.globalRescale(d);
+				_undoableEditSupport.postEdit(new VARNAEdits.RescaleRNAEdit(d,
+						_vp));
 			}
 		}
 	}
-	
+
 	public void UIGlobalRotation() {
 		if (_vp.isModifiable()) {
 			if (_vp.getRNA().get_listeBases().size() > 0) {
@@ -724,16 +718,16 @@ public class VueUI {
 			}
 		}
 	}
-	
+
 	public void UIGlobalRotation(double d) {
 		if (_vp.isModifiable()) {
 			if (_vp.getRNA().get_listeBases().size() > 0) {
-					_vp.globalRotation(d);
-					_undoableEditSupport.postEdit(new VARNAEdits.RotateRNAEdit(d,_vp));
+				_vp.globalRotation(d);
+				_undoableEditSupport.postEdit(new VARNAEdits.RotateRNAEdit(d,
+						_vp));
 			}
 		}
 	}
-
 
 	public void UISetBPStyle() {
 		if (_vp.getRNA().get_listeBases().size() > 0) {
@@ -825,8 +819,8 @@ public class VueUI {
 
 	public void UIEditBasePair() {
 		if (_vp.isModifiable()) {
-			ModeleBase mb = _vp.getRNA().get_listeBases().get(
-					_vp.getNearestBase());
+			ModeleBase mb = _vp.getRNA().get_listeBases()
+					.get(_vp.getNearestBase());
 			if (mb.getElementStructure() != -1) {
 				ModeleBP msbp = mb.getStyleBP();
 				ModeleBP.Edge bck5 = msbp.getEdgePartner5();
@@ -848,13 +842,13 @@ public class VueUI {
 
 	public void UIColorBasePair() {
 		if (_vp.isModifiable()) {
-			ModeleBase mb = _vp.getRNA().get_listeBases().get(
-					_vp.getNearestBase());
+			ModeleBase mb = _vp.getRNA().get_listeBases()
+					.get(_vp.getNearestBase());
 			if (mb.getElementStructure() != -1) {
 				ModeleBP msbp = mb.getStyleBP();
 				Color c = JColorChooser.showDialog(_vp,
-						"Choose custom base pair color", msbp.getStyle().getColor(_vp
-								.getConfig()._bondColor));
+						"Choose custom base pair color", msbp.getStyle()
+								.getColor(_vp.getConfig()._bondColor));
 				if (c != null) {
 					msbp.getStyle().setCustomColor(c);
 					_vp.repaint();
@@ -865,8 +859,8 @@ public class VueUI {
 
 	public void UIThicknessBasePair() {
 		if (_vp.isModifiable()) {
-			ModeleBase mb = _vp.getRNA().get_listeBases().get(
-					_vp.getNearestBase());
+			ModeleBase mb = _vp.getRNA().get_listeBases()
+					.get(_vp.getNearestBase());
 			if (mb.getElementStructure() != -1) {
 				ModeleBP msbp = mb.getStyleBP();
 				ArrayList<ModeleBP> bases = new ArrayList<ModeleBP>();
@@ -881,7 +875,6 @@ public class VueUI {
 			}
 		}
 	}
-	
 
 	public void saveToPNG(String filename) throws ExceptionExportFailed {
 		VueJPEG jpeg = new VueJPEG(true, false);
@@ -889,14 +882,13 @@ public class VueUI {
 				"Set resolution", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
 			Double scale = jpeg.getScaleSlider().getValue() / 100.0;
 			BufferedImage myImage = new BufferedImage((int) Math.round(_vp
-					.getWidth()
-					* scale), (int) Math.round(_vp.getHeight() * scale),
-					BufferedImage.TRANSLUCENT);
+					.getWidth() * scale), (int) Math.round(_vp.getHeight()
+					* scale), BufferedImage.TRANSLUCENT);
 			Graphics2D g2 = myImage.createGraphics();
 			AffineTransform AF = new AffineTransform();
 			AF.setToScale(scale, scale);
 			g2.setTransform(AF);
-			_vp.paintComponent(g2,!_vp.getConfig()._drawBackground);
+			_vp.paintComponent(g2, !_vp.getConfig()._drawBackground);
 			g2.dispose();
 			try {
 				ImageIO.write(myImage, "PNG", new File(filename));
@@ -917,17 +909,18 @@ public class VueUI {
 			else
 				scale = jpeg.getScaleSlider().getValue() / 100.;
 			BufferedImage myImage = new BufferedImage((int) Math.round(_vp
-					.getWidth()
-					* scale), (int) Math.round(_vp.getHeight() * scale),
-					BufferedImage.TYPE_INT_RGB);
+					.getWidth() * scale), (int) Math.round(_vp.getHeight()
+					* scale), BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2 = myImage.createGraphics();
 			AffineTransform AF = new AffineTransform();
 			AF.setToScale(scale, scale);
 			g2.setTransform(AF);
 			_vp.paintComponent(g2);
 			try {
-				FileImageOutputStream out = new FileImageOutputStream(new File(filename));
-				ImageWriter writer = ImageIO.getImageWritersByFormatName("jpeg").next();
+				FileImageOutputStream out = new FileImageOutputStream(new File(
+						filename));
+				ImageWriter writer = ImageIO
+						.getImageWritersByFormatName("jpeg").next();
 				ImageWriteParam params = writer.getDefaultWriteParam();
 				params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 				params.setCompressionQuality(jpeg.getQualitySlider().getValue() / 100.0f);
@@ -972,8 +965,8 @@ public class VueUI {
 
 	public void UIPickSpecialBasesColor() {
 		Color c = JColorChooser.showDialog(_vp,
-				"Choose new special bases color", _vp
-						.getNonStandardBasesColor());
+				"Choose new special bases color",
+				_vp.getNonStandardBasesColor());
 		if (c != null) {
 			_vp.setNonStandardBasesColor(c);
 			_vp.setColorNonStandardBases(true);
@@ -1034,7 +1027,7 @@ public class VueUI {
 			_vp.repaint();
 		}
 	}
-	
+
 	public void UIAutoAnnotateInteriorLoops() {
 		if (_vp.isModifiable()) {
 			_vp.getRNA().autoAnnotateInteriorLoops();
@@ -1132,15 +1125,15 @@ public class VueUI {
 			annotationAdd.show();
 		}
 	}
-	
+
 	public void UIAnnotationsAddBase(int x, int y) {
 		if (_vp.isModifiable()) {
 			ModeleBase mb = _vp.getBaseAt(new Point2D.Double(x, y));
-			if(mb!=null)
-			{
+			if (mb != null) {
 				_vp.highlightSelectedBase(mb);
 				TextAnnotation textAnnot = new TextAnnotation("", mb);
-				VueAnnotation annotationAdd = new VueAnnotation(_vp,  textAnnot,true);
+				VueAnnotation annotationAdd = new VueAnnotation(_vp, textAnnot,
+						true);
 				annotationAdd.show();
 			}
 		}
@@ -1149,90 +1142,88 @@ public class VueUI {
 	public void UIAnnotationsAddLoop(int x, int y) {
 		if (_vp.isModifiable()) {
 			try {
-			ModeleBase mb = _vp.getBaseAt(new Point2D.Double(x, y));
-			if(mb!=null)
-			{
-				Vector<Integer> v = _vp.getRNA().getLoopBases(mb.getIndex());
-				ArrayList<ModeleBase> mbs = _vp.getRNA().getBasesAt(v); 
-				TextAnnotation textAnnot;
-					textAnnot = new TextAnnotation("", mbs,TextAnnotation.AnchorType.LOOP);
-				_vp.setSelection(mbs);
-				VueAnnotation annotationAdd = new VueAnnotation(_vp,  textAnnot,true);
-				annotationAdd.show();
-			}
+				ModeleBase mb = _vp.getBaseAt(new Point2D.Double(x, y));
+				if (mb != null) {
+					Vector<Integer> v = _vp.getRNA()
+							.getLoopBases(mb.getIndex());
+					ArrayList<ModeleBase> mbs = _vp.getRNA().getBasesAt(v);
+					TextAnnotation textAnnot;
+					textAnnot = new TextAnnotation("", mbs,
+							TextAnnotation.AnchorType.LOOP);
+					_vp.setSelection(mbs);
+					VueAnnotation annotationAdd = new VueAnnotation(_vp,
+							textAnnot, true);
+					annotationAdd.show();
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	private ArrayList<ModeleBase> extractMaxContiguousPortion(ArrayList<ModeleBase> m)
-	{
+
+	private ArrayList<ModeleBase> extractMaxContiguousPortion(
+			ArrayList<ModeleBase> m) {
 		ModeleBase[] tab = new ModeleBase[_vp.getRNA().getSize()];
-		for(int i=0;i<tab.length;i++)
-		{ tab[i] = null; }
-		for(ModeleBase mb : m)
-		{ tab[mb.getIndex()] = mb; }
+		for (int i = 0; i < tab.length; i++) {
+			tab[i] = null;
+		}
+		for (ModeleBase mb : m) {
+			tab[mb.getIndex()] = mb;
+		}
 		ArrayList<ModeleBase> best = new ArrayList<ModeleBase>();
 		ArrayList<ModeleBase> current = new ArrayList<ModeleBase>();
-		for(int i=0;i<tab.length;i++)
-		{ 
-			if (tab[i] != null)
-			{  current.add(tab[i]);  }
-			else
-			{    
-				if (current.size()>best.size())
-				  best = current;
+		for (int i = 0; i < tab.length; i++) {
+			if (tab[i] != null) {
+				current.add(tab[i]);
+			} else {
+				if (current.size() > best.size())
+					best = current;
 				current = new ArrayList<ModeleBase>();
 			}
 		}
-		if (current.size()>best.size())
-		{
+		if (current.size() > best.size()) {
 			best = current;
 		}
 		return best;
 	}
 
-
-	
 	public void UIAnnotationsAddRegion(int x, int y) {
 		if (_vp.isModifiable()) {
 			ArrayList<ModeleBase> mb = _vp.getSelection().getBases();
-			if (mb.size()==0)
-			{
+			if (mb.size() == 0) {
 				ModeleBase m = _vp.getBaseAt(new Point2D.Double(x, y));
 				mb.add(m);
 			}
 			mb = extractMaxContiguousPortion(extractMaxContiguousPortion(mb));
 			_vp.setSelection(mb);
-				HighlightRegionAnnotation regionAnnot = new HighlightRegionAnnotation(mb);
-				_vp.addHighlightRegion(regionAnnot);
-				VueHighlightRegionEdit annotationAdd = new VueHighlightRegionEdit(_vp,regionAnnot);
-				if (!annotationAdd.show())
-				{  _vp.removeHighlightRegion(regionAnnot);  }
-				_vp.clearSelection();
+			HighlightRegionAnnotation regionAnnot = new HighlightRegionAnnotation(
+					mb);
+			_vp.addHighlightRegion(regionAnnot);
+			VueHighlightRegionEdit annotationAdd = new VueHighlightRegionEdit(
+					_vp, regionAnnot);
+			if (!annotationAdd.show()) {
+				_vp.removeHighlightRegion(regionAnnot);
+			}
+			_vp.clearSelection();
 		}
 	}
 
 	public void UIAnnotationsAddChemProb(int x, int y) {
-		if (_vp.isModifiable() && _vp.getRNA().getSize()>1) {
+		if (_vp.isModifiable() && _vp.getRNA().getSize() > 1) {
 			Point2D.Double p = _vp.panelToLogicPoint(new Point2D.Double(x, y));
 			ModeleBase m1 = _vp.getBaseAt(new Point2D.Double(x, y));
 			ModeleBase best = null;
-			if (m1.getIndex()-1>=0)
-			{ best = _vp.getRNA().getBaseAt(m1.getIndex()-1);}
-			if (m1.getIndex()+1<_vp.getRNA().getSize())
-			{
-				ModeleBase m2 = _vp.getRNA().getBaseAt(m1.getIndex()+1);
-				if (best==null)
-				{
+			if (m1.getIndex() - 1 >= 0) {
+				best = _vp.getRNA().getBaseAt(m1.getIndex() - 1);
+			}
+			if (m1.getIndex() + 1 < _vp.getRNA().getSize()) {
+				ModeleBase m2 = _vp.getRNA().getBaseAt(m1.getIndex() + 1);
+				if (best == null) {
 					best = m2;
-				}
-				else
-				{
-					if (best.getCoords().distance(p)>m2.getCoords().distance(p))
-					{
+				} else {
+					if (best.getCoords().distance(p) > m2.getCoords().distance(
+							p)) {
 						best = m2;
 					}
 				}
@@ -1241,30 +1232,33 @@ public class VueUI {
 			tab.add(m1);
 			tab.add(best);
 			_vp.setSelection(tab);
-				ChemProbAnnotation regionAnnot = new ChemProbAnnotation(m1,best);
-				_vp.getRNA().addChemProbAnnotation(regionAnnot);
-				VueChemProbAnnotation annotationAdd = new VueChemProbAnnotation(_vp,regionAnnot);
-				if (!annotationAdd.show())
-				{  _vp.getRNA().removeChemProbAnnotation(regionAnnot);  }
-				_vp.clearSelection();
+			ChemProbAnnotation regionAnnot = new ChemProbAnnotation(m1, best);
+			_vp.getRNA().addChemProbAnnotation(regionAnnot);
+			VueChemProbAnnotation annotationAdd = new VueChemProbAnnotation(
+					_vp, regionAnnot);
+			if (!annotationAdd.show()) {
+				_vp.getRNA().removeChemProbAnnotation(regionAnnot);
+			}
+			_vp.clearSelection();
 		}
 	}
 
-	
 	public void UIAnnotationsAddHelix(int x, int y) {
 		if (_vp.isModifiable()) {
 			try {
-			ModeleBase mb = _vp.getBaseAt(new Point2D.Double(x, y));
-			if(mb!=null)
-			{
-				ArrayList<Integer> v = _vp.getRNA().findHelix(mb.getIndex());
-				ArrayList<ModeleBase> mbs = _vp.getRNA().getBasesAt(v); 
-				TextAnnotation textAnnot;
-					textAnnot = new TextAnnotation("", mbs,TextAnnotation.AnchorType.HELIX);
-				_vp.setSelection(mbs);
-				VueAnnotation annotationAdd = new VueAnnotation(_vp,  textAnnot,true);
-				annotationAdd.show();
-			}
+				ModeleBase mb = _vp.getBaseAt(new Point2D.Double(x, y));
+				if (mb != null) {
+					ArrayList<Integer> v = _vp.getRNA()
+							.findHelix(mb.getIndex());
+					ArrayList<ModeleBase> mbs = _vp.getRNA().getBasesAt(v);
+					TextAnnotation textAnnot;
+					textAnnot = new TextAnnotation("", mbs,
+							TextAnnotation.AnchorType.HELIX);
+					_vp.setSelection(mbs);
+					VueAnnotation annotationAdd = new VueAnnotation(_vp,
+							textAnnot, true);
+					annotationAdd.show();
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1280,7 +1274,6 @@ public class VueUI {
 		}
 	}
 
-	
 	public void UIAnnotationsAdd() {
 		if (_vp.isModifiable()) {
 			VueAnnotation annotationAdd = new VueAnnotation(_vp);
@@ -1292,15 +1285,14 @@ public class VueUI {
 		if (_vp.isModifiable()) {
 			new VueBPList(_vp);
 		}
-	} 
-	
+	}
+
 	public void UIEditAllBases() {
 		if (_vp.isModifiable()) {
-			new VueBases(_vp,VueBases.ALL_MODE);
+			new VueBases(_vp, VueBases.ALL_MODE);
 		}
-	} 
-	
-	
+	}
+
 	public void UIAnnotationsRemove() {
 		if (_vp.isModifiable()) {
 			new VueListeAnnotations(_vp, VueListeAnnotations.REMOVE);
@@ -1316,67 +1308,73 @@ public class VueUI {
 	public void UIAddBP(int i, int j, ModeleBP ms) {
 		if (_vp.isModifiable()) {
 			_vp.getRNA().addBP(i, j, ms);
-			_undoableEditSupport.postEdit(new VARNAEdits.AddBPEdit(i,j,ms,_vp));
+			_undoableEditSupport.postEdit(new VARNAEdits.AddBPEdit(i, j, ms,
+					_vp));
 			_vp.repaint();
 
 			HashSet<ModeleBP> tmp = new HashSet<ModeleBP>();
 			tmp.add(ms);
-			_vp.fireStructureChanged(new HashSet<ModeleBP>(_vp.getRNA().getAllBPs()), tmp, new HashSet<ModeleBP>());
+			_vp.fireStructureChanged(new HashSet<ModeleBP>(_vp.getRNA()
+					.getAllBPs()), tmp, new HashSet<ModeleBP>());
 		}
 	}
-	
+
 	public void UIRemoveBP(ModeleBP ms) {
 		if (_vp.isModifiable()) {
-			_undoableEditSupport.postEdit(new VARNAEdits.RemoveBPEdit(ms.getIndex5(),ms.getIndex3(),ms,_vp));
+			_undoableEditSupport.postEdit(new VARNAEdits.RemoveBPEdit(ms
+					.getIndex5(), ms.getIndex3(), ms, _vp));
 			_vp.getRNA().removeBP(ms);
 			_vp.repaint();
 
 			HashSet<ModeleBP> tmp = new HashSet<ModeleBP>();
 			tmp.add(ms);
-			_vp.fireStructureChanged(new HashSet<ModeleBP>(_vp.getRNA().getAllBPs()), new HashSet<ModeleBP>(), tmp);
+			_vp.fireStructureChanged(new HashSet<ModeleBP>(_vp.getRNA()
+					.getAllBPs()), new HashSet<ModeleBP>(), tmp);
 		}
 	}
-	
-	public void UIShiftBaseCoord(ArrayList<Integer> indices, double dx, double dy) {
-		if (_vp.isModifiable()) {
-			Hashtable<Integer,Point2D.Double> backupPos = new Hashtable<Integer,Point2D.Double>(); 
 
-			for (int index:indices)
-			{
+	public void UIShiftBaseCoord(ArrayList<Integer> indices, double dx,
+			double dy) {
+		if (_vp.isModifiable()) {
+			Hashtable<Integer, Point2D.Double> backupPos = new Hashtable<Integer, Point2D.Double>();
+
+			for (int index : indices) {
 				ModeleBase mb = _vp.getRNA().getBaseAt(index);
 				Point2D.Double d = mb.getCoords();
-				backupPos.put(index,d);
-				_vp.getRNA().setCoord(index, d.x+dx,d.y+dy);
-				_vp.getRNA().setCenter(index, mb.getCenter().x+dx,mb.getCenter().y+dy);
+				backupPos.put(index, d);
+				_vp.getRNA().setCoord(index, d.x + dx, d.y + dy);
+				_vp.getRNA().setCenter(index, mb.getCenter().x + dx,
+						mb.getCenter().y + dy);
 			}
-			_undoableEditSupport.postEdit(new VARNAEdits.BasesShiftEdit(indices,dx,dy,_vp));
+			_undoableEditSupport.postEdit(new VARNAEdits.BasesShiftEdit(
+					indices, dx, dy, _vp));
 			_vp.repaint();
 			_vp.fireLayoutChanged(backupPos);
 		}
 	}
 
 	public void UIShiftBaseCoord(ArrayList<Integer> indices, Point2D.Double dv) {
-		UIShiftBaseCoord(indices, dv.x,dv.y);
+		UIShiftBaseCoord(indices, dv.x, dv.y);
 	}
 
 	public void UIMoveSingleBase(int index, double nx, double ny) {
 		if (_vp.isModifiable()) {
 			ModeleBase mb = _vp.getRNA().getBaseAt(index);
 			Point2D.Double d = mb.getCoords();
-			Hashtable<Integer,Point2D.Double> backupPos = new Hashtable<Integer,Point2D.Double>(); 
-			backupPos.put(index,d);
-			_undoableEditSupport.postEdit(new VARNAEdits.SingleBaseMoveEdit(index,nx,ny,_vp));
-			_vp.getRNA().setCoord(index, nx,ny);
+			Hashtable<Integer, Point2D.Double> backupPos = new Hashtable<Integer, Point2D.Double>();
+			backupPos.put(index, d);
+			_undoableEditSupport.postEdit(new VARNAEdits.SingleBaseMoveEdit(
+					index, nx, ny, _vp));
+			_vp.getRNA().setCoord(index, nx, ny);
 			_vp.repaint();
 			_vp.fireLayoutChanged(backupPos);
 		}
 	}
 
 	public void UIMoveSingleBase(int index, Point2D.Double dv) {
-		UIMoveSingleBase(index, dv.x,dv.y);
+		UIMoveSingleBase(index, dv.x, dv.y);
 	}
-	
-	
+
 	public void UISetBaseCenter(int index, double x, double y) {
 		UISetBaseCenter(index, new Point2D.Double(x, y));
 	}
@@ -1386,17 +1384,14 @@ public class VueUI {
 			_vp.getRNA().setCenter(index, p);
 		}
 	}
-	
-	public void UIUndo()
-	{
+
+	public void UIUndo() {
 		_vp.undo();
 	}
 
-	public void UIRedo()
-	{
+	public void UIRedo() {
 		_vp.redo();
 	}
-
 
 	/**
 	 * Move a helix of the rna
@@ -1404,30 +1399,25 @@ public class VueUI {
 	 * @param index
 	 *            :the index of the selected base
 	 * @param newPos
-	 *            :the new xy coordinate, within the logical system of coordinates 
+	 *            :the new xy coordinate, within the logical system of
+	 *            coordinates
 	 */
-	public void UIMoveHelixAtom(int index, Point2D.Double newPos) 
-	{
+	public void UIMoveHelixAtom(int index, Point2D.Double newPos) {
 		if (_vp.isModifiable() && (index >= 0)
-				&& (index < _vp.getRNA().get_listeBases().size())) 
-		{
+				&& (index < _vp.getRNA().get_listeBases().size())) {
 			int indexTo = _vp.getRNA().get_listeBases().get(index)
 					.getElementStructure();
-			Point h  = _vp.getRNA().getHelixInterval(index);
+			Point h = _vp.getRNA().getHelixInterval(index);
 			Point ml = _vp.getRNA().getMultiLoop(h.x);
 			int i = ml.x;
-			if (indexTo != -1) 
-			{
-				if (i == 0) 
-				{
-					if (shouldFlip(index, newPos)) 
-					{
+			if (indexTo != -1) {
+				if (i == 0) {
+					if (shouldFlip(index, newPos)) {
 						UIFlipHelix(h);
-						_undoableEditSupport.postEdit(new VARNAEdits.HelixFlipEdit(h,_vp));
+						_undoableEditSupport
+								.postEdit(new VARNAEdits.HelixFlipEdit(h, _vp));
 					}
-				} 
-				else 
-				{
+				} else {
 					UIRotateHelixAtom(index, newPos);
 				}
 
@@ -1435,14 +1425,13 @@ public class VueUI {
 			_vp.fireLayoutChanged();
 		}
 	}
-	
-	
+
 	/**
 	 * Flip an helix around its supporting base
 	 */
 	public void UIFlipHelix(Point h) {
-		int hBeg=h.x;
-		int hEnd=h.y;
+		int hBeg = h.x;
+		int hEnd = h.y;
 		Point2D.Double A = _vp.getRNA().getCoords(hBeg);
 		Point2D.Double B = _vp.getRNA().getCoords(hEnd);
 		Point2D.Double AB = new Point2D.Double(B.x - A.x, B.y - A.y);
@@ -1451,7 +1440,7 @@ public class VueUI {
 		// unit x-vector Ox.
 		Point2D.Double O = A;
 		Point2D.Double Ox = new Point2D.Double(AB.x / normAB, AB.y / normAB);
-		Hashtable<Integer,Point2D.Double> old = new Hashtable<Integer,Point2D.Double>(); 
+		Hashtable<Integer, Point2D.Double> old = new Hashtable<Integer, Point2D.Double>();
 		for (int i = hBeg + 1; i < hEnd; i++) {
 			Point2D.Double P = _vp.getRNA().getCoords(i);
 			Point2D.Double nP = RNA.project(O, Ox, P);
@@ -1483,18 +1472,14 @@ public class VueUI {
 		return (signC * signP < 0.0);
 	}
 
-
-	
-	public void UIRotateHelixAtom(int index, Point2D.Double newPos)
-	{
-		Point h  = _vp.getRNA().getHelixInterval(index);
+	public void UIRotateHelixAtom(int index, Point2D.Double newPos) {
+		Point h = _vp.getRNA().getHelixInterval(index);
 		Point ml = _vp.getRNA().getMultiLoop(h.x);
 		int i = ml.x;
 		int prevIndex = h.x;
 		int nextIndex = h.y;
 		while (i <= ml.y) {
-			int j = _vp.getRNA().get_listeBases().get(i)
-					.getElementStructure();
+			int j = _vp.getRNA().get_listeBases().get(i).getElementStructure();
 			if ((j != -1) && (i < h.x)) {
 				prevIndex = i;
 			}
@@ -1502,8 +1487,7 @@ public class VueUI {
 				nextIndex = i;
 			}
 			if ((j > i) && (j < ml.y)) {
-				i = _vp.getRNA().get_listeBases().get(i)
-						.getElementStructure();
+				i = _vp.getRNA().get_listeBases().get(i).getElementStructure();
 			} else {
 				i++;
 			}
@@ -1527,10 +1511,10 @@ public class VueUI {
 			helixStop = _vp.getRNA().getCoords(h.x);
 		}
 
-		Point2D.Double center = _vp.getRNA().get_listeBases().get(
-				h.x).getCenter();
-		double base = (RNA.computeAngle(center, limitLoopRight) + RNA.computeAngle(
-				center, limitLoopLeft)) / 2.0;
+		Point2D.Double center = _vp.getRNA().get_listeBases().get(h.x)
+				.getCenter();
+		double base = (RNA.computeAngle(center, limitLoopRight) + RNA
+				.computeAngle(center, limitLoopLeft)) / 2.0;
 		double pLimR = RNA.computeAngle(center, limitLeft) - base;
 		double pHelR = RNA.computeAngle(center, helixStart) - base;
 		double pNew = RNA.computeAngle(center, newPos) - base;
@@ -1568,22 +1552,21 @@ public class VueUI {
 				delta = maxDelta;
 			}
 		}
-		double corrected = RNA.correctHysteresis((delta+base+(pHelR+pHelL)/2.));
-		delta = corrected-(base+(pHelR+pHelL)/2.);
-		_undoableEditSupport.postEdit(new VARNAEdits.HelixRotateEdit(delta,base,pLimL,pLimR,h,ml,_vp));
+		double corrected = RNA
+				.correctHysteresis((delta + base + (pHelR + pHelL) / 2.));
+		delta = corrected - (base + (pHelR + pHelL) / 2.);
+		_undoableEditSupport.postEdit(new VARNAEdits.HelixRotateEdit(delta,
+				base, pLimL, pLimR, h, ml, _vp));
 		UIRotateEverything(delta, base, pLimL, pLimR, h, ml);
 	}
-	
-	
-	public void UIRotateEverything(double delta, double base, double pLimL, double pLimR, Point h, Point ml)
-	{
-		Hashtable<Integer,Point2D.Double> backupPos = new Hashtable<Integer,Point2D.Double>(); 
-		_vp.getRNA().rotateEverything(delta, base, pLimL, pLimR, h, ml,backupPos);
+
+	public void UIRotateEverything(double delta, double base, double pLimL,
+			double pLimR, Point h, Point ml) {
+		Hashtable<Integer, Point2D.Double> backupPos = new Hashtable<Integer, Point2D.Double>();
+		_vp.getRNA().rotateEverything(delta, base, pLimL, pLimR, h, ml,
+				backupPos);
 		_vp.fireLayoutChanged(backupPos);
 	}
-	
-	
-	
 
 	private double normalizeAngle(double angle) {
 		return normalizeAngle(angle, 0.0);
@@ -1599,7 +1582,4 @@ public class VueUI {
 		return angle;
 	}
 
-
-
-	
 }

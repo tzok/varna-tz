@@ -76,7 +76,7 @@ import java.util.Vector;
 import javax.xml.transform.sax.TransformerHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
-import pl.poznan.put.AlternativeLeontisWesthofDrawing;
+import pl.poznan.put.varna.AlternativeLeontisWesthofDrawing;
 
 /**
  * The RNA model which contain the base list and the draw algorithm mode

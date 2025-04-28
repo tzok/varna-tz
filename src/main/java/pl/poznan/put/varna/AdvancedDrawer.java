@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import fr.orsay.lri.varna.models.VARNAConfig;
 import fr.orsay.lri.varna.models.rna.ModeleBP;
+import fr.orsay.lri.varna.models.rna.ModeleBPStyle; // Import ModeleBPStyle
 import fr.orsay.lri.varna.models.rna.ModeleBase;
 import fr.orsay.lri.varna.models.rna.ModelBaseStyle; // Import ModelBaseStyle
 import fr.orsay.lri.varna.models.rna.RNA;
@@ -367,37 +368,6 @@ public class AdvancedDrawer {
     }
 
     // --- Apply Nucleotide Colors ---
-    if (structureData.nucleotides != null) {
-      for (Nucleotide nucData : structureData.nucleotides) {
-        Integer index = idToIndexMap.get(nucData.id);
-        Integer index2 = idToIndexMap.get(bpData.id2);
-
-        if (index1 == null || index2 == null) {
-          System.err.println(
-              "Warning: Skipping customization for base pair involving missing nucleotide IDs: "
-                  + bpData.id1
-                  + ", "
-                  + bpData.id2);
-          continue;
-        }
-
-        // Canonical pairs are already handled by rna.setRNA(sequence, structure)
-        if (bpData.canonical == null || !bpData.canonical) {
-          try {
-            rna.addBPAux(index1, index2, bpData.edge5, bpData.edge3, bpData.stericity);
-          } catch (Exception e) {
-            System.err.println(
-                "Warning: Failed to add non-canonical base pair between indices "
-                    + (index1 + 1)
-                    + " and "
-                    + (index2 + 1)
-                    + ": "
-                    + e.getMessage());
-          }
-        }
-      }
-    }
-
     // Apply nucleotide colors
     if (structureData.nucleotides != null) {
       for (Nucleotide nucData : structureData.nucleotides) {

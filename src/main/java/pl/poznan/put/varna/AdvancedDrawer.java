@@ -154,9 +154,9 @@ public class AdvancedDrawer {
           rna.saveRNASVG(outputFilename, config);
           System.out.println("Initial SVG saved successfully.");
 
-          // 7. Post-process SVG to remove discontinuous backbone lines
+          // 7. Post-process SVG to remove discontinuous backbone lines and filter text labels
           try {
-            removeDiscontinuousBackboneLines(outputFilename, structureData);
+            postProcessSvg(outputFilename, structureData); // Renamed method call
             System.out.println("SVG post-processed successfully.");
           } catch (Exception xmlException) {
             System.err.println("Error during SVG post-processing:");
@@ -460,10 +460,35 @@ public class AdvancedDrawer {
 
     if (discontinuityIndices.isEmpty()) {
       System.out.println("No numbering discontinuities found. SVG not modified.");
-      return; // No discontinuities, nothing to remove
+      System.out.println("No numbering discontinuities found.");
+      // Continue processing for text labels even if no backbone lines are removed
     }
 
-    // 2. Parse the SVG file
+    // --- Determine External Nucleotides ---
+    int n = structureData.nucleotides.size();
+    boolean[] isExternal = new boolean[n];
+    if (n > 0) {
+      isExternal[0] = true; // First is always external
+      isExternal[n - 1] = true; // Last is always external
+      for (int i = 1; i < n - 1; i++) {
+        Nucleotide prev = structureData.nucleotides.get(i - 1);
+        Nucleotide curr = structureData.nucleotides.get(i);
+        Nucleotide next = structureData.nucleotides.get(i + 1);
+        if (prev != null && curr != null && next != null) {
+          if (curr.number != prev.number + 1) { // Start of a block
+            isExternal[i] = true;
+          }
+          if (curr.number + 1 != next.number) { // End of a block
+            isExternal[i] = true;
+          }
+        } else {
+          // Handle potential nulls if necessary, assume external if neighbors are null?
+          isExternal[i] = true;
+        }
+      }
+    }
+
+    // --- Parse the SVG file ---
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document doc = builder.parse(new File(svgFilePath));
@@ -522,7 +547,83 @@ public class AdvancedDrawer {
     }
     System.out.println("Removed " + removedCount + " backbone line(s) due to discontinuities.");
 
-    // 5. Write the modified DOM back to the SVG file
+    System.out.println("Removed " + removedCount + " backbone line(s) due to discontinuities.");
+
+    // --- Filter Text Labels ---
+    NodeList textNodes = doc.getElementsByTagName("text");
+    List<Element> textLabelsToRemove = new ArrayList<>();
+    List<Element> numberLabels = new ArrayList<>(); // Store potential number labels in order
+
+    // Find all text elements likely representing numbers
+    for (int i = 0; i < textNodes.getLength(); i++) {
+      Node node = textNodes.item(i);
+      if (node.getNodeType() == Node.ELEMENT_NODE) {
+        Element element = (Element) node;
+        // Check for the specific fill attribute
+        if ("rgb(25%, 25%, 25%)".equals(element.getAttribute("fill"))) {
+          // Basic check if content looks like a number
+          if (element.getTextContent() != null && element.getTextContent().matches("\\d+")) {
+            numberLabels.add(element);
+          }
+        }
+      }
+    }
+
+    // Assume the order of these labels corresponds to the nucleotide sequence order
+    if (numberLabels.size() != n) {
+      System.err.println(
+          "Warning: Found "
+              + numberLabels.size()
+              + " potential number labels, but expected "
+              + n
+              + ". Text label filtering might be incorrect.");
+      // Decide how to proceed. For now, we'll attempt filtering anyway.
+    }
+
+    int labelsChecked = 0;
+    for (int i = 0; i < numberLabels.size() && i < n; i++) { // Iterate up to the minimum size
+      Element textElement = numberLabels.get(i);
+      String textContent = textElement.getTextContent();
+      try {
+        int number = Integer.parseInt(textContent);
+        labelsChecked++;
+        // Check conditions: keep if divisible by 10 OR external
+        boolean keepLabel = (number % 10 == 0) || isExternal[i];
+
+        if (!keepLabel) {
+          textLabelsToRemove.add(textElement);
+        }
+      } catch (NumberFormatException e) {
+        System.err.println(
+            "Warning: Could not parse number from text element content: '"
+                + textContent
+                + "'. Skipping filtering for this element.");
+      } catch (ArrayIndexOutOfBoundsException e) {
+        System.err.println(
+            "Warning: Index mismatch ("
+                + i
+                + ") accessing isExternal array. Skipping filtering for this element.");
+        // This might happen if numberLabels.size() != n
+      }
+    }
+
+    // Remove the identified text labels
+    int removedTextCount = 0;
+    for (Element textElement : textLabelsToRemove) {
+      Node parent = textElement.getParentNode();
+      if (parent != null) {
+        parent.removeChild(textElement);
+        removedTextCount++;
+      }
+    }
+    System.out.println(
+        "Checked "
+            + labelsChecked
+            + " number labels. Removed "
+            + removedTextCount
+            + " text label(s) based on filtering rules.");
+
+    // --- Write the modified DOM back to the SVG file ---
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     Transformer transformer = transformerFactory.newTransformer();
     DOMSource source = new DOMSource(doc);

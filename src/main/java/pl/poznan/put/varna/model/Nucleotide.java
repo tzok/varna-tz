@@ -12,12 +12,18 @@ public class Nucleotide {
   public int number;
 
   @JsonProperty("char")
-  public String character; // Using String as 'char' might be multi-character like 'DA'
+  public String character;
 
   @JsonProperty("color")
-  public String color; // Store as String, can be parsed later if needed
+  public String color;
 
-  // parseColor method moved to AdvancedDrawer class
+  // Transient field to store the parsed color object
+  public transient Optional<Color> parsedColor = Optional.empty();
+
+  // Getter for the parsed color
+  public Optional<Color> getParsedColor() {
+    return parsedColor;
+  }
 
   @Override
   public String toString() {

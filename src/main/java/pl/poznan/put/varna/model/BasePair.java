@@ -27,6 +27,14 @@ public class BasePair {
   @JsonProperty("color")
   public String color; // Optional color field
 
+  // Transient field to store the parsed color object
+  public transient Optional<Color> parsedColor = Optional.empty();
+
+  // Getter for the parsed color
+  public Optional<Color> getParsedColor() {
+    return parsedColor;
+  }
+
   @Override
   public String toString() {
     return "BasePair{"

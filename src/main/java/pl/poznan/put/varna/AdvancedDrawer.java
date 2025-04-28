@@ -19,10 +19,6 @@ import pl.poznan.put.varna.model.Nucleotide;
 import pl.poznan.put.varna.model.StructureData;
 
 public class AdvancedDrawer {
-
-  // Nested classes Nucleotide, BasePair, and StructureData moved to separate files
-  // in pl.poznan.put.varna.model package
-
   // Utility method to parse color strings
   public static Optional<Color> parseColor(String colorString) {
     if (colorString == null || colorString.isEmpty()) {
@@ -76,7 +72,39 @@ public class AdvancedDrawer {
     try {
       structureData = objectMapper.readValue(jsonFile, StructureData.class);
       System.out.println("Successfully parsed and validated JSON file: " + jsonFilePath);
+
+      // Parse colors after loading
+      if (structureData.nucleotides != null) {
+        for (Nucleotide n : structureData.nucleotides) {
+          n.parsedColor = parseColor(n.color);
+        }
+      }
+      if (structureData.basePairs != null) {
+        for (BasePair bp : structureData.basePairs) {
+          bp.parsedColor = parseColor(bp.color);
+        }
+      }
+
       System.out.println("Parsed data summary: " + structureData);
+
+      // Example: Print details including parsed color status
+      if (structureData.nucleotides != null && !structureData.nucleotides.isEmpty()) {
+        Nucleotide firstN = structureData.nucleotides.get(0);
+        System.out.println(
+            "First nucleotide: "
+                + firstN
+                + ", Parsed Color Present: "
+                + firstN.getParsedColor().isPresent());
+      }
+      if (structureData.basePairs != null && !structureData.basePairs.isEmpty()) {
+        BasePair firstBP = structureData.basePairs.get(0);
+        System.out.println(
+            "First base pair: "
+                + firstBP
+                + ", Parsed Color Present: "
+                + firstBP.getParsedColor().isPresent());
+      }
+
     } catch (InvalidFormatException e) {
       // Handle errors specifically related to invalid enum values (validation failure)
       System.err.println("Error: Invalid value found in JSON file: " + jsonFilePath);

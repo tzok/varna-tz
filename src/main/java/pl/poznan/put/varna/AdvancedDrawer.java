@@ -10,17 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-// VARNA imports
-import fr.orsay.lri.varna.VARNAConfig;
-import fr.orsay.lri.varna.exceptions.ExceptionExportFailed;
+
+import fr.orsay.lri.varna.models.VARNAConfig;
 import fr.orsay.lri.varna.models.rna.ModeleBP;
-import fr.orsay.lri.varna.models.rna.ModeleBPStyle;
 import fr.orsay.lri.varna.models.rna.ModeleBase;
 import fr.orsay.lri.varna.models.rna.ModelBaseStyle; // Import ModelBaseStyle
 import fr.orsay.lri.varna.models.rna.RNA;
-// BioCommons imports
 import pl.poznan.put.structure.formats.*;
-// Local model imports
 import pl.poznan.put.varna.model.BasePair;
 import pl.poznan.put.varna.model.Nucleotide;
 import pl.poznan.put.varna.model.StructureData;

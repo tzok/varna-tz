@@ -11,10 +11,7 @@ import java.util.Map; // Added for Map
 import java.util.Optional;
 import java.util.stream.Collectors;
 import fr.orsay.lri.varna.models.rna.ModeleBP;
-import pl.poznan.put.structure.formats.BpSeq; // Import BpSeq
-import pl.poznan.put.structure.formats.DotBracket; // Import DotBracket if needed later
-import pl.poznan.put.structure.formats.ImmutableBpSeq; // Import ImmutableBpSeq
-import pl.poznan.put.structure.formats.ImmutableDefaultDotBracket; // Import if needed later
+import pl.poznan.put.structure.formats.*;
 import pl.poznan.put.varna.model.BasePair;
 import pl.poznan.put.varna.model.Nucleotide;
 import pl.poznan.put.varna.model.StructureData;
@@ -91,15 +88,11 @@ public class AdvancedDrawer {
       // Create BpSeq object from canonical pairs
       try {
         BpSeq bpSeq = createBpSeqFromStructureData(structureData);
-        System.out.println("Generated BpSeq object:");
-        System.out.println(bpSeq); // Print the BpSeq object (or specific info)
-        // Optionally, convert BpSeq to DotBracket if needed:
-        // DotBracket dotBracket = ImmutableDefaultDotBracket.fromBpSeq(bpSeq);
-        // System.out.println("Dot-Bracket (from BpSeq): " + dotBracket.structure());
+        Converter converter = ImmutableDefaultConverter.of();
+        DotBracket dotBracket = converter.convert(bpSeq);
+        System.out.println("Dot-Bracket:\n" + dotBracket);
       } catch (IllegalArgumentException e) {
         System.err.println("Error creating BpSeq structure: " + e.getMessage());
-        // Optionally print stack trace for debugging
-        // e.printStackTrace();
       }
 
     } catch (InvalidFormatException e) {
@@ -120,12 +113,10 @@ public class AdvancedDrawer {
                     .map(Enum::name)
                     .collect(Collectors.joining(", ")));
       }
-      e.printStackTrace();
       System.exit(1);
     } catch (IOException e) {
       // Handle other general IO/parsing errors
       System.err.println("Error reading or parsing JSON file: " + jsonFilePath);
-      e.printStackTrace();
       System.exit(1);
     }
   }

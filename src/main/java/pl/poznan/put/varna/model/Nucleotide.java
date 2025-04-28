@@ -22,16 +22,12 @@ public class Nucleotide {
   @JsonProperty("innerColor")
   public String innerColor;
 
-  @JsonProperty("numberColor")
-  public String numberColor;
-
   @JsonProperty("nameColor")
   public String nameColor;
 
   // Transient fields to store the parsed color objects
   public transient Optional<Color> parsedOutlineColor = Optional.empty();
   public transient Optional<Color> parsedInnerColor = Optional.empty();
-  public transient Optional<Color> parsedNumberColor = Optional.empty();
   public transient Optional<Color> parsedNameColor = Optional.empty();
 
   // Getters for the parsed colors (optional, but good practice)
@@ -41,10 +37,6 @@ public class Nucleotide {
 
   public Optional<Color> getParsedInnerColor() {
     return parsedInnerColor;
-  }
-
-  public Optional<Color> getParsedNumberColor() {
-    return parsedNumberColor;
   }
 
   public Optional<Color> getParsedNameColor() {
@@ -66,9 +58,6 @@ public class Nucleotide {
         + '\''
         + ", innerColor='"
         + innerColor
-        + '\''
-        + ", numberColor='"
-        + numberColor
         + '\''
         + ", nameColor='"
         + nameColor

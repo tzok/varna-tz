@@ -52,7 +52,6 @@ public class AdvancedDrawer {
         for (Nucleotide n : structureData.nucleotides) {
           n.parsedOutlineColor = parseColor(n.outlineColor);
           n.parsedInnerColor = parseColor(n.innerColor);
-          n.parsedNumberColor = parseColor(n.numberColor);
           n.parsedNameColor = parseColor(n.nameColor);
         }
       }
@@ -399,7 +398,6 @@ public class AdvancedDrawer {
               // Apply colors if they were successfully parsed
               nucData.getParsedOutlineColor().ifPresent(style::setBaseOutlineColor);
               nucData.getParsedInnerColor().ifPresent(style::setBaseInnerColor);
-              nucData.getParsedNumberColor().ifPresent(style::setBaseNumberColor);
               nucData.getParsedNameColor().ifPresent(style::setBaseNameColor);
             } else {
               System.err.println(

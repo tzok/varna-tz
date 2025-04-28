@@ -1,19 +1,14 @@
 package pl.poznan.put.varna;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.Color;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-// Import enums from ModeleBP
 import fr.orsay.lri.varna.models.rna.ModeleBP;
-// Import model classes
 import pl.poznan.put.varna.model.BasePair;
 import pl.poznan.put.varna.model.Nucleotide;
 import pl.poznan.put.varna.model.StructureData;

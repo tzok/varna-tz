@@ -199,8 +199,16 @@ public class AdvancedDrawer {
       int seqIndex = i + 1;
       // BpSeq uses 0 for unpaired, otherwise 1-based index of partner
       int pairIndex = (pairMap[i] == -1) ? 0 : pairMap[i] + 1;
-      // Get the character, handle potential null/empty strings if necessary
-      String character = (nucleotide.character != null && !nucleotide.character.isEmpty()) ? nucleotide.character : "?";
+      // Get the character, throw error if null/empty
+      String character = nucleotide.character;
+      if (character == null || character.isEmpty()) {
+        throw new IllegalArgumentException(
+            "Cannot create BpSeq: Nucleotide with ID "
+                + nucleotide.id
+                + " (at index "
+                + i
+                + ") is missing its character ('char' field).");
+      }
       // Ensure single character for standard BpSeq (take first char if multi)
       char bpSeqChar = character.charAt(0);
 

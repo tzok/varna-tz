@@ -377,6 +377,8 @@ public class AdvancedDrawer {
             ModeleBase modeleBase = rna.getBaseAt(index);
             if (modeleBase != null) {
               ModelBaseStyle style = modeleBase.getStyleBase();
+              // Set the base number from JSON data
+              modeleBase.setBaseNumber(nucData.number);
               // Apply colors if they were successfully parsed
               nucData.getParsedOutlineColor().ifPresent(style::setBaseOutlineColor);
               nucData.getParsedInnerColor().ifPresent(style::setBaseInnerColor);

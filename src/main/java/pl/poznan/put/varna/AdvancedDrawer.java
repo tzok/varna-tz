@@ -13,11 +13,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 // Import enums from ModeleBP
 import fr.orsay.lri.varna.models.rna.ModeleBP;
+// Import model classes
+import pl.poznan.put.varna.model.BasePair;
+import pl.poznan.put.varna.model.Nucleotide;
+import pl.poznan.put.varna.model.StructureData;
 
 public class AdvancedDrawer {
 
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static class Nucleotide {
+  // Nested classes Nucleotide, BasePair, and StructureData moved to separate files
+  // in pl.poznan.put.varna.model package
     @JsonProperty("id")
     public int id;
 

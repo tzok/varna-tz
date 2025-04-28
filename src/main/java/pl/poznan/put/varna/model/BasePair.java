@@ -1,0 +1,50 @@
+package pl.poznan.put.varna.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import fr.orsay.lri.varna.models.rna.ModeleBP;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class BasePair {
+  @JsonProperty("id1")
+  public int id1; // References Nucleotide.id
+
+  @JsonProperty("id2")
+  public int id2; // References Nucleotide.id
+
+  @JsonProperty("edge5")
+  public ModeleBP.Edge edge5;
+
+  @JsonProperty("edge3")
+  public ModeleBP.Edge edge3;
+
+  @JsonProperty("stericity")
+  public ModeleBP.Stericity stericity;
+
+  @JsonProperty("canonical")
+  public Boolean canonical; // Use Boolean object type to handle absence (null)
+
+  @JsonProperty("color")
+  public String color; // Optional color field
+
+  @Override
+  public String toString() {
+    return "BasePair{"
+        + "id1="
+        + id1
+        + ", id2="
+        + id2
+        + ", edge5="
+        + edge5
+        + ", edge3="
+        + edge3
+        + ", stericity="
+        + stericity
+        + ", canonical="
+        + canonical
+        + ", color='"
+        + color
+        + '\''
+        + '}';
+  }
+}

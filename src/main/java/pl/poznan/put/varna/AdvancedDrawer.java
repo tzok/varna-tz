@@ -126,6 +126,7 @@ public class AdvancedDrawer {
 
           // 5. Configure and Draw
           VARNAConfig config = new VARNAConfig();
+          config._numPeriod = 1;
           // Add any custom config settings here, e.g., config.setColorScheme(...)
 
           System.out.println("Calculating RNA layout...");

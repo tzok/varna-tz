@@ -313,8 +313,7 @@ public class AdvancedDrawer {
           Integer index2 = idToIndexMap.get(bpData.id2);
           if (index1 != null && index2 != null) {
             try {
-              // VARNA uses 1-based indexing for addBPAux
-              rna.addBPAux(index1 + 1, index2 + 1, bpData.edge5, bpData.edge3, bpData.stericity);
+              rna.addBPAux(index1, index2, bpData.edge5, bpData.edge3, bpData.stericity);
             } catch (Exception e) {
               System.err.println(
                   "Warning: Failed to add non-canonical base pair between indices "
@@ -331,9 +330,9 @@ public class AdvancedDrawer {
 
     // 3. Iterate through VARNA's ModeleBP objects and apply styles
     for (ModeleBP modeleBP : rna.getAllBPs()) {
-      // VARNA's getIndex() returns 1-based index, convert to 0-based for map lookup
-      int index1 = modeleBP.getIndex5() - 1;
-      int index2 = modeleBP.getIndex3() - 1;
+      int index1 = modeleBP.getIndex5();
+      int index2 = modeleBP.getIndex3();
+      System.out.println("Processing ModeleBP with indices: " + index1 + ", " + index2);
 
       // Create the lookup key
       String key = Math.min(index1, index2) + "-" + Math.max(index1, index2);
@@ -353,6 +352,7 @@ public class AdvancedDrawer {
         // Apply thickness if present
         if (bpData.thickness != null) {
           try {
+            System.out.println("Setting thickness for pair " + key + ": " + bpData.thickness);
             style.setThickness(bpData.thickness);
           } catch (NumberFormatException e) {
             // This shouldn't happen if thickness is Double, but good practice

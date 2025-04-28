@@ -6,20 +6,15 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap; // Added for Map
-import java.util.Map; // Added for Map
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-// VARNA imports
-import fr.orsay.lri.varna.VARNAConfig;
-import fr.orsay.lri.varna.exceptions.ExceptionExportFailed;
+
+import fr.orsay.lri.varna.models.VARNAConfig;
 import fr.orsay.lri.varna.models.rna.ModeleBP;
-import fr.orsay.lri.varna.models.rna.ModeleBPStyle;
-import fr.orsay.lri.varna.models.rna.ModeleBase;
 import fr.orsay.lri.varna.models.rna.RNA;
-// BioCommons imports
 import pl.poznan.put.structure.formats.*;
-// Local model imports
 import pl.poznan.put.varna.model.BasePair;
 import pl.poznan.put.varna.model.Nucleotide;
 import pl.poznan.put.varna.model.StructureData;
@@ -121,7 +116,7 @@ public class AdvancedDrawer {
 
           // 4. Add non-canonical pairs and apply colors
           Map<Integer, Integer> idToIndexMap = createIdToIndexMap(structureData);
-          applyCustomizations(rna, structureData, idToIndexMap);
+          addNonCanonicalBasePairs(rna, structureData, idToIndexMap);
 
           // 5. Configure and Draw
           VARNAConfig config = new VARNAConfig();
@@ -135,10 +130,6 @@ public class AdvancedDrawer {
           System.out.println("Saving RNA visualization to: " + outputFilename);
           rna.saveRNASVG(outputFilename, config);
           System.out.println("SVG saved successfully.");
-
-        } catch (ExceptionExportFailed e) {
-          System.err.println("Error saving SVG output: " + e.getError());
-          e.printStackTrace();
         } catch (Exception e) {
           // Catch other potential exceptions during RNA processing/drawing
           System.err.println("An unexpected error occurred during RNA drawing:");
@@ -281,11 +272,8 @@ public class AdvancedDrawer {
     return idToIndexMap;
   }
 
-  // Method to add non-canonical base pairs and apply colors
-  private static void applyCustomizations(
+  private static void addNonCanonicalBasePairs(
       RNA rna, StructureData structureData, Map<Integer, Integer> idToIndexMap) {
-
-    // Apply base pair customizations (non-canonical & colors)
     if (structureData.basePairs != null) {
       for (BasePair bpData : structureData.basePairs) {
         Integer index1 = idToIndexMap.get(bpData.id1);
@@ -300,12 +288,10 @@ public class AdvancedDrawer {
           continue;
         }
 
-        // Add non-canonical pairs using addBPAux
         // Canonical pairs are already handled by rna.setRNA(sequence, structure)
         if (bpData.canonical == null || !bpData.canonical) {
           try {
-            // VARNA uses 1-based indexing for addBPAux
-            rna.addBPAux(index1 + 1, index2 + 1, bpData.edge5, bpData.edge3, bpData.stericity);
+            rna.addBPAux(index1, index2, bpData.edge5, bpData.edge3, bpData.stericity);
           } catch (Exception e) {
             System.err.println(
                 "Warning: Failed to add non-canonical base pair between indices "
@@ -314,68 +300,6 @@ public class AdvancedDrawer {
                     + (index2 + 1)
                     + ": "
                     + e.getMessage());
-          }
-        }
-
-        // Apply color to the base pair if specified
-        Optional<Color> bpColor = bpData.getParsedColor();
-        if (bpColor.isPresent()) {
-          // Find the ModeleBP object in the RNA structure
-          // Note: Finding the exact ModeleBP might be tricky if multiple pairs exist between
-          // indices.
-          // VARNA's internal representation might need careful handling.
-          // A simpler approach might be needed if direct ModeleBP access is complex.
-          // For now, let's assume we can find it (this might need refinement)
-          ModeleBP modeleBP = rna.getBP(index1, index2); // Check if this method exists/works
-          if (modeleBP != null) {
-            ModeleBPStyle style = modeleBP.getStyle();
-            if (style == null) {
-              style = new ModeleBPStyle();
-              modeleBP.setStyle(style);
-            }
-            style.setCustomColor(bpColor.get());
-          } else {
-            System.err.println(
-                "Warning: Could not find ModeleBP object for pair between indices "
-                    + index1
-                    + " and "
-                    + index2
-                    + " to apply color.");
-          }
-        }
-      }
-    }
-
-    // Apply nucleotide colors
-    if (structureData.nucleotides != null) {
-      for (Nucleotide nucData : structureData.nucleotides) {
-        Optional<Color> nucColor = nucData.getParsedColor();
-        if (nucColor.isPresent()) {
-          Integer index = idToIndexMap.get(nucData.id);
-          if (index != null) {
-            try {
-              // VARNA uses 0-based indexing for getBase()
-              ModeleBase modeleBase = rna.getBase(index);
-              if (modeleBase != null) {
-                // Assuming ModelBaseStyle exists and handles color
-                modeleBase.getStyleBase().setBaseInnerColor(nucColor.get());
-                // Optionally color outline or number too
-                // modeleBase.getStyleBase().setBaseOutlineColor(nucColor.get());
-              } else {
-                System.err.println(
-                    "Warning: Could not find ModeleBase object for nucleotide index "
-                        + index
-                        + " to apply color.");
-              }
-            } catch (IndexOutOfBoundsException e) {
-              System.err.println(
-                  "Warning: Index out of bounds when trying to get ModeleBase at index " + index);
-            }
-          } else {
-            System.err.println(
-                "Warning: Could not find index for nucleotide ID "
-                    + nucData.id
-                    + " to apply color.");
           }
         }
       }

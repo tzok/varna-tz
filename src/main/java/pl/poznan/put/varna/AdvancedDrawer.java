@@ -476,8 +476,8 @@ public class AdvancedDrawer {
       Node node = lineNodes.item(i);
       if (node.getNodeType() == Node.ELEMENT_NODE) {
         Element element = (Element) node;
-        // Check if the line has class="Backbone" (case-sensitive)
-        if ("Backbone".equals(element.getAttribute("class"))) {
+        // Check if the line has the specific stroke attribute for backbone lines
+        if ("rgb(35%, 35%, 35%)".equals(element.getAttribute("stroke"))) {
           backboneLines.add(element);
         }
       }

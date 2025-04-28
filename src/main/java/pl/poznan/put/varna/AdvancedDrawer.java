@@ -3,17 +3,17 @@ package pl.poznan.put.varna;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.awt.Color; // Import Color for potential use
+import java.awt.Color;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class AdvancedDrawer {
-
-  // Define data structures matching the JSON format
-
-  @JsonIgnoreProperties(ignoreUnknown = true) // Ignore fields not defined here
+  @JsonIgnoreProperties(ignoreUnknown = true)
   public static class Nucleotide {
     @JsonProperty("id")
     public int id;
@@ -27,7 +27,6 @@ public class AdvancedDrawer {
     @JsonProperty("color")
     public String color; // Store as String, can be parsed later if needed
 
-    // Optional: Add a method to parse the color string
     public Optional<Color> parseColor() {
       if (color == null || color.isEmpty()) {
         return Optional.empty();
@@ -86,13 +85,13 @@ public class AdvancedDrawer {
     public int id2; // References Nucleotide.id
 
     @JsonProperty("edge5")
-    public String edge5;
+    public EdgeType edge5;
 
     @JsonProperty("edge3")
-    public String edge3;
+    public EdgeType edge3;
 
     @JsonProperty("stericity")
-    public String stericity;
+    public Stericity stericity;
 
     @JsonProperty("canonical")
     public Boolean canonical; // Use Boolean object type to handle absence (null)
@@ -104,15 +103,12 @@ public class AdvancedDrawer {
           + id1
           + ", id2="
           + id2
-          + ", edge5='"
+          + ", edge5="
           + edge5
-          + '\''
-          + ", edge3='"
+          + ", edge3="
           + edge3
-          + '\''
-          + ", stericity='"
+          + ", stericity="
           + stericity
-          + '\''
           + ", canonical="
           + canonical
           + '}';
@@ -157,21 +153,31 @@ public class AdvancedDrawer {
 
     try {
       structureData = objectMapper.readValue(jsonFile, StructureData.class);
-      System.out.println("Successfully parsed JSON file: " + jsonFilePath);
+      System.out.println("Successfully parsed and validated JSON file: " + jsonFilePath);
       System.out.println("Parsed data summary: " + structureData);
-
-      // Example: Print details of the first few elements if they exist
-      if (structureData.nucleotides != null && !structureData.nucleotides.isEmpty()) {
-        System.out.println("First nucleotide: " + structureData.nucleotides.get(0));
+    } catch (InvalidFormatException e) {
+      // Handle errors specifically related to invalid enum values (validation failure)
+      System.err.println("Error: Invalid value found in JSON file: " + jsonFilePath);
+      System.err.println("Invalid value: '" + e.getValue() + "' for field: " + e.getPathReference());
+      // Provide context about allowed values if it's one of our enums
+      if (e.getTargetType().equals(Stericity.class)) {
+        System.err.println(
+            "Allowed values for stericity are: "
+                + Arrays.stream(Stericity.values())
+                    .map(Enum::name)
+                    .collect(Collectors.joining(", ")));
+      } else if (e.getTargetType().equals(EdgeType.class)) {
+        System.err.println(
+            "Allowed values for edge types are: "
+                + Arrays.stream(EdgeType.values())
+                    .map(Enum::name)
+                    .collect(Collectors.joining(", ")));
       }
-      if (structureData.basePairs != null && !structureData.basePairs.isEmpty()) {
-        System.out.println("First base pair: " + structureData.basePairs.get(0));
-      }
-
-      // TODO: Add actual drawing logic here using the parsed structureData
-
+      e.printStackTrace();
+      System.exit(1);
     } catch (IOException e) {
-      System.err.println("Error parsing JSON file: " + jsonFilePath);
+      // Handle other general IO/parsing errors
+      System.err.println("Error reading or parsing JSON file: " + jsonFilePath);
       e.printStackTrace();
       System.exit(1);
     }

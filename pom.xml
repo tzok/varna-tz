@@ -18,6 +18,11 @@
       <artifactId>BioCommons</artifactId>
       <version>3.2.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.0.13</version> <!-- Use a recent version -->
+    </dependency>
   </dependencies>
 
   <build>

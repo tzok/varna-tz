@@ -314,40 +314,6 @@ public class AdvancedDrawer {
                     + e.getMessage());
           }
         }
-
-        // Apply color to the base pair if specified
-        Optional<Color> bpColor = bpData.getParsedColor();
-        if (bpColor.isPresent()) {
-          // Find the ModeleBP object in the RNA structure
-          // VARNA uses 0-based indexing for getBP
-          ModeleBP modeleBP = rna.getBP(index1, index2);
-          if (modeleBP != null) {
-            ModeleBPStyle style = modeleBP.getStyle();
-            if (style == null) {
-              style = new ModeleBPStyle();
-              modeleBP.setStyle(style);
-            }
-            style.setCustomColor(bpColor.get());
-          } else {
-            // Try the reverse order as well, as getBP might be order-sensitive
-            modeleBP = rna.getBP(index2, index1);
-            if (modeleBP != null) {
-              ModeleBPStyle style = modeleBP.getStyle();
-              if (style == null) {
-                style = new ModeleBPStyle();
-                modeleBP.setStyle(style);
-              }
-              style.setCustomColor(bpColor.get());
-            } else {
-              System.err.println(
-                  "Warning: Could not find ModeleBP object for pair between indices "
-                      + index1
-                      + " and "
-                      + index2
-                      + " to apply color.");
-            }
-          }
-        }
       }
     }
 

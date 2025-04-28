@@ -468,24 +468,34 @@ public class AdvancedDrawer {
     int n = structureData.nucleotides.size();
     boolean[] isExternal = new boolean[n];
     if (n > 0) {
-      isExternal[0] = true; // First is always external
-      isExternal[n - 1] = true; // Last is always external
-      for (int i = 1; i < n - 1; i++) {
+      isExternal[0] = true; // First nucleotide of sequence is external
+      isExternal[n - 1] = true; // Last nucleotide of sequence is external
+      // Check for breaks *before* index i (meaning i is the start of a block)
+      for (int i = 1; i < n; i++) {
         Nucleotide prev = structureData.nucleotides.get(i - 1);
         Nucleotide curr = structureData.nucleotides.get(i);
-        Nucleotide next = structureData.nucleotides.get(i + 1);
-        if (prev != null && curr != null && next != null) {
-          if (curr.number != prev.number + 1) { // Start of a block
-            isExternal[i] = true;
-          }
-          if (curr.number + 1 != next.number) { // End of a block
-            isExternal[i] = true;
+        if (prev != null && curr != null) {
+          if (curr.number != prev.number + 1) {
+            isExternal[i] = true; // i is the start of a new block, hence external
           }
         } else {
-          // Handle potential nulls if necessary, assume external if neighbors are null?
-          isExternal[i] = true;
+          isExternal[i] = true; // Treat null neighbor as a break
         }
       }
+      // Check for breaks *after* index i (meaning i is the end of a block)
+      for (int i = 0; i < n - 1; i++) {
+        Nucleotide curr = structureData.nucleotides.get(i);
+        Nucleotide next = structureData.nucleotides.get(i + 1);
+        if (curr != null && next != null) {
+          if (next.number != curr.number + 1) {
+            isExternal[i] = true; // i is the end of a block, hence external
+          }
+        } else {
+          isExternal[i] = true; // Treat null neighbor as a break
+        }
+      }
+      // Log the calculated external status for debugging
+      // System.out.println("isExternal array: " + Arrays.toString(isExternal));
     }
 
     // --- Parse the SVG file ---
@@ -522,10 +532,30 @@ public class AdvancedDrawer {
     // 4. Identify and remove lines corresponding to discontinuities
     // Iterate in reverse order of indices to avoid index shifting issues during removal
     List<Element> linesToRemove = new ArrayList<>();
+    System.out.println("--- Identifying Backbone Lines to Remove ---");
+    System.out.println("Discontinuity indices (line before break): " + discontinuityIndices);
+    System.out.println("Total backbone lines found: " + backboneLines.size());
+    /* // Optional: Log all found backbone lines
+    for(int k=0; k<backboneLines.size(); k++) {
+        System.out.println("  Line " + k + ": " + backboneLines.get(k).toString());
+    }
+    */
     for (int i = discontinuityIndices.size() - 1; i >= 0; i--) {
       int indexToRemove = discontinuityIndices.get(i);
       if (indexToRemove >= 0 && indexToRemove < backboneLines.size()) {
-        linesToRemove.add(backboneLines.get(indexToRemove));
+        Element lineElement = backboneLines.get(indexToRemove);
+        System.out.println(
+            "  Marking for removal: Line index "
+                + indexToRemove
+                + ", Element: "
+                + lineElement.getAttribute("x1")
+                + ","
+                + lineElement.getAttribute("y1")
+                + " -> "
+                + lineElement.getAttribute("x2")
+                + ","
+                + lineElement.getAttribute("y2")); // Log coordinates
+        linesToRemove.add(lineElement);
       } else {
         System.err.println(
             "Warning: Calculated discontinuity index "
@@ -547,9 +577,21 @@ public class AdvancedDrawer {
     }
     System.out.println("Removed " + removedCount + " backbone line(s) due to discontinuities.");
 
-    System.out.println("Removed " + removedCount + " backbone line(s) due to discontinuities.");
+    System.out.println("Marked " + linesToRemove.size() + " backbone line(s) for removal.");
+
+    // Perform removal
+    int removedCount = 0;
+    for (Element line : linesToRemove) {
+      Node parent = line.getParentNode();
+      if (parent != null) {
+        parent.removeChild(line);
+        removedCount++;
+      }
+    }
+    System.out.println("Actually removed " + removedCount + " backbone line(s).");
 
     // --- Filter Text Labels ---
+    System.out.println("--- Filtering Text Labels ---");
     NodeList textNodes = doc.getElementsByTagName("text");
     List<Element> textLabelsToRemove = new ArrayList<>();
     List<Element> numberLabels = new ArrayList<>(); // Store potential number labels in order
@@ -587,8 +629,23 @@ public class AdvancedDrawer {
       try {
         int number = Integer.parseInt(textContent);
         labelsChecked++;
+        boolean isExt = isExternal[i]; // Get calculated external status
         // Check conditions: keep if divisible by 10 OR external
-        boolean keepLabel = (number % 10 == 0) || isExternal[i];
+        boolean keepLabel = (number % 10 == 0) || isExt;
+
+        // Add detailed log
+        System.out.println(
+            "  Label Check: Index="
+                + i
+                + ", Number="
+                + number
+                + ", isExternal="
+                + isExt
+                + ", Keep="
+                + keepLabel
+                + ", TextContent='"
+                + textContent
+                + "'");
 
         if (!keepLabel) {
           textLabelsToRemove.add(textElement);

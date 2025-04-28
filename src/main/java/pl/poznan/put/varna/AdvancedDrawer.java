@@ -427,11 +427,11 @@ public class AdvancedDrawer {
     }
   }
 
-  // Method to parse SVG, find and remove backbone lines at numbering discontinuities
-  private static void removeDiscontinuousBackboneLines(
-      String svgFilePath, StructureData structureData) throws Exception {
-    if (structureData == null || structureData.nucleotides == null || structureData.nucleotides.size() < 2) {
-      // Not enough nucleotides to have a discontinuity
+  // Method to parse SVG, remove discontinuous backbone lines, and filter text labels
+  private static void postProcessSvg(String svgFilePath, StructureData structureData) throws Exception {
+    if (structureData == null || structureData.nucleotides == null || structureData.nucleotides.isEmpty()) {
+      // No data to process
+      System.err.println("Warning: No nucleotide data found for SVG post-processing.");
       return;
     }
 

@@ -30,37 +30,7 @@ public class AdvancedDrawer {
     @JsonProperty("color")
     public String color; // Store as String, can be parsed later if needed
 
-    public Optional<Color> parseColor() {
-      if (color == null || color.isEmpty()) {
-        return Optional.empty();
-      }
-      try {
-        // Basic color name handling (add more as needed)
-        if (color.equalsIgnoreCase("red")) return Optional.of(Color.RED);
-        if (color.equalsIgnoreCase("blue")) return Optional.of(Color.BLUE);
-        if (color.equalsIgnoreCase("green")) return Optional.of(Color.GREEN);
-        // Add more standard color names...
-
-        // Handle hex format like #RRGGBB or #RGB
-        if (color.startsWith("#")) {
-          return Optional.of(Color.decode(color));
-        }
-        // Handle comma-separated RGB like "R,G,B"
-        String[] rgb = color.split(",");
-        if (rgb.length == 3) {
-          return Optional.of(
-              new Color(
-                  Integer.parseInt(rgb[0].trim()),
-                  Integer.parseInt(rgb[1].trim()),
-                  Integer.parseInt(rgb[2].trim())));
-        }
-      } catch (NumberFormatException e) {
-        System.err.println("Warning: Could not parse color string: " + color);
-        return Optional.empty();
-      }
-      System.err.println("Warning: Unknown color format: " + color);
-      return Optional.empty();
-    }
+    // parseColor method moved to AdvancedDrawer class
 
     @Override
     public String toString() {
@@ -141,6 +111,39 @@ public class AdvancedDrawer {
           + (basePairs != null ? basePairs.size() : 0)
           + " items}";
     }
+  }
+
+  // Utility method to parse color strings
+  public static Optional<Color> parseColor(String colorString) {
+    if (colorString == null || colorString.isEmpty()) {
+      return Optional.empty();
+    }
+    try {
+      // Basic color name handling (add more as needed)
+      if (colorString.equalsIgnoreCase("red")) return Optional.of(Color.RED);
+      if (colorString.equalsIgnoreCase("blue")) return Optional.of(Color.BLUE);
+      if (colorString.equalsIgnoreCase("green")) return Optional.of(Color.GREEN);
+      // Add more standard color names...
+
+      // Handle hex format like #RRGGBB or #RGB
+      if (colorString.startsWith("#")) {
+        return Optional.of(Color.decode(colorString));
+      }
+      // Handle comma-separated RGB like "R,G,B"
+      String[] rgb = colorString.split(",");
+      if (rgb.length == 3) {
+        return Optional.of(
+            new Color(
+                Integer.parseInt(rgb[0].trim()),
+                Integer.parseInt(rgb[1].trim()),
+                Integer.parseInt(rgb[2].trim())));
+      }
+    } catch (NumberFormatException e) {
+      System.err.println("Warning: Could not parse color string: " + colorString);
+      return Optional.empty();
+    }
+    System.err.println("Warning: Unknown color format: " + colorString);
+    return Optional.empty();
   }
 
   public static void main(String[] args) {

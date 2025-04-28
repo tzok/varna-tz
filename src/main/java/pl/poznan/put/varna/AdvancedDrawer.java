@@ -19,13 +19,14 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import fr.orsay.lri.varna.models.VARNAConfig;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 // VARNA Imports
-import fr.orsay.lri.varna.VARNAConfig;
 import fr.orsay.lri.varna.exceptions.ExceptionExportFailed; // Added for ExceptionExportFailed
 import fr.orsay.lri.varna.models.rna.ModeleBP;
 import fr.orsay.lri.varna.models.rna.ModeleBPStyle;
@@ -161,10 +162,6 @@ public class AdvancedDrawer {
             System.err.println("Error during SVG post-processing:");
             xmlException.printStackTrace();
           }
-
-        } catch (ExceptionExportFailed e) { // Catch specific VARNA export exception
-          System.err.println("Error saving SVG output: " + e.getError());
-          e.printStackTrace();
         } catch (Exception e) {
           // Catch other potential exceptions during RNA processing/drawing
           System.err.println("An unexpected error occurred during RNA processing/drawing:");

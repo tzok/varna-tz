@@ -88,24 +88,6 @@ public class AdvancedDrawer {
 
       System.out.println("Parsed data summary: " + structureData);
 
-      // Example: Print details including parsed color status
-      if (structureData.nucleotides != null && !structureData.nucleotides.isEmpty()) {
-        Nucleotide firstN = structureData.nucleotides.get(0);
-        System.out.println(
-            "First nucleotide: "
-                + firstN
-                + ", Parsed Color Present: "
-                + firstN.getParsedColor().isPresent());
-      }
-      if (structureData.basePairs != null && !structureData.basePairs.isEmpty()) {
-        BasePair firstBP = structureData.basePairs.get(0);
-        System.out.println(
-            "First base pair: "
-                + firstBP
-                + ", Parsed Color Present: "
-                + firstBP.getParsedColor().isPresent());
-      }
-
       // Create BpSeq object from canonical pairs
       try {
         BpSeq bpSeq = createBpSeqFromStructureData(structureData);

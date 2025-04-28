@@ -99,6 +99,9 @@ public class AdvancedDrawer {
     @JsonProperty("canonical")
     public Boolean canonical; // Use Boolean object type to handle absence (null)
 
+    @JsonProperty("color")
+    public String color; // Optional color field
+
     @Override
     public String toString() {
       return "BasePair{"
@@ -114,6 +117,9 @@ public class AdvancedDrawer {
           + stericity
           + ", canonical="
           + canonical
+          + ", color='"
+          + color
+          + '\''
           + '}';
     }
   }

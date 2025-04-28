@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap; // Added for Map
+import java.util.Map; // Added for Map
 import java.util.Optional;
 import java.util.stream.Collectors;
 import fr.orsay.lri.varna.models.rna.ModeleBP;
@@ -100,6 +102,9 @@ public class AdvancedDrawer {
                 + firstBP.getParsedColor().isPresent());
       }
 
+      // Generate and print Dot-Bracket notation for canonical pairs
+      generateAndPrintDotBracket(structureData);
+
     } catch (InvalidFormatException e) {
       // Handle errors specifically related to invalid enum values (validation failure)
       System.err.println("Error: Invalid value found in JSON file: " + jsonFilePath);
@@ -126,5 +131,76 @@ public class AdvancedDrawer {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  private static void generateAndPrintDotBracket(StructureData structureData) {
+    if (structureData == null
+        || structureData.nucleotides == null
+        || structureData.nucleotides.isEmpty()) {
+      System.out.println("Dot-Bracket: (No nucleotides found)");
+      return;
+    }
+
+    int n = structureData.nucleotides.size();
+    Map<Integer, Integer> idToIndexMap = new HashMap<>();
+    for (int i = 0; i < n; i++) {
+      Nucleotide nucleotide = structureData.nucleotides.get(i);
+      if (nucleotide != null) {
+        idToIndexMap.put(nucleotide.id, i);
+      } else {
+        System.err.println("Warning: Null nucleotide found at index " + i);
+        // Decide how to handle this - skip? error? For now, we might get issues later.
+      }
+    }
+
+    int[] pairMap = new int[n];
+    Arrays.fill(pairMap, -1); // -1 indicates unpaired
+
+    if (structureData.basePairs != null) {
+      for (BasePair bp : structureData.basePairs) {
+        // Check if the canonical field is present and true
+        if (bp.canonical != null && bp.canonical) {
+          Integer index1 = idToIndexMap.get(bp.id1);
+          Integer index2 = idToIndexMap.get(bp.id2);
+
+          if (index1 != null && index2 != null) {
+            // Ensure we don't overwrite existing pairs (e.g., conflicting data)
+            if (pairMap[index1] != -1 || pairMap[index2] != -1) {
+              System.err.println(
+                  "Warning: Conflicting base pair involving nucleotides with IDs "
+                      + bp.id1
+                      + " and "
+                      + bp.id2
+                      + ". Skipping this pair for dot-bracket.");
+              continue;
+            }
+            pairMap[index1] = index2;
+            pairMap[index2] = index1;
+          } else {
+            System.err.println(
+                "Warning: Could not find index for nucleotide IDs "
+                    + bp.id1
+                    + " or "
+                    + bp.id2
+                    + " in canonical base pair. Skipping.");
+          }
+        }
+      }
+    }
+
+    StringBuilder dotBracket = new StringBuilder(n);
+    for (int i = 0; i < n; i++) {
+      if (pairMap[i] == -1) {
+        dotBracket.append('.');
+      } else {
+        if (pairMap[i] > i) {
+          dotBracket.append('('); // Opening bracket for the 5' partner
+        } else {
+          dotBracket.append(')'); // Closing bracket for the 3' partner
+        }
+      }
+    }
+
+    System.out.println("Dot-Bracket (Canonical): " + dotBracket.toString());
   }
 }

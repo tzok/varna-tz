@@ -277,14 +277,99 @@ public class AdvancedDrawer {
     return idToIndexMap;
   }
 
-  // Method to add non-canonical base pairs and apply colors to nucleotides and base pairs
+  // Method to add non-canonical base pairs and apply colors/thickness to nucleotides and base pairs
   private static void applyCustomizations(
       RNA rna, StructureData structureData, Map<Integer, Integer> idToIndexMap) {
 
-    // Apply base pair customizations (non-canonical & colors)
+    // --- Apply Base Pair Customizations (Non-canonical, Color, Thickness) ---
+
+    // 1. Build a lookup map for BasePair data based on nucleotide indices
+    Map<String, BasePair> bpDataMap = new HashMap<>();
     if (structureData.basePairs != null) {
       for (BasePair bpData : structureData.basePairs) {
         Integer index1 = idToIndexMap.get(bpData.id1);
+        Integer index2 = idToIndexMap.get(bpData.id2);
+        if (index1 != null && index2 != null) {
+          // Create a consistent key (e.g., "minIdx-maxIdx")
+          String key = Math.min(index1, index2) + "-" + Math.max(index1, index2);
+          bpDataMap.put(key, bpData);
+        } else {
+          System.err.println(
+              "Warning: Skipping creation of lookup key for base pair involving missing nucleotide IDs: "
+                  + bpData.id1
+                  + ", "
+                  + bpData.id2);
+        }
+      }
+    }
+
+    // 2. Add non-canonical pairs first (important for getAllBPs to include them)
+    if (structureData.basePairs != null) {
+      for (BasePair bpData : structureData.basePairs) {
+        // Add non-canonical pairs using addBPAux
+        if (bpData.canonical == null || !bpData.canonical) {
+          Integer index1 = idToIndexMap.get(bpData.id1);
+          Integer index2 = idToIndexMap.get(bpData.id2);
+          if (index1 != null && index2 != null) {
+            try {
+              // VARNA uses 1-based indexing for addBPAux
+              rna.addBPAux(index1 + 1, index2 + 1, bpData.edge5, bpData.edge3, bpData.stericity);
+            } catch (Exception e) {
+              System.err.println(
+                  "Warning: Failed to add non-canonical base pair between indices "
+                      + (index1 + 1)
+                      + " and "
+                      + (index2 + 1)
+                      + ": "
+                      + e.getMessage());
+            }
+          }
+        }
+      }
+    }
+
+    // 3. Iterate through VARNA's ModeleBP objects and apply styles
+    for (ModeleBP modeleBP : rna.getAllBPs()) {
+      // VARNA's getIndex() returns 1-based index, convert to 0-based for map lookup
+      int index1 = modeleBP.getIndex5() - 1;
+      int index2 = modeleBP.getIndex3() - 1;
+
+      // Create the lookup key
+      String key = Math.min(index1, index2) + "-" + Math.max(index1, index2);
+      BasePair bpData = bpDataMap.get(key);
+
+      if (bpData != null) {
+        // Get or create the style object
+        ModeleBPStyle style = modeleBP.getStyle();
+        if (style == null) {
+          style = new ModeleBPStyle();
+          modeleBP.setStyle(style);
+        }
+
+        // Apply color if present
+        bpData.getParsedColor().ifPresent(style::setCustomColor);
+
+        // Apply thickness if present
+        if (bpData.thickness != null) {
+          try {
+            style.setThickness(bpData.thickness);
+          } catch (NumberFormatException e) {
+            // This shouldn't happen if thickness is Double, but good practice
+            System.err.println(
+                "Warning: Invalid thickness format for pair " + key + ": " + bpData.thickness);
+          }
+        }
+      } else {
+        // This might happen for canonical pairs added by setRNA if not present in JSON basePairs list
+        // Or if there was an issue creating the key earlier.
+        // System.err.println("Debug: No matching BasePair data found for ModeleBP key: " + key);
+      }
+    }
+
+    // --- Apply Nucleotide Colors ---
+    if (structureData.nucleotides != null) {
+      for (Nucleotide nucData : structureData.nucleotides) {
+        Integer index = idToIndexMap.get(nucData.id);
         Integer index2 = idToIndexMap.get(bpData.id2);
 
         if (index1 == null || index2 == null) {

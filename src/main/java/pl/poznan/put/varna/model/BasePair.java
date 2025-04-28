@@ -29,6 +29,9 @@ public class BasePair {
   @JsonProperty("color")
   public String color; // Optional color field
 
+  @JsonProperty("thickness")
+  public Double thickness; // Optional thickness field
+
   // Transient field to store the parsed color object
   public transient Optional<Color> parsedColor = Optional.empty();
 
@@ -55,6 +58,8 @@ public class BasePair {
         + ", color='"
         + color
         + '\''
+        + ", thickness="
+        + thickness
         + '}';
   }
 }

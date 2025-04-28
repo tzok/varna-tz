@@ -11,6 +11,10 @@ import java.util.Map; // Added for Map
 import java.util.Optional;
 import java.util.stream.Collectors;
 import fr.orsay.lri.varna.models.rna.ModeleBP;
+import pl.poznan.put.structure.formats.BpSeq; // Import BpSeq
+import pl.poznan.put.structure.formats.DotBracket; // Import DotBracket if needed later
+import pl.poznan.put.structure.formats.ImmutableBpSeq; // Import ImmutableBpSeq
+import pl.poznan.put.structure.formats.ImmutableDefaultDotBracket; // Import if needed later
 import pl.poznan.put.varna.model.BasePair;
 import pl.poznan.put.varna.model.Nucleotide;
 import pl.poznan.put.varna.model.StructureData;
@@ -102,8 +106,19 @@ public class AdvancedDrawer {
                 + firstBP.getParsedColor().isPresent());
       }
 
-      // Generate and print Dot-Bracket notation for canonical pairs
-      generateAndPrintDotBracket(structureData);
+      // Create BpSeq object from canonical pairs
+      try {
+        BpSeq bpSeq = createBpSeqFromStructureData(structureData);
+        System.out.println("Generated BpSeq object:");
+        System.out.println(bpSeq); // Print the BpSeq object (or specific info)
+        // Optionally, convert BpSeq to DotBracket if needed:
+        // DotBracket dotBracket = ImmutableDefaultDotBracket.fromBpSeq(bpSeq);
+        // System.out.println("Dot-Bracket (from BpSeq): " + dotBracket.structure());
+      } catch (IllegalArgumentException e) {
+        System.err.println("Error creating BpSeq structure: " + e.getMessage());
+        // Optionally print stack trace for debugging
+        // e.printStackTrace();
+      }
 
     } catch (InvalidFormatException e) {
       // Handle errors specifically related to invalid enum values (validation failure)
@@ -133,26 +148,32 @@ public class AdvancedDrawer {
     }
   }
 
-  private static void generateAndPrintDotBracket(StructureData structureData) {
+  private static BpSeq createBpSeqFromStructureData(StructureData structureData)
+      throws IllegalArgumentException {
     if (structureData == null
         || structureData.nucleotides == null
         || structureData.nucleotides.isEmpty()) {
-      System.out.println("Dot-Bracket: (No nucleotides found)");
-      return;
+      throw new IllegalArgumentException("Cannot create BpSeq: No nucleotides found in input data.");
     }
 
     int n = structureData.nucleotides.size();
+    // Map nucleotide ID to its 0-based index
     Map<Integer, Integer> idToIndexMap = new HashMap<>();
+    // Map nucleotide ID to the Nucleotide object itself
+    Map<Integer, Nucleotide> idToNucleotideMap = new HashMap<>();
+
     for (int i = 0; i < n; i++) {
       Nucleotide nucleotide = structureData.nucleotides.get(i);
       if (nucleotide != null) {
         idToIndexMap.put(nucleotide.id, i);
+        idToNucleotideMap.put(nucleotide.id, nucleotide);
       } else {
-        System.err.println("Warning: Null nucleotide found at index " + i);
-        // Decide how to handle this - skip? error? For now, we might get issues later.
+        // BpSeq requires contiguous sequence, handle nulls if necessary
+        throw new IllegalArgumentException("Null nucleotide found at index " + i + ". Cannot create valid BpSeq.");
       }
     }
 
+    // Map 0-based index to its pairing partner's 0-based index
     int[] pairMap = new int[n];
     Arrays.fill(pairMap, -1); // -1 indicates unpaired
 
@@ -164,14 +185,14 @@ public class AdvancedDrawer {
           Integer index2 = idToIndexMap.get(bp.id2);
 
           if (index1 != null && index2 != null) {
-            // Ensure we don't overwrite existing pairs (e.g., conflicting data)
+            // Check for conflicts
             if (pairMap[index1] != -1 || pairMap[index2] != -1) {
               System.err.println(
-                  "Warning: Conflicting base pair involving nucleotides with IDs "
+                  "Warning: Conflicting canonical base pair involving nucleotides with IDs "
                       + bp.id1
                       + " and "
                       + bp.id2
-                      + ". Skipping this pair for dot-bracket.");
+                      + ". Skipping this pair for BpSeq generation.");
               continue;
             }
             pairMap[index1] = index2;
@@ -182,25 +203,35 @@ public class AdvancedDrawer {
                     + bp.id1
                     + " or "
                     + bp.id2
-                    + " in canonical base pair. Skipping.");
+                    + " in canonical base pair. Skipping for BpSeq.");
           }
         }
       }
     }
 
-    StringBuilder dotBracket = new StringBuilder(n);
+    // Build the BpSeq string representation: "index character pair_index" (1-based indexing)
+    StringBuilder bpSeqString = new StringBuilder();
     for (int i = 0; i < n; i++) {
-      if (pairMap[i] == -1) {
-        dotBracket.append('.');
-      } else {
-        if (pairMap[i] > i) {
-          dotBracket.append('('); // Opening bracket for the 5' partner
-        } else {
-          dotBracket.append(')'); // Closing bracket for the 3' partner
-        }
-      }
+      Nucleotide nucleotide = structureData.nucleotides.get(i);
+      // BpSeq format uses 1-based indexing for sequence position and pair position
+      int seqIndex = i + 1;
+      // BpSeq uses 0 for unpaired, otherwise 1-based index of partner
+      int pairIndex = (pairMap[i] == -1) ? 0 : pairMap[i] + 1;
+      // Get the character, handle potential null/empty strings if necessary
+      String character = (nucleotide.character != null && !nucleotide.character.isEmpty()) ? nucleotide.character : "?";
+      // Ensure single character for standard BpSeq (take first char if multi)
+      char bpSeqChar = character.charAt(0);
+
+      bpSeqString
+          .append(seqIndex)
+          .append(" ")
+          .append(bpSeqChar)
+          .append(" ")
+          .append(pairIndex)
+          .append("\n");
     }
 
-    System.out.println("Dot-Bracket (Canonical): " + dotBracket.toString());
+    // Parse the string using BioCommons
+    return ImmutableBpSeq.fromString(bpSeqString.toString());
   }
 }

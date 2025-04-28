@@ -13,6 +13,20 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AdvancedDrawer {
+
+  // Enum for allowed Stericity values
+  public enum Stericity {
+    CIS,
+    TRANS
+  }
+
+  // Enum for allowed Edge types
+  public enum EdgeType {
+    WC,
+    SUGAR,
+    HOOGSTEEN
+  }
+
   @JsonIgnoreProperties(ignoreUnknown = true)
   public static class Nucleotide {
     @JsonProperty("id")

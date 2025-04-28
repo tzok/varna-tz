@@ -1,77 +1,31 @@
 package pl.poznan.put.varna;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.awt.Color;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import fr.orsay.lri.varna.models.VARNAConfig;
+import fr.orsay.lri.varna.models.rna.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.ArrayList; // Added for List
-import java.util.List; // Added for List
+import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
-// XML Processing Imports
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import fr.orsay.lri.varna.models.VARNAConfig;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-// VARNA Imports
-import fr.orsay.lri.varna.exceptions.ExceptionExportFailed; // Added for ExceptionExportFailed
-import fr.orsay.lri.varna.models.rna.ModeleBP;
-import fr.orsay.lri.varna.models.rna.ModeleBPStyle;
-import fr.orsay.lri.varna.models.rna.ModeleBase;
-import fr.orsay.lri.varna.models.rna.ModelBaseStyle; // Import ModelBaseStyle
-import fr.orsay.lri.varna.models.rna.RNA;
 import pl.poznan.put.structure.formats.*;
 import pl.poznan.put.varna.model.BasePair;
 import pl.poznan.put.varna.model.Nucleotide;
 import pl.poznan.put.varna.model.StructureData;
 
 public class AdvancedDrawer {
-  // Utility method to parse color strings
-  public static Optional<Color> parseColor(String colorString) {
-    if (colorString == null || colorString.isEmpty()) {
-      return Optional.empty();
-    }
-    try {
-      // Basic color name handling (add more as needed)
-      if (colorString.equalsIgnoreCase("red")) return Optional.of(Color.RED);
-      if (colorString.equalsIgnoreCase("blue")) return Optional.of(Color.BLUE);
-      if (colorString.equalsIgnoreCase("green")) return Optional.of(Color.GREEN);
-      // Add more standard color names...
-
-      // Handle hex format like #RRGGBB or #RGB
-      if (colorString.startsWith("#")) {
-        return Optional.of(Color.decode(colorString));
-      }
-      // Handle comma-separated RGB like "R,G,B"
-      String[] rgb = colorString.split(",");
-      if (rgb.length == 3) {
-        return Optional.of(
-            new Color(
-                Integer.parseInt(rgb[0].trim()),
-                Integer.parseInt(rgb[1].trim()),
-                Integer.parseInt(rgb[2].trim())));
-      }
-    } catch (NumberFormatException e) {
-      System.err.println("Warning: Could not parse color string: " + colorString);
-      return Optional.empty();
-    }
-    System.err.println("Warning: Unknown color format: " + colorString);
-    return Optional.empty();
-  }
-
   public static void main(String[] args) {
     if (args.length != 1) {
       System.err.println("Usage: java pl.poznan.put.varna.AdvancedDrawer <path_to_json_file>");
@@ -172,7 +126,8 @@ public class AdvancedDrawer {
     } catch (InvalidFormatException e) {
       // Handle errors specifically related to invalid enum values (validation failure)
       System.err.println("Error: Invalid value found in JSON file: " + jsonFilePath);
-      System.err.println("Invalid value: '" + e.getValue() + "' for field: " + e.getPathReference());
+      System.err.println(
+          "Invalid value: '" + e.getValue() + "' for field: " + e.getPathReference());
       // Provide context about allowed values if it's one of our enums
       if (e.getTargetType().equals(ModeleBP.Stericity.class)) {
         System.err.println(
@@ -195,12 +150,46 @@ public class AdvancedDrawer {
     }
   }
 
+  // Utility method to parse color strings
+  public static Optional<Color> parseColor(String colorString) {
+    if (colorString == null || colorString.isEmpty()) {
+      return Optional.empty();
+    }
+    try {
+      // Basic color name handling (add more as needed)
+      if (colorString.equalsIgnoreCase("red")) return Optional.of(Color.RED);
+      if (colorString.equalsIgnoreCase("blue")) return Optional.of(Color.BLUE);
+      if (colorString.equalsIgnoreCase("green")) return Optional.of(Color.GREEN);
+      // Add more standard color names...
+
+      // Handle hex format like #RRGGBB or #RGB
+      if (colorString.startsWith("#")) {
+        return Optional.of(Color.decode(colorString));
+      }
+      // Handle comma-separated RGB like "R,G,B"
+      String[] rgb = colorString.split(",");
+      if (rgb.length == 3) {
+        return Optional.of(
+            new Color(
+                Integer.parseInt(rgb[0].trim()),
+                Integer.parseInt(rgb[1].trim()),
+                Integer.parseInt(rgb[2].trim())));
+      }
+    } catch (NumberFormatException e) {
+      System.err.println("Warning: Could not parse color string: " + colorString);
+      return Optional.empty();
+    }
+    System.err.println("Warning: Unknown color format: " + colorString);
+    return Optional.empty();
+  }
+
   private static BpSeq createBpSeqFromStructureData(StructureData structureData)
       throws IllegalArgumentException {
     if (structureData == null
         || structureData.nucleotides == null
         || structureData.nucleotides.isEmpty()) {
-      throw new IllegalArgumentException("Cannot create BpSeq: No nucleotides found in input data.");
+      throw new IllegalArgumentException(
+          "Cannot create BpSeq: No nucleotides found in input data.");
     }
 
     int n = structureData.nucleotides.size();
@@ -216,7 +205,8 @@ public class AdvancedDrawer {
         idToNucleotideMap.put(nucleotide.id, nucleotide);
       } else {
         // BpSeq requires contiguous sequence, handle nulls if necessary
-        throw new IllegalArgumentException("Null nucleotide found at index " + i + ". Cannot create valid BpSeq.");
+        throw new IllegalArgumentException(
+            "Null nucleotide found at index " + i + ". Cannot create valid BpSeq.");
       }
     }
 
@@ -322,7 +312,8 @@ public class AdvancedDrawer {
           bpDataMap.put(key, bpData);
         } else {
           System.err.println(
-              "Warning: Skipping creation of lookup key for base pair involving missing nucleotide IDs: "
+              "Warning: Skipping creation of lookup key for base pair involving missing nucleotide"
+                  + " IDs: "
                   + bpData.id1
                   + ", "
                   + bpData.id2);
@@ -385,7 +376,8 @@ public class AdvancedDrawer {
           }
         }
       } else {
-        // This might happen for canonical pairs added by setRNA if not present in JSON basePairs list
+        // This might happen for canonical pairs added by setRNA if not present in JSON basePairs
+        // list
         // Or if there was an issue creating the key earlier.
         // System.err.println("Debug: No matching BasePair data found for ModeleBP key: " + key);
       }
@@ -428,8 +420,11 @@ public class AdvancedDrawer {
   }
 
   // Method to parse SVG, remove discontinuous backbone lines, and filter text labels
-  private static void postProcessSvg(String svgFilePath, StructureData structureData) throws Exception {
-    if (structureData == null || structureData.nucleotides == null || structureData.nucleotides.isEmpty()) {
+  private static void postProcessSvg(String svgFilePath, StructureData structureData)
+      throws Exception {
+    if (structureData == null
+        || structureData.nucleotides == null
+        || structureData.nucleotides.isEmpty()) {
       // No data to process
       System.err.println("Warning: No nucleotide data found for SVG post-processing.");
       return;
@@ -437,6 +432,7 @@ public class AdvancedDrawer {
 
     // 1. Find indices BEFORE which a discontinuity occurs
     List<Integer> discontinuityIndices = new ArrayList<>();
+    Set<Integer> labelsToKeep = new HashSet<>();
     for (int i = 0; i < structureData.nucleotides.size() - 1; i++) {
       Nucleotide current = structureData.nucleotides.get(i);
       Nucleotide next = structureData.nucleotides.get(i + 1);
@@ -444,6 +440,8 @@ public class AdvancedDrawer {
         // Check if numbering is NOT consecutive (current.number + 1 != next.number)
         if (current.number + 1 != next.number) {
           discontinuityIndices.add(i); // Add the index of the nucleotide BEFORE the break
+          labelsToKeep.add(i);
+          labelsToKeep.add(i + 1);
           System.out.println(
               "Detected numbering discontinuity between index "
                   + i
@@ -455,50 +453,19 @@ public class AdvancedDrawer {
                   + next.number
                   + ")");
         }
+        if (current.number % 10 == 0) {
+          labelsToKeep.add(i); // Keep the label for every 10th nucleotide
+        }
       }
     }
+    labelsToKeep.add(0); // Always keep the first nucleotide label
+    labelsToKeep.add(structureData.nucleotides.size() - 1); // Always keep the last nucleotide label
 
     if (discontinuityIndices.isEmpty()) {
-      System.out.println("No numbering discontinuities found. SVG not modified.");
       System.out.println("No numbering discontinuities found.");
-      // Continue processing for text labels even if no backbone lines are removed
     }
 
-    // --- Determine External Nucleotides ---
-    int n = structureData.nucleotides.size();
-    boolean[] isExternal = new boolean[n];
-    if (n > 0) {
-      isExternal[0] = true; // First nucleotide of sequence is external
-      isExternal[n - 1] = true; // Last nucleotide of sequence is external
-      // Check for breaks *before* index i (meaning i is the start of a block)
-      for (int i = 1; i < n; i++) {
-        Nucleotide prev = structureData.nucleotides.get(i - 1);
-        Nucleotide curr = structureData.nucleotides.get(i);
-        if (prev != null && curr != null) {
-          if (curr.number != prev.number + 1) {
-            isExternal[i] = true; // i is the start of a new block, hence external
-          }
-        } else {
-          isExternal[i] = true; // Treat null neighbor as a break
-        }
-      }
-      // Check for breaks *after* index i (meaning i is the end of a block)
-      for (int i = 0; i < n - 1; i++) {
-        Nucleotide curr = structureData.nucleotides.get(i);
-        Nucleotide next = structureData.nucleotides.get(i + 1);
-        if (curr != null && next != null) {
-          if (next.number != curr.number + 1) {
-            isExternal[i] = true; // i is the end of a block, hence external
-          }
-        } else {
-          isExternal[i] = true; // Treat null neighbor as a break
-        }
-      }
-      // Log the calculated external status for debugging
-      // System.out.println("isExternal array: " + Arrays.toString(isExternal));
-    }
-
-    // --- Parse the SVG file ---
+    // 2. Parse the SVG file
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document doc = builder.parse(new File(svgFilePath));
@@ -535,11 +502,7 @@ public class AdvancedDrawer {
     System.out.println("--- Identifying Backbone Lines to Remove ---");
     System.out.println("Discontinuity indices (line before break): " + discontinuityIndices);
     System.out.println("Total backbone lines found: " + backboneLines.size());
-    /* // Optional: Log all found backbone lines
-    for(int k=0; k<backboneLines.size(); k++) {
-        System.out.println("  Line " + k + ": " + backboneLines.get(k).toString());
-    }
-    */
+
     for (int i = discontinuityIndices.size() - 1; i >= 0; i--) {
       int indexToRemove = discontinuityIndices.get(i);
       if (indexToRemove >= 0 && indexToRemove < backboneLines.size()) {
@@ -577,108 +540,59 @@ public class AdvancedDrawer {
     }
     System.out.println("Removed " + removedCount + " backbone line(s) due to discontinuities.");
 
-    System.out.println("Marked " + linesToRemove.size() + " backbone line(s) for removal.");
-
-    // Perform removal
-    int removedCount = 0;
-    for (Element line : linesToRemove) {
-      Node parent = line.getParentNode();
-      if (parent != null) {
-        parent.removeChild(line);
-        removedCount++;
+    // 5. Find pairs of text and line elements that correspond to numbered labels
+    List<Element> numberLines = new ArrayList<>();
+    for (int i = 0; i < lineNodes.getLength(); i++) {
+      Node node = lineNodes.item(i);
+      if (node.getNodeType() == Node.ELEMENT_NODE) {
+        Element element = (Element) node;
+        // Check if the line has the specific stroke attribute for backbone lines
+        if ("rgb(25%, 25%, 25%)".equals(element.getAttribute("stroke"))) {
+          numberLines.add(element);
+        }
       }
     }
-    System.out.println("Actually removed " + removedCount + " backbone line(s).");
-
-    // --- Filter Text Labels ---
-    System.out.println("--- Filtering Text Labels ---");
     NodeList textNodes = doc.getElementsByTagName("text");
-    List<Element> textLabelsToRemove = new ArrayList<>();
-    List<Element> numberLabels = new ArrayList<>(); // Store potential number labels in order
-
-    // Find all text elements likely representing numbers
+    List<Element> numberTexts = new ArrayList<>();
     for (int i = 0; i < textNodes.getLength(); i++) {
       Node node = textNodes.item(i);
       if (node.getNodeType() == Node.ELEMENT_NODE) {
         Element element = (Element) node;
-        // Check for the specific fill attribute
+        // Check if the line has the specific stroke attribute for backbone lines
         if ("rgb(25%, 25%, 25%)".equals(element.getAttribute("fill"))) {
-          // Basic check if content looks like a number
-          if (element.getTextContent() != null && element.getTextContent().matches("\\d+")) {
-            numberLabels.add(element);
-          }
+          numberTexts.add(element);
         }
       }
     }
 
-    // Assume the order of these labels corresponds to the nucleotide sequence order
-    if (numberLabels.size() != n) {
+    // Safety check: Ensure number of label lines and texts matches
+    if (numberLines.size() != numberTexts.size()) {
       System.err.println(
-          "Warning: Found "
-              + numberLabels.size()
-              + " potential number labels, but expected "
-              + n
-              + ". Text label filtering might be incorrect.");
-      // Decide how to proceed. For now, we'll attempt filtering anyway.
+          "Warning: Number of label lines ("
+              + numberLines.size()
+              + ") does not match number of label texts ("
+              + numberTexts.size()
+              + "). SVG modification might be incorrect.");
+      // Decide whether to proceed or abort. For now, let's proceed with caution.
     }
 
-    int labelsChecked = 0;
-    for (int i = 0; i < numberLabels.size() && i < n; i++) { // Iterate up to the minimum size
-      Element textElement = numberLabels.get(i);
-      String textContent = textElement.getTextContent();
-      try {
-        int number = Integer.parseInt(textContent);
-        labelsChecked++;
-        boolean isExt = isExternal[i]; // Get calculated external status
-        // Check conditions: keep if divisible by 10 OR external
-        boolean keepLabel = (number % 10 == 0) || isExt;
-
-        // Add detailed log
-        System.out.println(
-            "  Label Check: Index="
-                + i
-                + ", Number="
-                + number
-                + ", isExternal="
-                + isExt
-                + ", Keep="
-                + keepLabel
-                + ", TextContent='"
-                + textContent
-                + "'");
-
-        if (!keepLabel) {
-          textLabelsToRemove.add(textElement);
+    // Perform removal
+    removedCount = 0;
+    for (int i = 0; i < numberLines.size(); i++) {
+      if (!labelsToKeep.contains(i)) {
+        Element line = numberLines.get(i);
+        Element text = numberTexts.get(i);
+        Node parentLine = line.getParentNode();
+        Node parentText = text.getParentNode();
+        if (parentLine != null && parentText != null) {
+          parentLine.removeChild(line);
+          parentText.removeChild(text);
+          removedCount++;
         }
-      } catch (NumberFormatException e) {
-        System.err.println(
-            "Warning: Could not parse number from text element content: '"
-                + textContent
-                + "'. Skipping filtering for this element.");
-      } catch (ArrayIndexOutOfBoundsException e) {
-        System.err.println(
-            "Warning: Index mismatch ("
-                + i
-                + ") accessing isExternal array. Skipping filtering for this element.");
-        // This might happen if numberLabels.size() != n
-      }
-    }
-
-    // Remove the identified text labels
-    int removedTextCount = 0;
-    for (Element textElement : textLabelsToRemove) {
-      Node parent = textElement.getParentNode();
-      if (parent != null) {
-        parent.removeChild(textElement);
-        removedTextCount++;
       }
     }
     System.out.println(
-        "Checked "
-            + labelsChecked
-            + " number labels. Removed "
-            + removedTextCount
-            + " text label(s) based on filtering rules.");
+        "Removed " + removedCount + " label line(s) and text(s) based on numbering rules.");
 
     // --- Write the modified DOM back to the SVG file ---
     TransformerFactory transformerFactory = TransformerFactory.newInstance();

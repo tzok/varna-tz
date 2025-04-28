@@ -35,8 +35,11 @@ public final class ExtendedSecondaryStructureDrawer {
   }
 
   public static void main(final String[] args)
-      throws IOException, ExceptionNAViewAlgorithm, ExceptionWritingForbidden,
-          ExceptionFileFormatOrSyntax, ExceptionUnmatchedClosingParentheses {
+      throws IOException,
+          ExceptionNAViewAlgorithm,
+          ExceptionWritingForbidden,
+          ExceptionFileFormatOrSyntax,
+          ExceptionUnmatchedClosingParentheses {
     if (args.length != 1) {
       System.err.println("Usage: extended-drawer FILE");
       System.err.println("FILE contains multiple lines in the following format:");
@@ -69,8 +72,10 @@ public final class ExtendedSecondaryStructureDrawer {
   }
 
   public static void draw(final Collection<String> lines, final File outputFile)
-      throws ExceptionNAViewAlgorithm, ExceptionWritingForbidden,
-          ExceptionUnmatchedClosingParentheses, ExceptionFileFormatOrSyntax {
+      throws ExceptionNAViewAlgorithm,
+          ExceptionWritingForbidden,
+          ExceptionUnmatchedClosingParentheses,
+          ExceptionFileFormatOrSyntax {
     final VARNAConfig config = new VARNAConfig();
     final RNA rna = new RNA(true);
     String sequence = "";

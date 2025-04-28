@@ -123,8 +123,11 @@ public class FragSeqFileModel implements Comparable<FragSeqFileModel> {
   }
 
   private ArrayList<RNA> createRNAs()
-      throws ExceptionUnmatchedClosingParentheses, ExceptionFileFormatOrSyntax,
-          FileNotFoundException, ExceptionExportFailed, ExceptionPermissionDenied,
+      throws ExceptionUnmatchedClosingParentheses,
+          ExceptionFileFormatOrSyntax,
+          FileNotFoundException,
+          ExceptionExportFailed,
+          ExceptionPermissionDenied,
           ExceptionLoadingFailed {
     Collection<RNA> r = RNAFactory.loadSecStr(_path);
     for (RNA r2 : r) {

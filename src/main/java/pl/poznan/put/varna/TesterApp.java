@@ -16,8 +16,11 @@ public final class TesterApp {
   }
 
   public static void main(final String[] args)
-      throws ExceptionUnmatchedClosingParentheses, ExceptionFileFormatOrSyntax, IOException,
-          ExceptionWritingForbidden, ExceptionNAViewAlgorithm {
+      throws ExceptionUnmatchedClosingParentheses,
+          ExceptionFileFormatOrSyntax,
+          IOException,
+          ExceptionWritingForbidden,
+          ExceptionNAViewAlgorithm {
 
     final VARNAConfig config = new VARNAConfig();
 

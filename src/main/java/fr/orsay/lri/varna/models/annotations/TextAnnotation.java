@@ -55,6 +55,7 @@ public class TextAnnotation implements Serializable {
 
   /** default text color */
   public static final Color DEFAULTCOLOR = Color.black;
+
   /** default text font */
   public static final Font DEFAULTFONT = new Font("Arial", Font.PLAIN, 12);
 

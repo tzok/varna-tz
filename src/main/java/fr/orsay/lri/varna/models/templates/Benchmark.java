@@ -110,10 +110,10 @@ public class Benchmark {
     System.out.println(
         "\tNumber of too near consecutive bases = "
             + tooNearConsecutiveBases); // + " ie. " + percent(tooNearConsecutiveBases,
-                                        // rna.getSize()-1) + " %");
+    // rna.getSize()-1) + " %");
     System.out.println(
         "\tNumber of too far consecutive bases = "
             + tooFarConsecutiveBases); // + " ie. " + percent(tooFarConsecutiveBases,
-                                       // rna.getSize()-1) + " %");
+    // rna.getSize()-1) + " %");
   }
 }

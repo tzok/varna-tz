@@ -311,7 +311,7 @@ public class VARNAcmd implements InterfaceParameterLoader {
     ArrayList<VARNAPanel> vpl;
     ArrayList<FullBackup> confs = new ArrayList<FullBackup>();
     try {
-      if (!_inFile.equals("")) {
+      if (!_inFile.isEmpty()) {
         if (!_inFile.toLowerCase().endsWith(".varna")) {
           Collection<RNA> rnas = RNAFactory.loadSecStr(_inFile);
           if (rnas.isEmpty()) {
@@ -340,7 +340,7 @@ public class VARNAcmd implements InterfaceParameterLoader {
             this.getParameterValue("sequenceDBN", ""), this.getParameterValue("structureDBN", ""));
         confs.add(new FullBackup(r, "From Params"));
       }
-      if (!_outFile.equals("")) {
+      if (!_outFile.isEmpty()) {
         int index = 1;
         for (FullBackup r : confs) {
           VARNAcfg.setRNA(r.rna);
@@ -440,7 +440,7 @@ public class VARNAcmd implements InterfaceParameterLoader {
       throw (new ExitCode(1, "Error: Missing input file \"" + _inFile + "\"."));
     }
 
-    if (!_outFile.equals("")) throw (new ExitCode(0, ""));
+    if (!_outFile.isEmpty()) throw (new ExitCode(0, ""));
   }
 
   public void saveToJPEG(String filename, VARNAPanel vp)

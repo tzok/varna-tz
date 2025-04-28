@@ -57,7 +57,7 @@ public class NAView {
       ArrayList<Short> pair_table2, ArrayList<Double> x, ArrayList<Double> y)
       throws ExceptionNAViewAlgorithm {
     if (debug) System.out.println("naview_xy_coordinates");
-    if (pair_table2.size() == 0) return 0;
+    if (pair_table2.isEmpty()) return 0;
     int i;
     ArrayList<Integer> pair_table = new ArrayList<Integer>(pair_table2.size() + 1);
     pair_table.add(pair_table2.size());

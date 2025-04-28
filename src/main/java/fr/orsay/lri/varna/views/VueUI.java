@@ -408,7 +408,9 @@ public class VueUI {
       new FileNameExtensionFilter("PGF/Tikz diagram", "tex", "pgf");
 
   public void UIExport()
-      throws ExceptionExportFailed, ExceptionPermissionDenied, ExceptionWritingForbidden,
+      throws ExceptionExportFailed,
+          ExceptionPermissionDenied,
+          ExceptionWritingForbidden,
           ExceptionJPEGEncoding {
     ArrayList<FileNameExtensionFilter> v = new ArrayList<FileNameExtensionFilter>();
     v.add(_epsFilter);

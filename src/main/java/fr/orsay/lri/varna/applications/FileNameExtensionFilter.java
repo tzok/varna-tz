@@ -33,7 +33,7 @@ public class FileNameExtensionFilter extends FileFilter {
   public boolean accept(File path) {
     String name = path.getName();
     if (path.isDirectory()) return true;
-    int index = name.lastIndexOf(".");
+    int index = name.lastIndexOf('.');
     if (index != -1) {
       String suffix = name.substring(index + 1);
       if (_exts.containsKey(suffix)) {

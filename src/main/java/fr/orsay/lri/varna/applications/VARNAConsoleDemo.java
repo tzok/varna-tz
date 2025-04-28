@@ -197,7 +197,7 @@ public class VARNAConsoleDemo extends JApplet implements ActionListener {
     else if (_algo.equals("naview")) _algoCode = RNA.DRAW_MODE_NAVIEW;
     else if (_algo.equals("line")) _algoCode = RNA.DRAW_MODE_LINEAR;
     else _algoCode = RNA.DRAW_MODE_RADIATE;
-    if (_seq.getText().equals("") && _struct.getText().equals("")) {
+    if (_seq.getText().isEmpty() && _struct.getText().isEmpty()) {
       _seq.setText(DEFAULT_SEQUENCE);
       _struct.setText(DEFAULT_STRUCTURE);
     }

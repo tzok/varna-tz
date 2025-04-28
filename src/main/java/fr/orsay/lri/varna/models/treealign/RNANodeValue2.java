@@ -62,6 +62,7 @@ public class RNANodeValue2 implements GraphvizDrawableNodeValue {
       throw (new RNANodeValue2WrongTypeException());
     }
   }
+
   /** In case of multiple nodes, return the sequence of nucleotides. */
   public char[] computeSequence() {
     if (!singleNode) {

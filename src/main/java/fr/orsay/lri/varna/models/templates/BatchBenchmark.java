@@ -29,8 +29,11 @@ public class BatchBenchmark {
   final boolean DEFAULT_STRAIGHT_BULGES = false;
 
   public static RNA loadRNA(File file)
-      throws ExceptionFileFormatOrSyntax, ExceptionUnmatchedClosingParentheses,
-          FileNotFoundException, ExceptionExportFailed, ExceptionPermissionDenied,
+      throws ExceptionFileFormatOrSyntax,
+          ExceptionUnmatchedClosingParentheses,
+          FileNotFoundException,
+          ExceptionExportFailed,
+          ExceptionPermissionDenied,
           ExceptionLoadingFailed {
     Collection<RNA> rnas = RNAFactory.loadSecStr(file.getPath());
     if (rnas.isEmpty()) {
@@ -40,9 +43,15 @@ public class BatchBenchmark {
   }
 
   public void benchmarkRNA(File templatePath, File rnaPath, BufferedWriter outbuf)
-      throws ExceptionXmlLoading, RNATemplateDrawingAlgorithmException, ExceptionFileFormatOrSyntax,
-          ExceptionUnmatchedClosingParentheses, ExceptionExportFailed, ExceptionPermissionDenied,
-          ExceptionLoadingFailed, ExceptionNAViewAlgorithm, IOException {
+      throws ExceptionXmlLoading,
+          RNATemplateDrawingAlgorithmException,
+          ExceptionFileFormatOrSyntax,
+          ExceptionUnmatchedClosingParentheses,
+          ExceptionExportFailed,
+          ExceptionPermissionDenied,
+          ExceptionLoadingFailed,
+          ExceptionNAViewAlgorithm,
+          IOException {
     // load template
     RNATemplate template = RNATemplate.fromXMLFile(templatePath);
 

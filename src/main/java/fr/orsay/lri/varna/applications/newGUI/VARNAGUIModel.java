@@ -79,8 +79,11 @@ public class VARNAGUIModel implements Comparable<VARNAGUIModel> {
   }
 
   private RNA createRNA()
-      throws ExceptionUnmatchedClosingParentheses, ExceptionFileFormatOrSyntax,
-          FileNotFoundException, ExceptionExportFailed, ExceptionPermissionDenied,
+      throws ExceptionUnmatchedClosingParentheses,
+          ExceptionFileFormatOrSyntax,
+          FileNotFoundException,
+          ExceptionExportFailed,
+          ExceptionPermissionDenied,
           ExceptionLoadingFailed {
     Collection<RNA> r = RNAFactory.loadSecStr(_path);
     if (r.size() > 0) {

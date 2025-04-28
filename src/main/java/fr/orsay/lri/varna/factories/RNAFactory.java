@@ -163,8 +163,10 @@ public class RNAFactory {
   }
 
   public static ArrayList<RNA> loadSecStrDBN(Reader r)
-      throws ExceptionLoadingFailed, ExceptionPermissionDenied,
-          ExceptionUnmatchedClosingParentheses, ExceptionFileFormatOrSyntax {
+      throws ExceptionLoadingFailed,
+          ExceptionPermissionDenied,
+          ExceptionUnmatchedClosingParentheses,
+          ExceptionFileFormatOrSyntax {
     boolean loadOk = false;
     ArrayList<RNA> result = new ArrayList<RNA>();
     RNA current = new RNA();
@@ -174,10 +176,10 @@ public class RNAFactory {
       String title = "";
       String seqTmp = "";
       String strTmp = "";
-      while ((line != null) && (strTmp.equals(""))) {
+      while ((line != null) && (strTmp.isEmpty())) {
         line = line.trim();
         if (!line.startsWith(">")) {
-          if (seqTmp.equals("")) {
+          if (seqTmp.isEmpty()) {
             seqTmp = line;
           } else {
             strTmp = line;
@@ -308,8 +310,12 @@ public class RNAFactory {
   }
 
   public static ArrayList<RNA> loadSecStr(String path)
-      throws ExceptionExportFailed, ExceptionPermissionDenied, ExceptionLoadingFailed,
-          ExceptionFileFormatOrSyntax, ExceptionUnmatchedClosingParentheses, FileNotFoundException {
+      throws ExceptionExportFailed,
+          ExceptionPermissionDenied,
+          ExceptionLoadingFailed,
+          ExceptionFileFormatOrSyntax,
+          ExceptionUnmatchedClosingParentheses,
+          FileNotFoundException {
     FileReader fr = null;
     try {
       fr = new FileReader(path);
@@ -393,7 +399,7 @@ public class RNAFactory {
             }
           }
         } else if (tokens[0].startsWith("#")) {
-          int occur = line.indexOf("#");
+          int occur = line.indexOf('#');
           String tmp = line.substring(occur + 1);
           title += tmp.trim() + " ";
         } else if (tokens[0].startsWith(filenameStr)) {

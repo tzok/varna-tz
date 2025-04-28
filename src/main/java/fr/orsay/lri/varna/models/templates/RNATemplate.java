@@ -1229,6 +1229,7 @@ public class RNATemplate {
       public EdgeEndPoint getOtherEndPoint() {
         return otherEndPoint;
       }
+
       /**
        * Returns the endpoint at the other endpoint of the edge. Will be null if there is no edge
        * connecter to this endpoint.
@@ -1305,7 +1306,8 @@ public class RNATemplate {
         EdgeEndPointPosition positionHere,
         RNATemplateElement otherElement,
         EdgeEndPointPosition positionOnOtherElement)
-        throws ExceptionEdgeEndpointAlreadyConnected, ExceptionEdgeEndpointAlreadyConnected,
+        throws ExceptionEdgeEndpointAlreadyConnected,
+            ExceptionEdgeEndpointAlreadyConnected,
             ExceptionInvalidRNATemplate {
       EdgeEndPoint otherEndPoint = otherElement.getEndPointFromPosition(positionOnOtherElement);
       connectTo(positionHere, otherEndPoint);

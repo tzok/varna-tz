@@ -30,12 +30,16 @@ import org.xml.sax.SAXException;
 public abstract class ModeleBase implements Serializable, java.lang.Comparable<ModeleBase> {
 
   private ModeleBP _BP;
+
   /** The base style. */
   protected ModelBaseStyle _styleBase = new ModelBaseStyle();
+
   /** TRUE if this InterfaceBase has to be colored, else FALSE. */
   protected Boolean _colorie = new Boolean(true);
+
   /** The coordinate representation of this InterfaceBase on the final graphic. */
   protected VARNAPoint _coords = new VARNAPoint();
+
   /** The nearest loop center of this InterfaceBase. */
   protected VARNAPoint _center = new VARNAPoint();
 
@@ -180,7 +184,7 @@ public abstract class ModeleBase implements Serializable, java.lang.Comparable<M
   }
 
   public String getLabel() {
-    if (_label == null || _label.equals("")) {
+    if (_label == null || _label.isEmpty()) {
       return "" + this.getBaseNumber();
     } else {
       return _label;

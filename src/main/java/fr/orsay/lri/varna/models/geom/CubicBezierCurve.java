@@ -17,6 +17,7 @@ public class CubicBezierCurve {
   private Point2D.Double P0, P1, P2, P3;
 
   private int n;
+
   /** The number of lines approximating the Bezier curve. */
   public int getN() {
     return n;

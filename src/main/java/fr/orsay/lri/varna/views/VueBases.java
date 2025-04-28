@@ -42,8 +42,10 @@ public class VueBases extends JPanel {
 
   /** for bases by kind */
   public static final int KIND_MODE = 1;
+
   /** for all bases */
   public static final int ALL_MODE = 2;
+
   /** for base pairs by king */
   public static final int COUPLE_MODE = 3;
 

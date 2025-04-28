@@ -101,7 +101,7 @@ public class VueMenu extends JPopupMenu {
     mi.setActionCommand(command);
     mi.addActionListener(_controlerMenu);
     if (keyStroke != null)
-      if (!keyStroke.equals("")) mi.setAccelerator(KeyStroke.getKeyStroke(keyStroke));
+      if (!keyStroke.isEmpty()) mi.setAccelerator(KeyStroke.getKeyStroke(keyStroke));
     if (disabled) {
       _disabled.add(mi);
     }

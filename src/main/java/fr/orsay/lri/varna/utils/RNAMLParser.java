@@ -568,7 +568,7 @@ public class RNAMLParser extends DefaultHandler {
   private void postProcess() {
     for (RNATmp r : _molecules.values()) {
       // First, check if base numbers were specified
-      if (r._sequenceIDs.size() == 0) {
+      if (r._sequenceIDs.isEmpty()) {
         Vector<Integer> results = new Vector<Integer>();
         for (int i = 0; i < r._sequence.size(); i++) {
           results.add(new Integer(i + 1));

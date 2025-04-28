@@ -35,6 +35,7 @@ public class VARNAConfig implements Serializable, Cloneable {
 
   /** */
   private static final long serialVersionUID = 2853916694420964233L;
+
   /** */
   public static final int MAJOR_VERSION = 3;
 

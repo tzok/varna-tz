@@ -638,7 +638,7 @@ public class VARNASecDraw {
     }
 
     private void placeTerminalLoop(ArrayList<ModeleBase> mbl, RNA r) {
-      if ((_children.size() == 0) && (_p._r.getNumPortions() == 1)) {
+      if ((_children.isEmpty()) && (_p._r.getNumPortions() == 1)) {
         Portion p = _p._r.getPortion(0);
         if (p instanceof UnpairedPortion) {
           UnpairedPortion up = (UnpairedPortion) p;

@@ -30,15 +30,19 @@ import java.awt.event.MouseMotionListener;
  */
 public class ControleurDraggedMolette implements MouseListener, MouseMotionListener {
   private VARNAPanel _vp;
+
   /**
    * <code>true</code> if the right button is pressed<br>
    * <code>false</code> if not
    */
   private static Boolean _rightButtonClick;
+
   /** The vector which contains the direction of the mouse movement */
   private static Point _direction;
+
   /** The position of the cursor before the mouse drag */
   private static Point _avant;
+
   /** The position of the cursor after the mouse drag */
   private static Point _apres;
 

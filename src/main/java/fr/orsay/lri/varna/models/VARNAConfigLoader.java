@@ -254,8 +254,12 @@ public class VARNAConfigLoader {
   }
 
   public ArrayList<VARNAPanel> createVARNAPanels()
-      throws ExceptionParameterError, ExceptionModeleStyleBaseSyntaxError, ExceptionNonEqualLength,
-          IOException, ExceptionFileFormatOrSyntax, ExceptionLoadingFailed {
+      throws ExceptionParameterError,
+          ExceptionModeleStyleBaseSyntaxError,
+          ExceptionNonEqualLength,
+          IOException,
+          ExceptionFileFormatOrSyntax,
+          ExceptionLoadingFailed {
     _VARNAPanelList.clear();
     retrieveParametersValues();
     return _VARNAPanelList;
@@ -577,33 +581,33 @@ public class VARNAConfigLoader {
           _useNonStandardColor = false;
 
           tmp = _optionProducer.getParameterValue(baseNameColorOpt + n, "");
-          if (!tmp.equals("")) {
+          if (!tmp.isEmpty()) {
             _useBaseNameColor = true;
             _baseNameColor = getSafeColor(tmp, _baseNameColor);
           }
           tmp = _optionProducer.getParameterValue(baseNumbersColorOpt + n, "");
-          if (!tmp.equals("")) {
+          if (!tmp.isEmpty()) {
             _useBaseNumbersColor = true;
             _baseNumColor = getSafeColor(tmp, _baseNumColor);
           }
           tmp = _optionProducer.getParameterValue(baseOutlineColorOpt + n, "");
-          if (!tmp.equals("")) {
+          if (!tmp.isEmpty()) {
             _useBaseOutlineColor = true;
             _baseOutlineColor = getSafeColor(tmp, _baseOutlineColor);
           }
           tmp = _optionProducer.getParameterValue(baseInnerColorOpt + n, "");
-          if (!tmp.equals("")) {
+          if (!tmp.isEmpty()) {
             _useInnerBaseColor = true;
             _baseInnerColor = getSafeColor(tmp, _baseInnerColor);
           }
 
           tmp = _optionProducer.getParameterValue(nonStandardColorOpt + n, "");
-          if (!tmp.equals("")) {
+          if (!tmp.isEmpty()) {
             _nonStandardColor = getSafeColor(tmp, _nonStandardColor);
             _useNonStandardColor = true;
           }
           tmp = _optionProducer.getParameterValue(gapsBaseColorOpt + n, _gapsColor.toString());
-          if (!tmp.equals("")) {
+          if (!tmp.isEmpty()) {
             _gapsColor = getSafeColor(tmp, _gapsColor);
             _useGapsColor = true;
           }
@@ -798,7 +802,7 @@ public class VARNAConfigLoader {
                   _optionProducer.getParameterValue(titleColorOpt + n, _titleColor.toString()),
                   _titleColor);
 
-          if (!_URL.equals("")) {
+          if (!_URL.isEmpty()) {
             _sstruct = "";
             _sseq = "";
             _title = "";
@@ -813,7 +817,7 @@ public class VARNAConfigLoader {
           } else {
             _sseq = _optionProducer.getParameterValue(sequenceOpt + n, _sseq);
             _sstruct = _optionProducer.getParameterValue(structureOpt + n, _sstruct);
-            if (!_sseq.equals("") && !_sstruct.equals("")) {
+            if (!_sseq.isEmpty() && !_sstruct.isEmpty()) {
               _URL = "";
             }
             _comparisonMode = false;
@@ -850,8 +854,11 @@ public class VARNAConfigLoader {
   public static final String ALGORITHM_MOTIF_VIEW = "motifview";
 
   private void applyValues(String n)
-      throws ExceptionParameterError, ExceptionNonEqualLength, IOException,
-          ExceptionFileFormatOrSyntax, ExceptionLoadingFailed {
+      throws ExceptionParameterError,
+          ExceptionNonEqualLength,
+          IOException,
+          ExceptionFileFormatOrSyntax,
+          ExceptionLoadingFailed {
     boolean applyOptions = true;
     int algoCode;
     if (_algo.equals(ALGORITHM_CIRCULAR)) algoCode = RNA.DRAW_MODE_CIRCULAR;
@@ -874,7 +881,7 @@ public class VARNAConfigLoader {
     _mainSurface.setSpaceBetweenBases(_spaceBetweenBases);
     _mainSurface.setTitle(_title);
 
-    if (!_URL.equals("")) {
+    if (!_URL.isEmpty()) {
       URL url = null;
       try {
 
@@ -914,7 +921,7 @@ public class VARNAConfigLoader {
 
     } else {
       if (!_comparisonMode) {
-        if (!_sstruct.equals("")) {
+        if (!_sstruct.isEmpty()) {
           _mainSurface.drawRNA(_sseq, _sstruct, algoCode);
         } else {
           try {
@@ -974,26 +981,26 @@ public class VARNAConfigLoader {
 
       applyBasesStyle(n);
 
-      if (!_customBases.equals("")) applyBasesCustomStyles(_mainSurface);
+      if (!_customBases.isEmpty()) applyBasesCustomStyles(_mainSurface);
 
-      if (!_highlightRegion.equals("")) applyHighlightRegion(_mainSurface);
+      if (!_highlightRegion.isEmpty()) applyHighlightRegion(_mainSurface);
 
-      if (!_auxBPs.equals("")) applyAuxBPs(_mainSurface);
+      if (!_auxBPs.isEmpty()) applyAuxBPs(_mainSurface);
 
-      if (!_chemProbs.equals("")) applyChemProbs(_mainSurface);
+      if (!_chemProbs.isEmpty()) applyChemProbs(_mainSurface);
 
-      if (!_customBPs.equals("")) applyBPsCustomStyles(_mainSurface);
+      if (!_customBPs.isEmpty()) applyBPsCustomStyles(_mainSurface);
 
       _mainSurface.setDrawOutlineBases(_drawBases);
       _mainSurface.setFillBases(_fillBases);
       _mainSurface.drawRNA();
 
-      if (!_annotations.equals("")) applyAnnotations(_mainSurface);
+      if (!_annotations.isEmpty()) applyAnnotations(_mainSurface);
       if (_autoHelices) _mainSurface.getVARNAUI().UIAutoAnnotateHelices();
       if (_autoTerminalLoops) _mainSurface.getVARNAUI().UIAutoAnnotateTerminalLoops();
       if (_autoInteriorLoops) _mainSurface.getVARNAUI().UIAutoAnnotateInteriorLoops();
 
-      if (!_orientation.equals("")) {
+      if (!_orientation.isEmpty()) {
         try {
           double d = 360 * _mainSurface.getOrientation() / (2. * Math.PI);
           _rotation = Double.parseDouble(_orientation) - d;
@@ -1070,7 +1077,7 @@ public class VARNAConfigLoader {
   }
 
   private void applyColorMapValues(VARNAPanel vp) {
-    if (!_colorMapValues.equals("")) {
+    if (!_colorMapValues.isEmpty()) {
       File f = new File(_colorMapValues);
       if (f.exists() && !f.isDirectory()) {
         try {

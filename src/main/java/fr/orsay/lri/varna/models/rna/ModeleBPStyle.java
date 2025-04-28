@@ -29,6 +29,7 @@ public class ModeleBPStyle implements Serializable {
 
   /** */
   private static final long serialVersionUID = 3006493290669550139L;
+
   /** */
   private boolean _isCustomColored = false;
 

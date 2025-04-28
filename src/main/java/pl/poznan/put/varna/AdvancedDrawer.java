@@ -11,21 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+// Import enums from ModeleBP
+import fr.orsay.lri.varna.models.rna.ModeleBP;
 
 public class AdvancedDrawer {
-
-  // Enum for allowed Stericity values
-  public enum Stericity {
-    CIS,
-    TRANS
-  }
-
-  // Enum for allowed Edge types
-  public enum EdgeType {
-    WC,
-    SUGAR,
-    HOOGSTEEN
-  }
 
   @JsonIgnoreProperties(ignoreUnknown = true)
   public static class Nucleotide {
@@ -99,13 +88,13 @@ public class AdvancedDrawer {
     public int id2; // References Nucleotide.id
 
     @JsonProperty("edge5")
-    public EdgeType edge5;
+    public ModeleBP.Edge edge5;
 
     @JsonProperty("edge3")
-    public EdgeType edge3;
+    public ModeleBP.Edge edge3;
 
     @JsonProperty("stericity")
-    public Stericity stericity;
+    public ModeleBP.Stericity stericity;
 
     @JsonProperty("canonical")
     public Boolean canonical; // Use Boolean object type to handle absence (null)
@@ -174,16 +163,16 @@ public class AdvancedDrawer {
       System.err.println("Error: Invalid value found in JSON file: " + jsonFilePath);
       System.err.println("Invalid value: '" + e.getValue() + "' for field: " + e.getPathReference());
       // Provide context about allowed values if it's one of our enums
-      if (e.getTargetType().equals(Stericity.class)) {
+      if (e.getTargetType().equals(ModeleBP.Stericity.class)) {
         System.err.println(
             "Allowed values for stericity are: "
-                + Arrays.stream(Stericity.values())
+                + Arrays.stream(ModeleBP.Stericity.values())
                     .map(Enum::name)
                     .collect(Collectors.joining(", ")));
-      } else if (e.getTargetType().equals(EdgeType.class)) {
+      } else if (e.getTargetType().equals(ModeleBP.Edge.class)) {
         System.err.println(
             "Allowed values for edge types are: "
-                + Arrays.stream(EdgeType.values())
+                + Arrays.stream(ModeleBP.Edge.values())
                     .map(Enum::name)
                     .collect(Collectors.joining(", ")));
       }

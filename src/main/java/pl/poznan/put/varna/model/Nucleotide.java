@@ -16,15 +16,39 @@ public class Nucleotide {
   @JsonProperty("char")
   public String character;
 
-  @JsonProperty("color")
-  public String color;
+  @JsonProperty("outlineColor")
+  public String outlineColor;
 
-  // Transient field to store the parsed color object
-  public transient Optional<Color> parsedColor = Optional.empty();
+  @JsonProperty("innerColor")
+  public String innerColor;
 
-  // Getter for the parsed color
-  public Optional<Color> getParsedColor() {
-    return parsedColor;
+  @JsonProperty("numberColor")
+  public String numberColor;
+
+  @JsonProperty("nameColor")
+  public String nameColor;
+
+  // Transient fields to store the parsed color objects
+  public transient Optional<Color> parsedOutlineColor = Optional.empty();
+  public transient Optional<Color> parsedInnerColor = Optional.empty();
+  public transient Optional<Color> parsedNumberColor = Optional.empty();
+  public transient Optional<Color> parsedNameColor = Optional.empty();
+
+  // Getters for the parsed colors (optional, but good practice)
+  public Optional<Color> getParsedOutlineColor() {
+    return parsedOutlineColor;
+  }
+
+  public Optional<Color> getParsedInnerColor() {
+    return parsedInnerColor;
+  }
+
+  public Optional<Color> getParsedNumberColor() {
+    return parsedNumberColor;
+  }
+
+  public Optional<Color> getParsedNameColor() {
+    return parsedNameColor;
   }
 
   @Override
@@ -37,8 +61,17 @@ public class Nucleotide {
         + ", character='"
         + character
         + '\''
-        + ", color='"
-        + color
+        + ", outlineColor='"
+        + outlineColor
+        + '\''
+        + ", innerColor='"
+        + innerColor
+        + '\''
+        + ", numberColor='"
+        + numberColor
+        + '\''
+        + ", nameColor='"
+        + nameColor
         + '\''
         + '}';
   }

@@ -332,7 +332,6 @@ public class AdvancedDrawer {
     for (ModeleBP modeleBP : rna.getAllBPs()) {
       int index1 = modeleBP.getIndex5();
       int index2 = modeleBP.getIndex3();
-      System.out.println("Processing ModeleBP with indices: " + index1 + ", " + index2);
 
       // Create the lookup key
       String key = Math.min(index1, index2) + "-" + Math.max(index1, index2);
@@ -352,7 +351,6 @@ public class AdvancedDrawer {
         // Apply thickness if present
         if (bpData.thickness != null) {
           try {
-            System.out.println("Setting thickness for pair " + key + ": " + bpData.thickness);
             style.setThickness(bpData.thickness);
           } catch (NumberFormatException e) {
             // This shouldn't happen if thickness is Double, but good practice

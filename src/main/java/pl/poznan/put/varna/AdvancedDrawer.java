@@ -9,11 +9,26 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ArrayList; // Added for List
+import java.util.List; // Added for List
 import java.util.stream.Collectors;
-
-import fr.orsay.lri.varna.models.VARNAConfig;
+// XML Processing Imports
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+// VARNA Imports
+import fr.orsay.lri.varna.VARNAConfig;
+import fr.orsay.lri.varna.exceptions.ExceptionExportFailed; // Added for ExceptionExportFailed
 import fr.orsay.lri.varna.models.rna.ModeleBP;
-import fr.orsay.lri.varna.models.rna.ModeleBPStyle; // Import ModeleBPStyle
+import fr.orsay.lri.varna.models.rna.ModeleBPStyle;
 import fr.orsay.lri.varna.models.rna.ModeleBase;
 import fr.orsay.lri.varna.models.rna.ModelBaseStyle; // Import ModelBaseStyle
 import fr.orsay.lri.varna.models.rna.RNA;
@@ -136,10 +151,23 @@ public class AdvancedDrawer {
           String outputFilename = "output.svg"; // Default output filename
           System.out.println("Saving RNA visualization to: " + outputFilename);
           rna.saveRNASVG(outputFilename, config);
-          System.out.println("SVG saved successfully.");
+          System.out.println("Initial SVG saved successfully.");
+
+          // 7. Post-process SVG to remove discontinuous backbone lines
+          try {
+            removeDiscontinuousBackboneLines(outputFilename, structureData);
+            System.out.println("SVG post-processed successfully.");
+          } catch (Exception xmlException) {
+            System.err.println("Error during SVG post-processing:");
+            xmlException.printStackTrace();
+          }
+
+        } catch (ExceptionExportFailed e) { // Catch specific VARNA export exception
+          System.err.println("Error saving SVG output: " + e.getError());
+          e.printStackTrace();
         } catch (Exception e) {
           // Catch other potential exceptions during RNA processing/drawing
-          System.err.println("An unexpected error occurred during RNA drawing:");
+          System.err.println("An unexpected error occurred during RNA processing/drawing:");
           e.printStackTrace();
         }
       }
@@ -400,5 +428,108 @@ public class AdvancedDrawer {
         }
       }
     }
+  }
+
+  // Method to parse SVG, find and remove backbone lines at numbering discontinuities
+  private static void removeDiscontinuousBackboneLines(
+      String svgFilePath, StructureData structureData) throws Exception {
+    if (structureData == null || structureData.nucleotides == null || structureData.nucleotides.size() < 2) {
+      // Not enough nucleotides to have a discontinuity
+      return;
+    }
+
+    // 1. Find indices BEFORE which a discontinuity occurs
+    List<Integer> discontinuityIndices = new ArrayList<>();
+    for (int i = 0; i < structureData.nucleotides.size() - 1; i++) {
+      Nucleotide current = structureData.nucleotides.get(i);
+      Nucleotide next = structureData.nucleotides.get(i + 1);
+      if (current != null && next != null) {
+        // Check if numbering is NOT consecutive (current.number + 1 != next.number)
+        if (current.number + 1 != next.number) {
+          discontinuityIndices.add(i); // Add the index of the nucleotide BEFORE the break
+          System.out.println(
+              "Detected numbering discontinuity between index "
+                  + i
+                  + " (number "
+                  + current.number
+                  + ") and index "
+                  + (i + 1)
+                  + " (number "
+                  + next.number
+                  + ")");
+        }
+      }
+    }
+
+    if (discontinuityIndices.isEmpty()) {
+      System.out.println("No numbering discontinuities found. SVG not modified.");
+      return; // No discontinuities, nothing to remove
+    }
+
+    // 2. Parse the SVG file
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    Document doc = builder.parse(new File(svgFilePath));
+    doc.getDocumentElement().normalize();
+
+    // 3. Find all backbone lines
+    NodeList lineNodes = doc.getElementsByTagName("line");
+    List<Element> backboneLines = new ArrayList<>();
+    for (int i = 0; i < lineNodes.getLength(); i++) {
+      Node node = lineNodes.item(i);
+      if (node.getNodeType() == Node.ELEMENT_NODE) {
+        Element element = (Element) node;
+        // Check if the line has class="Backbone" (case-sensitive)
+        if ("Backbone".equals(element.getAttribute("class"))) {
+          backboneLines.add(element);
+        }
+      }
+    }
+
+    // Safety check: Ensure number of backbone lines matches expectation (n-1)
+    if (backboneLines.size() != structureData.nucleotides.size() - 1) {
+      System.err.println(
+          "Warning: Expected "
+              + (structureData.nucleotides.size() - 1)
+              + " backbone lines, but found "
+              + backboneLines.size()
+              + ". SVG modification might be incorrect.");
+      // Decide whether to proceed or abort. For now, let's proceed with caution.
+    }
+
+    // 4. Identify and remove lines corresponding to discontinuities
+    // Iterate in reverse order of indices to avoid index shifting issues during removal
+    List<Element> linesToRemove = new ArrayList<>();
+    for (int i = discontinuityIndices.size() - 1; i >= 0; i--) {
+      int indexToRemove = discontinuityIndices.get(i);
+      if (indexToRemove >= 0 && indexToRemove < backboneLines.size()) {
+        linesToRemove.add(backboneLines.get(indexToRemove));
+      } else {
+        System.err.println(
+            "Warning: Calculated discontinuity index "
+                + indexToRemove
+                + " is out of bounds for the found backbone lines (size: "
+                + backboneLines.size()
+                + "). Skipping removal.");
+      }
+    }
+
+    // Perform removal
+    int removedCount = 0;
+    for (Element line : linesToRemove) {
+      Node parent = line.getParentNode();
+      if (parent != null) {
+        parent.removeChild(line);
+        removedCount++;
+      }
+    }
+    System.out.println("Removed " + removedCount + " backbone line(s) due to discontinuities.");
+
+    // 5. Write the modified DOM back to the SVG file
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    Transformer transformer = transformerFactory.newTransformer();
+    DOMSource source = new DOMSource(doc);
+    StreamResult result = new StreamResult(new File(svgFilePath));
+    transformer.transform(source, result);
   }
 }

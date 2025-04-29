@@ -465,6 +465,22 @@ public class AdvancedDrawer {
 
     // 2. Parse the SVG file
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    // Disable external DTDs and entities for security
+    try {
+      // XXE prevention
+      factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+      factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+      // Disable external DTDs
+      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+      // Disable expansion of entities
+      factory.setExpandEntityReferences(false);
+    } catch (javax.xml.parsers.ParserConfigurationException e) {
+      // Handle the configuration error, e.g., log it or rethrow as a runtime exception
+      System.err.println("Error configuring secure XML parser features: " + e.getMessage());
+      // Depending on requirements, you might want to throw a new exception here
+      // throw new RuntimeException("Failed to configure secure XML parser", e);
+    }
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document doc = builder.parse(new File(svgFilePath));
     doc.getDocumentElement().normalize();

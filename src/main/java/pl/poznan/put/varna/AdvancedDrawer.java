@@ -470,26 +470,26 @@ public class AdvancedDrawer {
     doc.getDocumentElement().normalize();
 
     // 3. Find all backbone lines
-    NodeList lineNodes = doc.getElementsByTagName("line");
-    List<Element> backboneLines = new ArrayList<>();
-    for (int i = 0; i < lineNodes.getLength(); i++) {
-      Node node = lineNodes.item(i);
+    NodeList childNodes = doc.getDocumentElement().getChildNodes();
+    List<Element> backboneElements = new ArrayList<>();
+    for (int i = 0;
+        i < childNodes.getLength()
+            && backboneElements.size() < structureData.nucleotides.size() - 1;
+        i++) {
+      Node node = childNodes.item(i);
       if (node.getNodeType() == Node.ELEMENT_NODE) {
         Element element = (Element) node;
-        // Check if the line has the specific stroke attribute for backbone lines
-        if ("rgb(35%, 35%, 35%)".equals(element.getAttribute("stroke"))) {
-          backboneLines.add(element);
-        }
+        backboneElements.add(element);
       }
     }
 
     // Safety check: Ensure number of backbone lines matches expectation (n-1)
-    if (backboneLines.size() != structureData.nucleotides.size() - 1) {
+    if (backboneElements.size() != structureData.nucleotides.size() - 1) {
       System.err.println(
           "Warning: Expected "
               + (structureData.nucleotides.size() - 1)
               + " backbone lines, but found "
-              + backboneLines.size()
+              + backboneElements.size()
               + ". SVG modification might be incorrect.");
       // Decide whether to proceed or abort. For now, let's proceed with caution.
     }
@@ -499,12 +499,12 @@ public class AdvancedDrawer {
     List<Element> linesToRemove = new ArrayList<>();
     System.out.println("--- Identifying Backbone Lines to Remove ---");
     System.out.println("Discontinuity indices (line before break): " + discontinuityIndices);
-    System.out.println("Total backbone lines found: " + backboneLines.size());
+    System.out.println("Total backbone lines found: " + backboneElements.size());
 
     for (int i = discontinuityIndices.size() - 1; i >= 0; i--) {
       int indexToRemove = discontinuityIndices.get(i);
-      if (indexToRemove >= 0 && indexToRemove < backboneLines.size()) {
-        Element lineElement = backboneLines.get(indexToRemove);
+      if (indexToRemove >= 0 && indexToRemove < backboneElements.size()) {
+        Element lineElement = backboneElements.get(indexToRemove);
         System.out.println(
             "  Marking for removal: Line index "
                 + indexToRemove
@@ -522,7 +522,7 @@ public class AdvancedDrawer {
             "Warning: Calculated discontinuity index "
                 + indexToRemove
                 + " is out of bounds for the found backbone lines (size: "
-                + backboneLines.size()
+                + backboneElements.size()
                 + "). Skipping removal.");
       }
     }
@@ -539,6 +539,7 @@ public class AdvancedDrawer {
     System.out.println("Removed " + removedCount + " backbone line(s) due to discontinuities.");
 
     // 5. Find pairs of text and line elements that correspond to numbered labels
+    NodeList lineNodes = doc.getElementsByTagName("line");
     List<Element> numberLines = new ArrayList<>();
     for (int i = 0; i < lineNodes.getLength(); i++) {
       Node node = lineNodes.item(i);

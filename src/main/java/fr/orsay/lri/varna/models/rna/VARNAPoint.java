@@ -24,7 +24,7 @@ public class VARNAPoint implements Serializable {
 
   public void toXML(TransformerHandler hd, String role) throws SAXException {
     AttributesImpl atts = new AttributesImpl();
-    if (!role.equals("")) {
+    if (!role.isEmpty()) {
       atts.addAttribute("", "", XML_VAR_ROLE_NAME, "CDATA", "" + role);
     }
     atts.addAttribute("", "", XML_VAR_X_NAME, "CDATA", "" + x);

@@ -171,7 +171,7 @@ public class ModelBaseStyle implements Cloneable, Serializable {
 
   public void assignParameters(String parametersValue)
       throws ExceptionModeleStyleBaseSyntaxError, ExceptionParameterError {
-    if (parametersValue.equals("")) return;
+    if (parametersValue.isEmpty()) return;
 
     String[] parametersL = parametersValue.split(",");
 

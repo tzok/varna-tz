@@ -69,7 +69,7 @@ public class ControleurDemoTextField implements CaretListener {
           p.push(i);
         } else if (_vod.get_struct().getText().charAt(i) == ')') {
           nbPF++;
-          if (p.size() == 0) {
+          if (p.isEmpty()) {
             try {
               _hilit.addHighlight(i, i + 1, _painter);
             } catch (BadLocationException e1) {

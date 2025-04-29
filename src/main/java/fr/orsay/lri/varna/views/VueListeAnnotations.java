@@ -57,6 +57,7 @@ public class VueListeAnnotations extends JPanel {
 
   /** if this view is for removing annoted texts */
   public static final int REMOVE = 0;
+
   /** if this view is for editing annoted texts */
   public static final int EDIT = 1;
 

@@ -29,6 +29,7 @@ public interface VueVARNAGraphics {
   public void fillRoundRect(double x, double y, double w, double h, double rx, double ry);
 
   public void drawArc(double x, double y, double rx, double ry, double angleStart, double angleEnd);
+
   // public void drawString(String s, double x, double y);
   public void draw(GeneralPath s);
 

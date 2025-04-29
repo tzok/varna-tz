@@ -779,6 +779,7 @@ public class DrawRNATemplate {
   private static class UnpairedLineCounts {
     public int nBP, nLD, total;
   }
+
   /**
    * If we are drawing an unpaired region that may contains helices, and we are drawing it on a line
    * (curve or straight, doesn't matter), how many intervals should have a base-pair length (start

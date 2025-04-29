@@ -611,7 +611,7 @@ public class VARNAGUI extends JFrame
         if (select) {
           _l.removeSelectionInterval(0, _rnaList.size());
         }
-        if (name.equals("")) {
+        if (name.isEmpty()) {
           name = generateDefaultName();
         }
         FullBackup bck = new FullBackup(c, r, name);
@@ -636,6 +636,7 @@ public class VARNAGUI extends JFrame
     public boolean contains(RNA r) {
       return _rnas.contains(r);
     }
+
     /*public int getSize()
     {
     	return _rnaList.getSize();

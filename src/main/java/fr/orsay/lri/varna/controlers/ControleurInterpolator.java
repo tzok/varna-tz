@@ -498,7 +498,7 @@ public class ControleurInterpolator extends Thread {
     }
 
     public synchronized TargetsHolder get() {
-      while (_d.size() == 0) {
+      while (_d.isEmpty()) {
         try {
           wait();
         } catch (InterruptedException e) {

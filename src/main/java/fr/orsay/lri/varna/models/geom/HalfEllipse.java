@@ -15,6 +15,7 @@ public class HalfEllipse {
   private double a, b;
 
   private int n;
+
   /** The number of lines approximating the curve. */
   public int getN() {
     return n;

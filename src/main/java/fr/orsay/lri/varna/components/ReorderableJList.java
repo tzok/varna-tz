@@ -69,6 +69,7 @@ public class ReorderableJList extends JList
     draggedIndex = index;
     dragSource.startDrag(dge, Cursor.getDefaultCursor(), trans, this);
   }
+
   // DragSourceListener events
   public void dragDropEnd(DragSourceDropEvent dsde) {
     // System.out.println ("dragDropEnd()");
@@ -84,6 +85,7 @@ public class ReorderableJList extends JList
   public void dragOver(DragSourceDragEvent dsde) {}
 
   public void dropActionChanged(DragSourceDragEvent dsde) {}
+
   // DropTargetListener events
   public void dragEnter(DropTargetDragEvent dtde) {
     // System.out.println ("dragEnter");

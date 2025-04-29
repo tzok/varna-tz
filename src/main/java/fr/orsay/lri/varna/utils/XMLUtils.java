@@ -32,7 +32,7 @@ public class XMLUtils {
 
   public static void toXML(TransformerHandler hd, Font f, String role) throws SAXException {
     AttributesImpl atts = new AttributesImpl();
-    if (!role.equals("")) atts.addAttribute("", "", XML_ROLE_NAME, "CDATA", "" + role);
+    if (!role.isEmpty()) atts.addAttribute("", "", XML_ROLE_NAME, "CDATA", "" + role);
     atts.addAttribute("", "", XML_NAME_NAME, "CDATA", "" + f.getName());
     // atts.addAttribute("","",XML_FAMILY_NAME,"CDATA",""+f.getFamily());
     atts.addAttribute("", "", XML_STYLE_NAME, "CDATA", "" + f.getStyle());
@@ -62,7 +62,7 @@ public class XMLUtils {
     AttributesImpl atts = new AttributesImpl();
     String result = "";
     for (ModeleBase mb : m) {
-      if (!result.equals("")) result += ",";
+      if (!result.isEmpty()) result += ",";
       result += mb.getIndex();
     }
     hd.startElement("", "", XML_BASELIST_ELEMENT_NAME, atts);

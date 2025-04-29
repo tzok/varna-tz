@@ -42,6 +42,7 @@ import javax.swing.JOptionPane;
 
 public class VARNA extends JApplet implements InterfaceParameterLoader, DropTargetListener {
   ArrayList<VARNAPanel> _vpl = null;
+
   /** */
   private static final long serialVersionUID = -2598221520127067670L;
 

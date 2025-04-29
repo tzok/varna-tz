@@ -67,6 +67,7 @@ public class TemplateEditor extends JFrame
   private JButton flipButton;
   private JComboBox ellipseMethodList;
   private JComboBox applyMethodList;
+
   /*private JRadioButton ellipseButtons[];
   private JRadioButton methodButtons[];
   */

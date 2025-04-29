@@ -796,6 +796,7 @@ public class VARNAPanel extends JPanel {
   private boolean _premierAffichage;
 
   private ControleurInterpolator _interpolator;
+
   /**
    * If comparison mode is TRUE (ON), then the application will be used to display a super-structure
    * resulting on an RNA secondary structure comparison. Else, the application is used by default.
@@ -1029,7 +1030,7 @@ public class VARNAPanel extends JPanel {
   }
 
   private void updateTitleHeight() {
-    if (!getTitle().equals("")) {
+    if (!getTitle().isEmpty()) {
       _titleHeight = (int) (_conf._titleFont.getSize() * 1.5);
     } else {
       _titleHeight = 0;
@@ -2449,7 +2450,7 @@ public class VARNAPanel extends JPanel {
 
     if (getMinimumSize().height < getSize().height && getMinimumSize().width < getSize().width) {
       // Draw Title
-      if (!getTitle().equals("")) {
+      if (!getTitle().isEmpty()) {
         g2D.setColor(_conf._titleColor);
         g2D.setFont(_conf._titleFont);
         g2D.drawStringCentered(
@@ -2966,7 +2967,7 @@ public class VARNAPanel extends JPanel {
       // bases array
       // in order to color bases outer depending on the owning statement
       // of each bases.
-      if (!string_superSeq.equals("") && !string_superStruct.equals("")) {
+      if (!string_superSeq.isEmpty() && !string_superStruct.isEmpty()) {
         try {
           _RNA.setRNA(string_superSeq, string_superStruct, array_rnaOwn);
         } catch (ExceptionUnmatchedClosingParentheses e) {

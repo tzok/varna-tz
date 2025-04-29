@@ -104,7 +104,7 @@ public class ControleurScriptParser {
     }
 
     public String toString() {
-      return _val.toString();
+      return _val;
     }
   }
   ;
@@ -482,7 +482,7 @@ public class ControleurScriptParser {
   }
 
   private static Command parseCommand(String cmd) throws Exception {
-    int cut = cmd.indexOf("(");
+    int cut = cmd.indexOf('(');
     if (cut == -1) {
       throw new Exception(SCRIPT_ERROR_PREFIX + ": Syntax error");
     }

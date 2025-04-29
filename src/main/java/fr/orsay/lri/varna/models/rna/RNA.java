@@ -92,6 +92,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
    * base-pairings as chords of the circle graph.
    */
   public static final int DRAW_MODE_CIRCULAR = 1;
+
   /**
    * Selects the "tree drawing" algorithm. Draws each loop on a circle whose radius depends on the
    * number of bases involved in the loop. As some helices can be overlapping in the result, basic
@@ -105,6 +106,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
 
   /** Selects the NAView algorithm. */
   public static final int DRAW_MODE_NAVIEW = 3;
+
   /** Selects the linear algorithm. */
   public static final int DRAW_MODE_LINEAR = 4;
 
@@ -154,10 +156,13 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
   private String _name = "";
   private String _id = "";
   public double _bpHeightIncrement = VARNAConfig.DEFAULT_BP_INCREMENT;
+
   /** the base list */
   private ArrayList<ModeleBase> _listeBases;
+
   /** the strand list */
   StructureTemp _listStrands = new StructureTemp();
+
   /** Additional bonds and info can be specified here. */
   private ArrayList<ModeleBP> _structureAux = new ArrayList<ModeleBP>();
 
@@ -270,7 +275,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
   }
 
   public String toString() {
-    if (_name.equals("")) {
+    if (_name.isEmpty()) {
       return getStructDBN();
     } else {
       return _name;
@@ -290,7 +295,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
   public void saveRNADBN(String path, String title) throws ExceptionWritingForbidden {
     try {
       FileWriter out = new FileWriter(path);
-      if (!title.equals("")) {
+      if (!title.isEmpty()) {
         out.write("> " + title + "\n");
       }
       out.write(getListeBasesToString());
@@ -990,7 +995,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
     out.setColor(conf._titleColor);
     out.setFont(PSExport.FONT_HELVETICA, titleFontSize);
     double yTitle = currentBBox.y - titleFontSize / 2.0;
-    if (!getName().equals("")) {
+    if (!getName().isEmpty()) {
       out.drawText((maxX - minX) / 2.0, yTitle, getName());
     }
 
@@ -2334,7 +2339,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
       } else if (c == '.' || c == '-' || c == ':') {
         result[i] = -1;
       } else if (c == ')') {
-        if (p.size() == 0) {
+        if (p.isEmpty()) {
           throw new ExceptionUnmatchedClosingParentheses(i + 1);
         }
         int j = p.pop().intValue();

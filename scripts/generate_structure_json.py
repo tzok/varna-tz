@@ -39,7 +39,9 @@ def parse_dot_bracket(sequence, dot_bracket_string):
             stack.append((index, char_code))
         elif char_code in closing_brackets:
             if not stack:
-                raise ValueError(f"Unmatched closing bracket '{char_code}' at position {index}.")
+                raise ValueError(
+                    f"Unmatched closing bracket '{char_code}' at position {index}."
+                )
             nt1_index, open_bracket_char = stack.pop()
             if bracket_map[char_code] != open_bracket_char:
                 raise ValueError(
@@ -48,14 +50,16 @@ def parse_dot_bracket(sequence, dot_bracket_string):
                 )
             nt2_index = index
             # Ensure nt1 is always less than nt2, common convention
-            base_pairs.append({
-                "nt1": min(nt1_index, nt2_index),
-                "nt2": max(nt1_index, nt2_index),
-                "edge5": "WC",
-                "edge3": "WC",
-                "stericity": "CIS",
-                "canonical": True,
-            })
+            base_pairs.append(
+                {
+                    "nt1": min(nt1_index, nt2_index),
+                    "nt2": max(nt1_index, nt2_index),
+                    "edge5": "WC",
+                    "edge3": "WC",
+                    "stericity": "CIS",
+                    "canonical": True,
+                }
+            )
         elif char_code == ".":
             pass  # Unpaired nucleotide
         else:
@@ -65,7 +69,9 @@ def parse_dot_bracket(sequence, dot_bracket_string):
 
     if stack:
         unmatched_positions = [item[0] for item in stack]
-        raise ValueError(f"Unmatched opening brackets at positions: {unmatched_positions}.")
+        raise ValueError(
+            f"Unmatched opening brackets at positions: {unmatched_positions}."
+        )
 
     # Sort base pairs by the first nucleotide index for consistent output
     base_pairs.sort(key=lambda bp: bp["nt1"])

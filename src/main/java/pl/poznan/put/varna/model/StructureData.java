@@ -12,6 +12,9 @@ public class StructureData {
   @JsonProperty("basePairs")
   public List<BasePair> basePairs;
 
+  @JsonProperty("drawingAlgorithm")
+  public String drawingAlgorithm;
+
   @Override
   public String toString() {
     return "StructureData{"
@@ -19,6 +22,9 @@ public class StructureData {
         + (nucleotides != null ? nucleotides.size() : 0)
         + " items, basePairs="
         + (basePairs != null ? basePairs.size() : 0)
-        + " items}";
+        + " items, drawingAlgorithm='"
+        + drawingAlgorithm
+        + '\''
+        + "}";
   }
 }

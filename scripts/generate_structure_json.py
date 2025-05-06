@@ -84,7 +84,7 @@ def parse_dot_bracket(sequence, dot_bracket_string):
         raise ValueError(f"Unmatched opening brackets: {error_details}.")
 
     # Sort base pairs by the first nucleotide index for consistent output
-    base_pairs.sort(key=lambda bp: bp["id1"])
+    base_pairs.sort(key=lambda bp: bp["nt1"])
 
     return {"nucleotides": nucleotides, "basePairs": base_pairs}
 

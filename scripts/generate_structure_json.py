@@ -25,7 +25,7 @@ def parse_dot_bracket(sequence, dot_bracket_string):
 
     nucleotides = []
     for i, char_code in enumerate(sequence):
-        nucleotides.append({"index": i + 1, "name": char_code})
+        nucleotides.append({"index": i + 1, "number": i + 1, "name": char_code})
 
     base_pairs = []
     opening_brackets = "([{<"

@@ -4,6 +4,7 @@ import argparse
 import json
 import sys
 
+
 def parse_dot_bracket(sequence, dot_bracket_string):
     """
     Parses sequence and dot-bracket string to create a structure data dictionary.
@@ -30,16 +31,16 @@ def parse_dot_bracket(sequence, dot_bracket_string):
     stack = []
     for i, char_code in enumerate(dot_bracket_string):
         index = i + 1  # 1-based index
-        if char_code == '(':
+        if char_code == "(":
             stack.append(index)
-        elif char_code == ')':
+        elif char_code == ")":
             if not stack:
                 raise ValueError(f"Unmatched closing bracket at position {index}.")
             nt1 = stack.pop()
             nt2 = index
             # Ensure nt1 is always less than nt2, common convention
             base_pairs.append({"nt1": min(nt1, nt2), "nt2": max(nt1, nt2)})
-        elif char_code == '.':
+        elif char_code == ".":
             pass  # Unpaired nucleotide
         else:
             raise ValueError(
@@ -54,6 +55,7 @@ def parse_dot_bracket(sequence, dot_bracket_string):
 
     return {"nucleotides": nucleotides, "basePairs": base_pairs}
 
+
 def main():
     """
     Main function to parse arguments and print structure JSON.
@@ -61,7 +63,9 @@ def main():
     parser = argparse.ArgumentParser(
         description="Generate a JSON representation of RNA secondary structure from sequence and dot-bracket notation."
     )
-    parser.add_argument("sequence", type=str, help="The RNA sequence (e.g., 'GGAAACC').")
+    parser.add_argument(
+        "sequence", type=str, help="The RNA sequence (e.g., 'GGAAACC')."
+    )
     parser.add_argument(
         "dotbracket", type=str, help="The dot-bracket notation (e.g., '((...))')."
     )
@@ -74,6 +78,7 @@ def main():
     except ValueError as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

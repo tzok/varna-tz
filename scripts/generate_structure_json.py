@@ -25,7 +25,7 @@ def parse_dot_bracket(sequence, dot_bracket_string):
 
     nucleotides = []
     for i, char_code in enumerate(sequence):
-        nucleotides.append({"index": i + 1, "number": i + 1, "name": char_code})
+        nucleotides.append({"index": i + 1, "number": i + 1, "character": char_code})
 
     base_pairs = []
     opening_brackets = "([{<"
@@ -84,7 +84,7 @@ def parse_dot_bracket(sequence, dot_bracket_string):
         raise ValueError(f"Unmatched opening brackets: {error_details}.")
 
     # Sort base pairs by the first nucleotide index for consistent output
-    base_pairs.sort(key=lambda bp: bp["nt1"])
+    base_pairs.sort(key=lambda bp: bp["id1"])
 
     return {"nucleotides": nucleotides, "basePairs": base_pairs}
 

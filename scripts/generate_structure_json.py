@@ -28,26 +28,23 @@ def parse_dot_bracket(sequence, dot_bracket_string):
         nucleotides.append({"index": i + 1, "name": char_code})
 
     base_pairs = []
-    stack = []
     opening_brackets = "([{<"
     closing_brackets = ")]}>"
     bracket_map = {")": "(", "]": "[", "}": "{", ">": "<"}
+    # Initialize stacks for each type of opening bracket
+    stacks = {opener: [] for opener in opening_brackets}
 
     for i, char_code in enumerate(dot_bracket_string):
         index = i + 1  # 1-based index
         if char_code in opening_brackets:
-            stack.append((index, char_code))
+            stacks[char_code].append(index)  # Push index onto stack for this bracket type
         elif char_code in closing_brackets:
-            if not stack:
+            expected_opener = bracket_map[char_code]
+            if not stacks[expected_opener]:  # Check if stack for this specific opener type is empty
                 raise ValueError(
                     f"Unmatched closing bracket '{char_code}' at position {index}."
                 )
-            nt1_index, open_bracket_char = stack.pop()
-            if bracket_map[char_code] != open_bracket_char:
-                raise ValueError(
-                    f"Mismatched closing bracket '{char_code}' for opening bracket "
-                    f"'{open_bracket_char}' at position {nt1_index} and {index}."
-                )
+            nt1_index = stacks[expected_opener].pop()
             nt2_index = index
             # Ensure nt1 is always less than nt2, common convention
             base_pairs.append(
@@ -67,11 +64,16 @@ def parse_dot_bracket(sequence, dot_bracket_string):
                 f"Invalid character '{char_code}' in dot-bracket string at position {index}."
             )
 
-    if stack:
-        unmatched_positions = [item[0] for item in stack]
-        raise ValueError(
-            f"Unmatched opening brackets at positions: {unmatched_positions}."
-        )
+    # Check for unmatched opening brackets
+    all_unmatched_openers = []
+    for opener_type, s_list in stacks.items():
+        for pos in s_list:
+            all_unmatched_openers.append((pos, opener_type)) # Store as (position, type)
+
+    if all_unmatched_openers:
+        all_unmatched_openers.sort() # Sort by position, then by character
+        error_details = ", ".join([f"'{b}' at position {p}" for p, b in all_unmatched_openers])
+        raise ValueError(f"Unmatched opening brackets: {error_details}.")
 
     # Sort base pairs by the first nucleotide index for consistent output
     base_pairs.sort(key=lambda bp: bp["nt1"])

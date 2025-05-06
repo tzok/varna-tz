@@ -37,10 +37,14 @@ def parse_dot_bracket(sequence, dot_bracket_string):
     for i, char_code in enumerate(dot_bracket_string):
         index = i + 1  # 1-based index
         if char_code in opening_brackets:
-            stacks[char_code].append(index)  # Push index onto stack for this bracket type
+            stacks[char_code].append(
+                index
+            )  # Push index onto stack for this bracket type
         elif char_code in closing_brackets:
             expected_opener = bracket_map[char_code]
-            if not stacks[expected_opener]:  # Check if stack for this specific opener type is empty
+            if not stacks[
+                expected_opener
+            ]:  # Check if stack for this specific opener type is empty
                 raise ValueError(
                     f"Unmatched closing bracket '{char_code}' at position {index}."
                 )
@@ -68,11 +72,15 @@ def parse_dot_bracket(sequence, dot_bracket_string):
     all_unmatched_openers = []
     for opener_type, s_list in stacks.items():
         for pos in s_list:
-            all_unmatched_openers.append((pos, opener_type)) # Store as (position, type)
+            all_unmatched_openers.append(
+                (pos, opener_type)
+            )  # Store as (position, type)
 
     if all_unmatched_openers:
-        all_unmatched_openers.sort() # Sort by position, then by character
-        error_details = ", ".join([f"'{b}' at position {p}" for p, b in all_unmatched_openers])
+        all_unmatched_openers.sort()  # Sort by position, then by character
+        error_details = ", ".join(
+            [f"'{b}' at position {p}" for p, b in all_unmatched_openers]
+        )
         raise ValueError(f"Unmatched opening brackets: {error_details}.")
 
     # Sort base pairs by the first nucleotide index for consistent output

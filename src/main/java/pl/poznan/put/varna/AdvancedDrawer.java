@@ -99,7 +99,27 @@ public class AdvancedDrawer {
           // Add any custom config settings here, e.g., config.setColorScheme(...)
 
           System.out.println("Calculating RNA layout...");
-          rna.drawRNANAView(config); // Use NAView layout algorithm
+          int drawMode = RNA.DRAW_MODE_NAVIEW; // Default
+          if (structureData.drawingAlgorithm != null) {
+            String algo = structureData.drawingAlgorithm.toUpperCase();
+            if (algo.equals("CIRCULAR")) {
+              drawMode = RNA.DRAW_MODE_CIRCULAR;
+            } else if (algo.equals("RADIATE")) {
+              drawMode = RNA.DRAW_MODE_RADIATE;
+            } else if (algo.equals("LINEAR")) {
+              drawMode = RNA.DRAW_MODE_LINEAR;
+            } else if (algo.equals("VARNA_VIEW")) {
+              drawMode = RNA.DRAW_MODE_VARNA_VIEW;
+            } else if (algo.equals("NAVIEW")) {
+              drawMode = RNA.DRAW_MODE_NAVIEW;
+            } else {
+              System.err.println(
+                  "Warning: Unknown drawing algorithm '"
+                      + structureData.drawingAlgorithm
+                      + "'. Using default NAVIEW.");
+            }
+          }
+          rna.drawRNA(drawMode, config);
 
           // 6. Save SVG
           String outputFilename = "output.svg"; // Default output filename

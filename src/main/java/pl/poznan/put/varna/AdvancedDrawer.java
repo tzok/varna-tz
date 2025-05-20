@@ -450,7 +450,13 @@ public class AdvancedDrawer {
         if (index1 != null && index2 != null) {
           try {
             // Create a new ModeleBP for the stacking interaction
-            ModeleBP stackingBP = new ModeleBP(rna.getBaseAt(index1), rna.getBaseAt(index2));
+            ModeleBP stackingBP =
+                new ModeleBP(
+                    rna.getBaseAt(index1),
+                    rna.getBaseAt(index2),
+                    ModeleBP.Edge.SUGAR,
+                    ModeleBP.Edge.SUGAR,
+                    ModeleBP.Stericity.TRANS);
 
             // Get the style object (ModeleBP constructor creates a default style)
             ModeleBPStyle style = stackingBP.getStyle();

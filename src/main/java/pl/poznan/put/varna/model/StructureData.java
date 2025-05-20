@@ -12,6 +12,9 @@ public class StructureData {
   @JsonProperty("basePairs")
   public List<BasePair> basePairs;
 
+  @JsonProperty("stackings")
+  public List<Stacking> stackings;
+
   @JsonProperty("drawingAlgorithm")
   public String drawingAlgorithm;
 
@@ -25,6 +28,9 @@ public class StructureData {
         + " items, drawingAlgorithm='"
         + drawingAlgorithm
         + '\''
+        + ", stackings="
+        + (stackings != null ? stackings.size() : 0)
+        + " items"
         + "}";
   }
 }

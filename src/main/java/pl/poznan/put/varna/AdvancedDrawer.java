@@ -60,6 +60,11 @@ public class AdvancedDrawer {
           bp.parsedColor = parseColor(bp.color);
         }
       }
+      if (structureData.stackings != null) {
+        for (pl.poznan.put.varna.model.Stacking s : structureData.stackings) {
+          s.parsedColor = parseColor(s.color);
+        }
+      }
 
       System.out.println("Parsed data summary: " + structureData);
 
@@ -432,6 +437,69 @@ public class AdvancedDrawer {
         } else {
           System.err.println(
               "Warning: Could not find index for nucleotide ID " + nucData.id + " to apply color.");
+        }
+      }
+    }
+
+    // --- Apply Stacking Interactions ---
+    if (structureData.stackings != null) {
+      for (pl.poznan.put.varna.model.Stacking stackingData : structureData.stackings) {
+        Integer index1 = idToIndexMap.get(stackingData.id1);
+        Integer index2 = idToIndexMap.get(stackingData.id2);
+
+        if (index1 != null && index2 != null) {
+          try {
+            // Create a new ModeleBP for the stacking interaction
+            ModeleBP stackingBP = new ModeleBP(); // Partners will be set by addBPAux
+
+            // Get the style object (ModeleBP constructor creates a default style)
+            ModeleBPStyle style = stackingBP.getStyle();
+
+            // Apply color if present
+            stackingData.getParsedColor().ifPresent(style::setCustomColor);
+
+            // Apply thickness if present
+            if (stackingData.thickness != null) {
+              try {
+                style.setThickness(stackingData.thickness);
+              } catch (NumberFormatException e) {
+                System.err.println(
+                    "Warning: Invalid thickness format for stacking "
+                        + stackingData.id1
+                        + "-"
+                        + stackingData.id2
+                        + ": "
+                        + stackingData.thickness);
+              }
+            }
+
+            // Set bent style parameter to 1.0
+            style.setParam("bent", 1.0);
+
+            // Add the configured ModeleBP as an auxiliary base pair.
+            // This method will set the partners on stackingBP.
+            rna.addBPAux(index1, index2, stackingBP);
+
+          } catch (Exception e) {
+            System.err.println(
+                "Warning: Failed to add or style stacking interaction between nucleotide IDs "
+                    + stackingData.id1
+                    + " and "
+                    + stackingData.id2
+                    + " (indices "
+                    + index1
+                    + ", "
+                    + index2
+                    + "): "
+                    + e.getMessage());
+            e.printStackTrace(); // For more detailed debugging
+          }
+        } else {
+          System.err.println(
+              "Warning: Skipping stacking interaction due to missing nucleotide IDs: "
+                  + stackingData.id1
+                  + ", "
+                  + stackingData.id2);
         }
       }
     }

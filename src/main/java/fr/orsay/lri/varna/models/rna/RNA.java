@@ -599,6 +599,19 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
         double cx = (dest.x + orig.x) / 2.0;
         double cy = (dest.y + orig.y) / 2.0;
         out.drawLine(orig.x, orig.y, dest.x, dest.y, conf._bpThickness);
+        if (style.getStyle().isBent()) {
+          // Draw two arrow lines at 45° relative to the main base‐pair line
+          double mainAngle = Math.atan2(dest.y - orig.y, dest.x - orig.x);
+          double arrowLen = circleDiameter;
+          double angle1 = mainAngle + Math.toRadians(45);
+          double angle2 = mainAngle - Math.toRadians(45);
+          double p1x = cx + arrowLen * Math.cos(angle1);
+          double p1y = cy + arrowLen * Math.sin(angle1);
+          double p2x = cx + arrowLen * Math.cos(angle2);
+          double p2y = cy + arrowLen * Math.sin(angle2);
+          out.drawLine(p1x, p1y, cx, cy, thickness);
+          out.drawLine(p2x, p2y, cx, cy, thickness);
+        }
         if (p1 == p2) {
           drawSymbol(out, cx, cy, nx, ny, circleDiameter, style.isCIS(), p1, thickness);
         } else {

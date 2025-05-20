@@ -23,6 +23,7 @@ import org.w3c.dom.NodeList;
 import pl.poznan.put.structure.formats.*;
 import pl.poznan.put.varna.model.BasePair;
 import pl.poznan.put.varna.model.Nucleotide;
+import pl.poznan.put.varna.model.Stacking;
 import pl.poznan.put.varna.model.StructureData;
 
 public class AdvancedDrawer {
@@ -41,7 +42,7 @@ public class AdvancedDrawer {
     }
 
     ObjectMapper objectMapper = new ObjectMapper();
-    StructureData structureData = null;
+    StructureData structureData;
 
     try {
       structureData = objectMapper.readValue(jsonFile, StructureData.class);
@@ -107,21 +108,28 @@ public class AdvancedDrawer {
           int drawMode = RNA.DRAW_MODE_NAVIEW; // Default
           if (structureData.drawingAlgorithm != null) {
             String algo = structureData.drawingAlgorithm.toUpperCase();
-            if (algo.equals("CIRCULAR")) {
-              drawMode = RNA.DRAW_MODE_CIRCULAR;
-            } else if (algo.equals("RADIATE")) {
-              drawMode = RNA.DRAW_MODE_RADIATE;
-            } else if (algo.equals("LINEAR")) {
-              drawMode = RNA.DRAW_MODE_LINEAR;
-            } else if (algo.equals("VARNA_VIEW")) {
-              drawMode = RNA.DRAW_MODE_VARNA_VIEW;
-            } else if (algo.equals("NAVIEW")) {
-              drawMode = RNA.DRAW_MODE_NAVIEW;
-            } else {
-              System.err.println(
-                  "Warning: Unknown drawing algorithm '"
-                      + structureData.drawingAlgorithm
-                      + "'. Using default NAVIEW.");
+            switch (algo) {
+              case "CIRCULAR":
+                drawMode = RNA.DRAW_MODE_CIRCULAR;
+                break;
+              case "RADIATE":
+                drawMode = RNA.DRAW_MODE_RADIATE;
+                break;
+              case "LINEAR":
+                drawMode = RNA.DRAW_MODE_LINEAR;
+                break;
+              case "VARNA_VIEW":
+                drawMode = RNA.DRAW_MODE_VARNA_VIEW;
+                break;
+              case "NAVIEW":
+                drawMode = RNA.DRAW_MODE_NAVIEW;
+                break;
+              default:
+                System.err.println(
+                    "Warning: Unknown drawing algorithm '"
+                        + structureData.drawingAlgorithm
+                        + "'. Using default NAVIEW.");
+                break;
             }
           }
           rna.drawRNA(drawMode, config);
@@ -219,14 +227,11 @@ public class AdvancedDrawer {
     int n = structureData.nucleotides.size();
     // Map nucleotide ID to its 0-based index
     Map<Integer, Integer> idToIndexMap = new HashMap<>();
-    // Map nucleotide ID to the Nucleotide object itself
-    Map<Integer, Nucleotide> idToNucleotideMap = new HashMap<>();
 
     for (int i = 0; i < n; i++) {
       Nucleotide nucleotide = structureData.nucleotides.get(i);
       if (nucleotide != null) {
         idToIndexMap.put(nucleotide.id, i);
-        idToNucleotideMap.put(nucleotide.id, nucleotide);
       } else {
         // BpSeq requires contiguous sequence, handle nulls if necessary
         throw new IllegalArgumentException(
@@ -399,11 +404,6 @@ public class AdvancedDrawer {
                 "Warning: Invalid thickness format for pair " + key + ": " + bpData.thickness);
           }
         }
-      } else {
-        // This might happen for canonical pairs added by setRNA if not present in JSON basePairs
-        // list
-        // Or if there was an issue creating the key earlier.
-        // System.err.println("Debug: No matching BasePair data found for ModeleBP key: " + key);
       }
     }
 
@@ -443,14 +443,14 @@ public class AdvancedDrawer {
 
     // --- Apply Stacking Interactions ---
     if (structureData.stackings != null) {
-      for (pl.poznan.put.varna.model.Stacking stackingData : structureData.stackings) {
+      for (Stacking stackingData : structureData.stackings) {
         Integer index1 = idToIndexMap.get(stackingData.id1);
         Integer index2 = idToIndexMap.get(stackingData.id2);
 
         if (index1 != null && index2 != null) {
           try {
             // Create a new ModeleBP for the stacking interaction
-            ModeleBP stackingBP = new ModeleBP(); // Partners will be set by addBPAux
+            ModeleBP stackingBP = new ModeleBP(rna.getBaseAt(index1), rna.getBaseAt(index2));
 
             // Get the style object (ModeleBP constructor creates a default style)
             ModeleBPStyle style = stackingBP.getStyle();
@@ -474,7 +474,8 @@ public class AdvancedDrawer {
             }
 
             // Set bent style parameter to 1.0
-            style.setParam("bent", 1.0);
+            // This will trigger the hack to draw it as stacking
+            style.setBent(1.0);
 
             // Add the configured ModeleBP as an auxiliary base pair.
             // This method will set the partners on stackingBP.

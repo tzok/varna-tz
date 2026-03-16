@@ -104,7 +104,7 @@ java -jar target/varna-tz-1.5.0.jar path/to/structure.json
 ### Run with shaded JAR (all dependencies bundled)
 
 ```bash
-java -jar target/varna-tz-1.5.0-shaded.jar path/to/structure.json"
+java -jar target/varna-tz-1.5.0-shaded.jar path/to/structure.json
 ```
 
 The tool will read the JSON file and render the RNA structure.

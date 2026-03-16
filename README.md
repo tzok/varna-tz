@@ -78,3 +78,33 @@ This tool supports JSON input for custom RNA structure visualization.
   "stackings": [{ "id1": 1, "id2": 2 }]
 }
 ```
+
+---
+
+## CLI Usage
+
+### Build the project
+
+```bash
+mvn package
+```
+
+### Run with Maven
+
+```bash
+mvn exec:java -Dexec.mainClass="pl.poznan.put.varna.AdvancedDrawer" -Dexec.args="path/to/structure.json"
+```
+
+### Run with JAR
+
+```bash
+java -jar target/varna-tz-1.5.0.jar path/to/structure.json
+```
+
+### Run with shaded JAR (all dependencies bundled)
+
+```bash
+java -jar target/varna-tz-1.5.0-shaded.jar path/to/structure.json"
+```
+
+The tool will read the JSON file and render the RNA structure.

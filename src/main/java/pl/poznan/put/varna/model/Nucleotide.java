@@ -4,14 +4,48 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.awt.Color;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Nucleotide {
+  private static final Pattern NUMBER_PREFIX_PATTERN = Pattern.compile("^([+-]?\\d+)");
+
   @JsonProperty("id")
   public int id;
 
+  private String number;
+
   @JsonProperty("number")
-  public int number;
+  public void setNumber(Object number) {
+    this.number = number == null ? null : String.valueOf(number);
+  }
+
+  @JsonProperty("number")
+  public String getNumber() {
+    return number;
+  }
+
+  public String getNumberLabel() {
+    return number == null ? "" : number;
+  }
+
+  public Optional<Integer> getNumberPrefix() {
+    if (number == null) {
+      return Optional.empty();
+    }
+
+    Matcher matcher = NUMBER_PREFIX_PATTERN.matcher(number.trim());
+    if (!matcher.find()) {
+      return Optional.empty();
+    }
+
+    try {
+      return Optional.of(Integer.parseInt(matcher.group(1)));
+    } catch (NumberFormatException e) {
+      return Optional.empty();
+    }
+  }
 
   @JsonProperty("char")
   public String character;
@@ -48,8 +82,9 @@ public class Nucleotide {
     return "Nucleotide{"
         + "id="
         + id
-        + ", number="
+        + ", number='"
         + number
+        + '\''
         + ", character='"
         + character
         + '\''

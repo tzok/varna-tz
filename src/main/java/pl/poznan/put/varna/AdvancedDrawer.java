@@ -418,8 +418,10 @@ public class AdvancedDrawer {
             ModeleBase modeleBase = rna.getBaseAt(index);
             if (modeleBase != null) {
               ModelBaseStyle style = modeleBase.getStyleBase();
-              // Set the base number from JSON data
-              modeleBase.setBaseNumber(nucData.number);
+              String numberLabel = nucData.getNumberLabel();
+              if (!numberLabel.isEmpty()) {
+                modeleBase.setLabel(numberLabel);
+              }
               // Apply colors if they were successfully parsed
               nucData.getParsedOutlineColor().ifPresent(style::setBaseOutlineColor);
               nucData.getParsedInnerColor().ifPresent(style::setBaseInnerColor);
@@ -526,12 +528,14 @@ public class AdvancedDrawer {
     // 1. Find indices BEFORE which a discontinuity occurs
     List<Integer> discontinuityIndices = new ArrayList<>();
     Set<Integer> labelsToKeep = new HashSet<>();
+    Set<Integer> tenPrefixLabelsKept = new HashSet<>();
     for (int i = 0; i < structureData.nucleotides.size() - 1; i++) {
       Nucleotide current = structureData.nucleotides.get(i);
       Nucleotide next = structureData.nucleotides.get(i + 1);
       if (current != null && next != null) {
-        // Check if numbering is NOT consecutive (current.number + 1 != next.number)
-        if (current.number + 1 != next.number) {
+        Optional<Integer> currentPrefix = current.getNumberPrefix();
+        Optional<Integer> nextPrefix = next.getNumberPrefix();
+        if (isNumberingDiscontinuous(currentPrefix, nextPrefix)) {
           discontinuityIndices.add(i); // Add the index of the nucleotide BEFORE the break
           labelsToKeep.add(i);
           labelsToKeep.add(i + 1);
@@ -539,17 +543,22 @@ public class AdvancedDrawer {
               "Detected numbering discontinuity between index "
                   + i
                   + " (number "
-                  + current.number
+                  + current.getNumberLabel()
                   + ") and index "
                   + (i + 1)
                   + " (number "
-                  + next.number
+                  + next.getNumberLabel()
                   + ")");
         }
-        if (current.number % 10 == 0) {
-          labelsToKeep.add(i); // Keep the label for every 10th nucleotide
+        if (shouldKeepTenthLabel(currentPrefix, tenPrefixLabelsKept)) {
+          labelsToKeep.add(i);
         }
       }
+    }
+    Nucleotide lastNucleotide = structureData.nucleotides.get(structureData.nucleotides.size() - 1);
+    if (lastNucleotide != null
+        && shouldKeepTenthLabel(lastNucleotide.getNumberPrefix(), tenPrefixLabelsKept)) {
+      labelsToKeep.add(structureData.nucleotides.size() - 1);
     }
     labelsToKeep.add(0); // Always keep the first nucleotide label
     labelsToKeep.add(structureData.nucleotides.size() - 1); // Always keep the last nucleotide label
@@ -701,5 +710,30 @@ public class AdvancedDrawer {
     DOMSource source = new DOMSource(doc);
     StreamResult result = new StreamResult(new File(svgFilePath));
     transformer.transform(source, result);
+  }
+
+  private static boolean isNumberingDiscontinuous(
+      Optional<Integer> currentPrefix, Optional<Integer> nextPrefix) {
+    if (!currentPrefix.isPresent() || !nextPrefix.isPresent()) {
+      return false;
+    }
+
+    int currentValue = currentPrefix.get();
+    int nextValue = nextPrefix.get();
+    return nextValue != currentValue && nextValue != currentValue + 1;
+  }
+
+  private static boolean shouldKeepTenthLabel(Optional<Integer> prefix, Set<Integer> keptPrefixes) {
+    if (!prefix.isPresent()) {
+      return false;
+    }
+
+    int value = prefix.get();
+    if ((value % 10) != 0 || keptPrefixes.contains(value)) {
+      return false;
+    }
+
+    keptPrefixes.add(value);
+    return true;
   }
 }

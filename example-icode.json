@@ -1,0 +1,64 @@
+{
+  "drawingAlgorithm": "RADIATE",
+  "nucleotides": [
+    {
+      "id": 1,
+      "number": 8,
+      "char": "A"
+    },
+    {
+      "id": 2,
+      "number": 9,
+      "char": "C"
+    },
+    {
+      "id": 3,
+      "number": 10,
+      "char": "G"
+    },
+    {
+      "id": 4,
+      "number": "10A",
+      "char": "U"
+    },
+    {
+      "id": 5,
+      "number": "10B",
+      "char": "A"
+    },
+    {
+      "id": 6,
+      "number": 11,
+      "char": "C"
+    },
+    {
+      "id": 7,
+      "number": 25,
+      "char": "G"
+    },
+    {
+      "id": 8,
+      "number": "25A",
+      "char": "U"
+    }
+  ],
+  "basePairs": [
+    {
+      "id1": 1,
+      "id2": 8,
+      "stericity": "CIS",
+      "edge5": "WC",
+      "edge3": "WC",
+      "canonical": true
+    },
+    {
+      "id1": 2,
+      "id2": 7,
+      "stericity": "CIS",
+      "edge5": "WC",
+      "edge3": "WC",
+      "canonical": true
+    }
+  ],
+  "stackings": []
+}

@@ -18,6 +18,23 @@ public class StructureData {
   @JsonProperty("drawingAlgorithm")
   public String drawingAlgorithm;
 
+  @JsonProperty("stackingArrowPlacement")
+  public String stackingArrowPlacement;
+
+  @JsonProperty("stackingArrowGap")
+  public Double stackingArrowGap;
+
+  public StackingArrowPlacementParseResult parseStackingArrowPlacement() {
+    if (stackingArrowPlacement == null || stackingArrowPlacement.isBlank()) {
+      return StackingArrowPlacementParseResult.fallback(StackingArrowPlacement.CENTERED);
+    }
+
+    return StackingArrowPlacement.parse(stackingArrowPlacement)
+        .map(StackingArrowPlacementParseResult::explicit)
+        .orElseGet(
+            () -> StackingArrowPlacementParseResult.fallback(StackingArrowPlacement.CENTERED));
+  }
+
   @Override
   public String toString() {
     return "StructureData{"
@@ -28,6 +45,11 @@ public class StructureData {
         + " items, drawingAlgorithm='"
         + drawingAlgorithm
         + '\''
+        + ", stackingArrowPlacement='"
+        + stackingArrowPlacement
+        + '\''
+        + ", stackingArrowGap="
+        + stackingArrowGap
         + ", stackings="
         + (stackings != null ? stackings.size() : 0)
         + " items"

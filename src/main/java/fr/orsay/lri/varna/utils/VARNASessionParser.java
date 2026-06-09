@@ -287,6 +287,10 @@ public class VARNASessionParser extends DefaultHandler {
       mbps.setThickness(
           Double.parseDouble(attributes.getValue(ModeleBPStyle.XML_VAR_THICKNESS_NAME)));
       mbps.setBent(Double.parseDouble(attributes.getValue(ModeleBPStyle.XML_VAR_BENT_NAME)));
+      String stackingArrowGap = attributes.getValue(ModeleBPStyle.XML_VAR_STACKING_ARROW_GAP_NAME);
+      if (stackingArrowGap != null) {
+        mbps.setStackingArrowGap(Double.parseDouble(stackingArrowGap));
+      }
       if (mbp != null) {
         mbp.setStyle(mbps);
       }

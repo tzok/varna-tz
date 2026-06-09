@@ -24,6 +24,7 @@ import pl.poznan.put.structure.formats.*;
 import pl.poznan.put.varna.model.BasePair;
 import pl.poznan.put.varna.model.Nucleotide;
 import pl.poznan.put.varna.model.Stacking;
+import pl.poznan.put.varna.model.StackingArrowPlacementParseResult;
 import pl.poznan.put.varna.model.StructureData;
 
 public class AdvancedDrawer {
@@ -327,6 +328,25 @@ public class AdvancedDrawer {
   private static void applyCustomizations(
       RNA rna, StructureData structureData, Map<Integer, Integer> idToIndexMap) {
 
+    StackingArrowPlacementParseResult stackingArrowPlacement =
+        structureData.parseStackingArrowPlacement();
+    if (structureData.stackingArrowPlacement != null
+        && !structureData.stackingArrowPlacement.isBlank()
+        && stackingArrowPlacement.usedDefault()) {
+      System.err.println(
+          "Warning: Invalid stackingArrowPlacement '"
+              + structureData.stackingArrowPlacement
+              + "'. Falling back to centered.");
+    }
+    Double stackingArrowGap = structureData.stackingArrowGap;
+    if (stackingArrowGap != null && stackingArrowGap <= 0.0) {
+      System.err.println(
+          "Warning: Invalid stackingArrowGap '"
+              + structureData.stackingArrowGap
+              + "'. Falling back to default gap.");
+      stackingArrowGap = null;
+    }
+
     // --- Apply Base Pair Customizations (Non-canonical, Color, Thickness) ---
 
     // 1. Build a lookup map for BasePair data based on nucleotide indices
@@ -481,9 +501,10 @@ public class AdvancedDrawer {
               }
             }
 
-            // Set bent style parameter to 1.0
-            // This will trigger the hack to draw it as stacking
-            style.setBent(1.0);
+            style.setBent(stackingArrowPlacement.getPlacement().getBentValue());
+            if (stackingArrowGap != null) {
+              style.setStackingArrowGap(stackingArrowGap);
+            }
 
             // Add the configured ModeleBP as an auxiliary base pair.
             // This method will set the partners on stackingBP.

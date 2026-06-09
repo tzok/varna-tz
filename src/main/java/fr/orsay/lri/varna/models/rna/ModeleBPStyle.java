@@ -27,6 +27,11 @@ import org.xml.sax.helpers.AttributesImpl;
 
 public class ModeleBPStyle implements Serializable {
 
+  public static final double BENT_STACKING_CENTERED = 1.0;
+  public static final double BENT_STACKING_FIRST_PARTNER = 2.0;
+  public static final double BENT_STACKING_SECOND_PARTNER = 3.0;
+  public static final double BENT_STACKING_BOTH_PARTNERS = 4.0;
+
   /** */
   private static final long serialVersionUID = 3006493290669550139L;
 
@@ -37,12 +42,14 @@ public class ModeleBPStyle implements Serializable {
 
   private double _thickness = -1.0;
   private double _bent = 0.0;
+  private double _stackingArrowGap = -1.0;
 
   public static String XML_ELEMENT_NAME = "BPstyle";
   public static String XML_VAR_CUSTOM_STYLED_NAME = "custom";
   public static String XML_VAR_COLOR_NAME = "color";
   public static String XML_VAR_THICKNESS_NAME = "thickness";
   public static String XML_VAR_BENT_NAME = "bent";
+  public static String XML_VAR_STACKING_ARROW_GAP_NAME = "stackingArrowGap";
 
   public void toXML(TransformerHandler hd) throws SAXException {
     AttributesImpl atts = new AttributesImpl();
@@ -50,6 +57,7 @@ public class ModeleBPStyle implements Serializable {
     atts.addAttribute("", "", XML_VAR_COLOR_NAME, "CDATA", XMLUtils.toHTMLNotation(_color));
     atts.addAttribute("", "", XML_VAR_THICKNESS_NAME, "CDATA", "" + _thickness);
     atts.addAttribute("", "", XML_VAR_BENT_NAME, "CDATA", "" + _bent);
+    atts.addAttribute("", "", XML_VAR_STACKING_ARROW_GAP_NAME, "CDATA", "" + _stackingArrowGap);
     hd.startElement("", "", XML_ELEMENT_NAME, atts);
     hd.endElement("", "", XML_ELEMENT_NAME);
   }
@@ -64,6 +72,15 @@ public class ModeleBPStyle implements Serializable {
 
   public void setBent(double b) {
     _bent = b;
+  }
+
+  public double getStackingArrowGap(double def) {
+    if (_stackingArrowGap > 0.0) return _stackingArrowGap;
+    else return def;
+  }
+
+  public void setStackingArrowGap(double stackingArrowGap) {
+    _stackingArrowGap = stackingArrowGap;
   }
 
   public ModeleBPStyle() {}

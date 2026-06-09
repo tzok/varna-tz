@@ -14,6 +14,8 @@ This tool supports JSON input for custom RNA structure visualization.
 | `basePairs`        | Array  | Yes      | List of base pair objects            |
 | `stackings`        | Array  | No       | List of stacking objects             |
 | `drawingAlgorithm` | String | No       | Drawing algorithm: `NAVIEW`, `RADIATE`, `LINEAR`, `CIRCULAR`, or `VARNA_VIEW` |
+| `stackingArrowPlacement` | String | No | Placement of stacking arrowheads: `centered`, `first-partner`, `second-partner`, or `both-partners` |
+| `stackingArrowGap` | Number | No | Distance from each base circle edge to the stacking arrowhead visual center |
 
 ---
 
@@ -70,11 +72,28 @@ If a string `number` does not begin with an integer prefix, insertion-code-speci
 
 ---
 
+### Stacking Arrow Options
+
+- `stackingArrowPlacement` controls where stacking arrowheads are drawn along the interaction.
+- Accepted values are `centered`, `first-partner`, `second-partner`, and `both-partners`.
+- Accepted aliases:
+  - `centered`: `center`, `middle`, `midpoint`
+  - `first-partner`: `first`, `near-first`, `near-first-partner`
+  - `second-partner`: `second`, `near-second`, `near-second-partner`, `last`, `last-partner`
+  - `both-partners`: `both`, `both-ends`, `ends`, `double`
+- Invalid or missing `stackingArrowPlacement` values fall back to `centered`.
+- `stackingArrowGap` is a positive number in drawing units. It controls the distance from the trimmed base-circle edge to the arrowhead visual center for `first-partner`, `second-partner`, and `both-partners`.
+- Invalid or missing `stackingArrowGap` values fall back to the built-in default gap.
+
+---
+
 ### Example
 
 ```json
 {
   "drawingAlgorithm": "NAVIEW",
+  "stackingArrowPlacement": "both-partners",
+  "stackingArrowGap": 8.0,
   "nucleotides": [
     { "id": 1, "number": 1, "char": "C" },
     { "id": 2, "number": 2, "char": "A" }
@@ -117,9 +136,9 @@ mvn exec:java -Dexec.mainClass="pl.poznan.put.varna.AdvancedDrawer" -Dexec.args=
 ### Run with JAR
 
 ```bash
-java -jar target/varna-tz-1.5.2.jar path/to/structure.json
+java -jar target/varna-tz-1.5.3.jar path/to/structure.json
 ```
 
-`mvn package` builds a runnable shaded JAR at `target/varna-tz-1.5.2.jar`.
+`mvn package` builds a runnable shaded JAR at `target/varna-tz-1.5.3.jar`.
 
 The tool will read the JSON file and render the RNA structure.

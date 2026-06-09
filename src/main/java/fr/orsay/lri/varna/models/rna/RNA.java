@@ -541,6 +541,77 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
     }
   }
 
+  private void drawStackingArrowhead(
+      SecStrDrawingProducer out,
+      Point2D.Double start,
+      Point2D.Double end,
+      Point2D.Double visualCenter,
+      double arrowLen,
+      double thickness) {
+    double segmentLength = start.distance(end);
+    if (segmentLength == 0.0) {
+      return;
+    }
+    double ux = (end.x - start.x) / segmentLength;
+    double uy = (end.y - start.y) / segmentLength;
+    double headDepth = arrowLen * Math.cos(Math.toRadians(45.0));
+    double ax = visualCenter.x + ux * (headDepth / 2.0);
+    double ay = visualCenter.y + uy * (headDepth / 2.0);
+    double mainAngle = Math.atan2(start.y - end.y, start.x - end.x);
+    double angle1 = mainAngle + Math.toRadians(45);
+    double angle2 = mainAngle - Math.toRadians(45);
+    double p1x = ax + arrowLen * Math.cos(angle1);
+    double p1y = ay + arrowLen * Math.sin(angle1);
+    double p2x = ax + arrowLen * Math.cos(angle2);
+    double p2y = ay + arrowLen * Math.sin(angle2);
+    out.drawLine(p1x, p1y, ax, ay, thickness);
+    out.drawLine(p2x, p2y, ax, ay, thickness);
+  }
+
+  private double getStackingArrowCenterGap(
+      double arrowLen, double segmentLength, double thickness) {
+    double requestedGap = (BASE_RADIUS + arrowLen + thickness) / 2.0;
+    double maxGap = Math.max(0.0, (segmentLength - arrowLen - thickness) / 2.0);
+    return Math.min(requestedGap, maxGap);
+  }
+
+  private void drawStackingInteraction(
+      SecStrDrawingProducer out,
+      Point2D.Double orig,
+      Point2D.Double dest,
+      ModeleBP style,
+      double arrowLen,
+      double thickness) {
+    double segmentLength = orig.distance(dest);
+    if (segmentLength == 0.0) {
+      return;
+    }
+    double ux = (dest.x - orig.x) / segmentLength;
+    double uy = (dest.y - orig.y) / segmentLength;
+    double maxGap = Math.max(0.0, (segmentLength - arrowLen - thickness) / 2.0);
+    double gap =
+        Math.min(
+            style
+                .getStyle()
+                .getStackingArrowGap(getStackingArrowCenterGap(arrowLen, segmentLength, thickness)),
+            maxGap);
+    Point2D.Double centerPoint =
+        new Point2D.Double((orig.x + dest.x) / 2.0, (orig.y + dest.y) / 2.0);
+    Point2D.Double firstPartnerPoint = new Point2D.Double(orig.x + ux * gap, orig.y + uy * gap);
+    Point2D.Double secondPartnerPoint = new Point2D.Double(dest.x - ux * gap, dest.y - uy * gap);
+    double bent = style.getStyle().getBent();
+    if (bent == ModeleBPStyle.BENT_STACKING_FIRST_PARTNER) {
+      drawStackingArrowhead(out, orig, dest, firstPartnerPoint, arrowLen, thickness);
+    } else if (bent == ModeleBPStyle.BENT_STACKING_SECOND_PARTNER) {
+      drawStackingArrowhead(out, orig, dest, secondPartnerPoint, arrowLen, thickness);
+    } else if (bent == ModeleBPStyle.BENT_STACKING_BOTH_PARTNERS) {
+      drawStackingArrowhead(out, orig, dest, firstPartnerPoint, arrowLen, thickness);
+      drawStackingArrowhead(out, orig, dest, secondPartnerPoint, arrowLen, thickness);
+    } else {
+      drawStackingArrowhead(out, orig, dest, centerPoint, arrowLen, thickness);
+    }
+  }
+
   private void drawBasePair(
       SecStrDrawingProducer out,
       Point2D.Double orig,
@@ -601,17 +672,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
         out.drawLine(orig.x, orig.y, dest.x, dest.y, conf._bpThickness);
 
         if (style.getStyle().isBent()) { // This is a hack to draw stacking interactions!
-          // Draw two arrow lines at 45° relative to the main base‐pair line
-          double mainAngle = Math.atan2(orig.y - dest.y, orig.x - dest.x);
-          double arrowLen = circleDiameter;
-          double angle1 = mainAngle + Math.toRadians(45);
-          double angle2 = mainAngle - Math.toRadians(45);
-          double p1x = cx + arrowLen * Math.cos(angle1);
-          double p1y = cy + arrowLen * Math.sin(angle1);
-          double p2x = cx + arrowLen * Math.cos(angle2);
-          double p2y = cy + arrowLen * Math.sin(angle2);
-          out.drawLine(p1x, p1y, cx, cy, thickness);
-          out.drawLine(p2x, p2y, cx, cy, thickness);
+          drawStackingInteraction(out, orig, dest, style, circleDiameter, thickness);
         } else if (p1 == p2) {
           drawSymbol(out, cx, cy, nx, ny, circleDiameter, style.isCIS(), p1, thickness);
         } else {

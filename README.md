@@ -14,7 +14,7 @@ This tool supports JSON input for custom RNA structure visualization.
 | `basePairs`        | Array  | Yes      | List of base pair objects            |
 | `stackings`        | Array  | No       | List of stacking objects             |
 | `drawingAlgorithm` | String | No       | Drawing algorithm: `NAVIEW`, `RADIATE`, `LINEAR`, `CIRCULAR`, or `VARNA_VIEW` |
-| `stackingArrowPlacement` | String | No | Placement of stacking arrowheads: `centered`, `first-partner`, `second-partner`, or `both-partners` |
+| `stackingArrowPlacement` | String | No | Placement of stacking arrowheads: `centered`, `first-partner`, `second-partner`, `both-partners`, or `opposing-partners` |
 | `stackingArrowGap` | Number | No | Distance from each base circle edge to the stacking arrowhead visual center |
 
 ---
@@ -75,15 +75,17 @@ If a string `number` does not begin with an integer prefix, insertion-code-speci
 ### Stacking Arrow Options
 
 - `stackingArrowPlacement` controls where stacking arrowheads are drawn along the interaction.
-- Accepted values are `centered`, `first-partner`, `second-partner`, and `both-partners`.
+- Accepted values are `centered`, `first-partner`, `second-partner`, `both-partners`, and `opposing-partners`.
 - Accepted aliases:
   - `centered`: `center`, `middle`, `midpoint`
   - `first-partner`: `first`, `near-first`, `near-first-partner`
   - `second-partner`: `second`, `near-second`, `near-second-partner`, `last`, `last-partner`
   - `both-partners`: `both`, `both-ends`, `ends`, `double`
+  - `opposing-partners`: `opposing`, `bidirectional`, `inverse`, `inverse-both`
 - Invalid or missing `stackingArrowPlacement` values fall back to `centered`.
-- `stackingArrowGap` is a positive number in drawing units. It controls the distance from the trimmed base-circle edge to the arrowhead visual center for `first-partner`, `second-partner`, and `both-partners`.
+- `stackingArrowGap` is a positive number in drawing units. It controls the distance from the trimmed base-circle edge to the arrowhead visual center for `first-partner`, `second-partner`, `both-partners`, and `opposing-partners`.
 - Invalid or missing `stackingArrowGap` values fall back to the built-in default gap.
+- `opposing-partners` is the only mode that breaks the first -> second directionality rule: it draws one arrowhead pointing first -> second and one pointing second -> first.
 
 ---
 
@@ -92,7 +94,7 @@ If a string `number` does not begin with an integer prefix, insertion-code-speci
 ```json
 {
   "drawingAlgorithm": "NAVIEW",
-  "stackingArrowPlacement": "both-partners",
+  "stackingArrowPlacement": "opposing-partners",
   "stackingArrowGap": 8.0,
   "nucleotides": [
     { "id": 1, "number": 1, "char": "C" },
@@ -136,9 +138,9 @@ mvn exec:java -Dexec.mainClass="pl.poznan.put.varna.AdvancedDrawer" -Dexec.args=
 ### Run with JAR
 
 ```bash
-java -jar target/varna-tz-1.5.3.jar path/to/structure.json
+java -jar target/varna-tz-1.5.4.jar path/to/structure.json
 ```
 
-`mvn package` builds a runnable shaded JAR at `target/varna-tz-1.5.3.jar`.
+`mvn package` builds a runnable shaded JAR at `target/varna-tz-1.5.4.jar`.
 
 The tool will read the JSON file and render the RNA structure.

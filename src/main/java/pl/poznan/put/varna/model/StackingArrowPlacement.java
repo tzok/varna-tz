@@ -8,7 +8,8 @@ public enum StackingArrowPlacement {
   CENTERED("centered", ModeleBPStyle.BENT_STACKING_CENTERED),
   FIRST_PARTNER("first-partner", ModeleBPStyle.BENT_STACKING_FIRST_PARTNER),
   SECOND_PARTNER("second-partner", ModeleBPStyle.BENT_STACKING_SECOND_PARTNER),
-  BOTH_PARTNERS("both-partners", ModeleBPStyle.BENT_STACKING_BOTH_PARTNERS);
+  BOTH_PARTNERS("both-partners", ModeleBPStyle.BENT_STACKING_BOTH_PARTNERS),
+  OPPOSING_PARTNERS("opposing-partners", ModeleBPStyle.BENT_STACKING_OPPOSING_PARTNERS);
 
   private final String jsonValue;
   private final double bentValue;
@@ -56,6 +57,12 @@ public enum StackingArrowPlacement {
       case "ends":
       case "double":
         return Optional.of(BOTH_PARTNERS);
+      case "opposing":
+      case "opposing-partners":
+      case "bidirectional":
+      case "inverse":
+      case "inverse-both":
+        return Optional.of(OPPOSING_PARTNERS);
       default:
         return Optional.empty();
     }

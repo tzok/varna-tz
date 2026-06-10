@@ -568,6 +568,21 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
     out.drawLine(p2x, p2y, ax, ay, thickness);
   }
 
+  private void drawStackingArrowhead(
+      SecStrDrawingProducer out,
+      Point2D.Double start,
+      Point2D.Double end,
+      Point2D.Double visualCenter,
+      double arrowLen,
+      double thickness,
+      boolean reverse) {
+    if (reverse) {
+      drawStackingArrowhead(out, end, start, visualCenter, arrowLen, thickness);
+    } else {
+      drawStackingArrowhead(out, start, end, visualCenter, arrowLen, thickness);
+    }
+  }
+
   private double getStackingArrowCenterGap(
       double arrowLen, double segmentLength, double thickness) {
     double requestedGap = (BASE_RADIUS + arrowLen + thickness) / 2.0;
@@ -607,6 +622,9 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
     } else if (bent == ModeleBPStyle.BENT_STACKING_BOTH_PARTNERS) {
       drawStackingArrowhead(out, orig, dest, firstPartnerPoint, arrowLen, thickness);
       drawStackingArrowhead(out, orig, dest, secondPartnerPoint, arrowLen, thickness);
+    } else if (bent == ModeleBPStyle.BENT_STACKING_OPPOSING_PARTNERS) {
+      drawStackingArrowhead(out, orig, dest, firstPartnerPoint, arrowLen, thickness, false);
+      drawStackingArrowhead(out, orig, dest, secondPartnerPoint, arrowLen, thickness, true);
     } else {
       drawStackingArrowhead(out, orig, dest, centerPoint, arrowLen, thickness);
     }

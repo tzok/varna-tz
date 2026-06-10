@@ -31,6 +31,7 @@ public class ModeleBPStyle implements Serializable {
   public static final double BENT_STACKING_FIRST_PARTNER = 2.0;
   public static final double BENT_STACKING_SECOND_PARTNER = 3.0;
   public static final double BENT_STACKING_BOTH_PARTNERS = 4.0;
+  public static final double BENT_STACKING_OPPOSING_PARTNERS = 5.0;
 
   /** */
   private static final long serialVersionUID = 3006493290669550139L;

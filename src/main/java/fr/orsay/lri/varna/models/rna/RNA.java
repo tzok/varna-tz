@@ -623,8 +623,8 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
       drawStackingArrowhead(out, orig, dest, firstPartnerPoint, arrowLen, thickness);
       drawStackingArrowhead(out, orig, dest, secondPartnerPoint, arrowLen, thickness);
     } else if (bent == ModeleBPStyle.BENT_STACKING_OPPOSING_PARTNERS) {
-      drawStackingArrowhead(out, orig, dest, firstPartnerPoint, arrowLen, thickness, false);
-      drawStackingArrowhead(out, orig, dest, secondPartnerPoint, arrowLen, thickness, true);
+      drawStackingArrowhead(out, orig, dest, firstPartnerPoint, arrowLen, thickness, true);
+      drawStackingArrowhead(out, orig, dest, secondPartnerPoint, arrowLen, thickness, false);
     } else {
       drawStackingArrowhead(out, orig, dest, centerPoint, arrowLen, thickness);
     }

@@ -85,7 +85,7 @@ If a string `number` does not begin with an integer prefix, insertion-code-speci
 - Invalid or missing `stackingArrowPlacement` values fall back to `centered`.
 - `stackingArrowGap` is a positive number in drawing units. It controls the distance from the trimmed base-circle edge to the arrowhead visual center for `first-partner`, `second-partner`, `both-partners`, and `opposing-partners`.
 - Invalid or missing `stackingArrowGap` values fall back to the built-in default gap.
-- `opposing-partners` is the only mode that breaks the first -> second directionality rule: it draws one arrowhead pointing first -> second and one pointing second -> first.
+- `opposing-partners` is the only mode that breaks the first -> second directionality rule: it draws one arrowhead near the first partner pointing outward toward it, and one near the second partner pointing outward toward it.
 
 ---
 
@@ -138,9 +138,9 @@ mvn exec:java -Dexec.mainClass="pl.poznan.put.varna.AdvancedDrawer" -Dexec.args=
 ### Run with JAR
 
 ```bash
-java -jar target/varna-tz-1.5.4.jar path/to/structure.json
+java -jar target/varna-tz-1.5.5.jar path/to/structure.json
 ```
 
-`mvn package` builds a runnable shaded JAR at `target/varna-tz-1.5.4.jar`.
+`mvn package` builds a runnable shaded JAR at `target/varna-tz-1.5.5.jar`.
 
 The tool will read the JSON file and render the RNA structure.

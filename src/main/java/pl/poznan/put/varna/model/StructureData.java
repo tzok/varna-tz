@@ -24,6 +24,9 @@ public class StructureData {
   @JsonProperty("stackingArrowGap")
   public Double stackingArrowGap;
 
+  @JsonProperty("bpStyle")
+  public String bpStyle;
+
   public StackingArrowPlacementParseResult parseStackingArrowPlacement() {
     if (stackingArrowPlacement == null || stackingArrowPlacement.isBlank()) {
       return StackingArrowPlacementParseResult.fallback(StackingArrowPlacement.CENTERED);
@@ -50,6 +53,9 @@ public class StructureData {
         + '\''
         + ", stackingArrowGap="
         + stackingArrowGap
+        + ", bpStyle='"
+        + bpStyle
+        + '\''
         + ", stackings="
         + (stackings != null ? stackings.size() : 0)
         + " items"

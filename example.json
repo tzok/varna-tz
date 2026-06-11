@@ -1,6 +1,7 @@
 {
   "drawingAlgorithm": "RADIATE",
   "stackingArrowPlacement": "opposing",
+  "bpStyle": "lw",
   "nucleotides": [
     {
       "id": 1,

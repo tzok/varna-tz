@@ -103,7 +103,18 @@ public class AdvancedDrawer {
           // 5. Configure and Draw
           VARNAConfig config = new VARNAConfig();
           config._numPeriod = 1;
-          // Add any custom config settings here, e.g., config.setColorScheme(...)
+
+          if (structureData.bpStyle != null && !structureData.bpStyle.isBlank()) {
+            VARNAConfig.BP_STYLE parsedStyle = VARNAConfig.BP_STYLE.getStyle(structureData.bpStyle);
+            if (parsedStyle != null) {
+              config._mainBPStyle = parsedStyle;
+            } else {
+              System.err.println(
+                  "Warning: Invalid bpStyle '"
+                      + structureData.bpStyle
+                      + "'. Using default LW. Valid options: none, simple, rnaviz, lw, lwalt");
+            }
+          }
 
           System.out.println("Calculating RNA layout...");
           int drawMode = RNA.DRAW_MODE_NAVIEW; // Default

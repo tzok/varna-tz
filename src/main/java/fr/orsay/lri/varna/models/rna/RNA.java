@@ -498,7 +498,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
               style.getEdgePartner5(),
               thickness);
         } else {
-          out.drawArc(orig, distance, distance * coef, 180, 0);
+          out.drawArc(center, distance, distance * coef, 180, 0);
         }
       } else {
         ModeleBP.Edge p1 = style.getEdgePartner5();

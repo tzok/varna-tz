@@ -27,6 +27,14 @@ public class StructureData {
   @JsonProperty("bpStyle")
   public String bpStyle;
 
+  /**
+   * Zero-based indices of nucleotides after which the backbone is discontinuous (i.e. the last
+   * nucleotide of each strand except the final one). When present, these are honored in addition to
+   * the numbering-discontinuity heuristic during SVG post-processing.
+   */
+  @JsonProperty("strandBreaks")
+  public List<Integer> strandBreaks;
+
   public StackingArrowPlacementParseResult parseStackingArrowPlacement() {
     if (stackingArrowPlacement == null || stackingArrowPlacement.isBlank()) {
       return StackingArrowPlacementParseResult.fallback(StackingArrowPlacement.CENTERED);
@@ -56,6 +64,8 @@ public class StructureData {
         + ", bpStyle='"
         + bpStyle
         + '\''
+        + ", strandBreaks="
+        + (strandBreaks != null ? strandBreaks : "[]")
         + ", stackings="
         + (stackings != null ? stackings.size() : 0)
         + " items"

@@ -558,9 +558,29 @@ public class AdvancedDrawer {
     }
 
     // 1. Find indices BEFORE which a discontinuity occurs
-    List<Integer> discontinuityIndices = new ArrayList<>();
+    Set<Integer> discontinuityIndices = new TreeSet<>();
     Set<Integer> labelsToKeep = new HashSet<>();
     Set<Integer> tenPrefixLabelsKept = new HashSet<>();
+
+    // Honor explicit strand breaks (0-based index of the last nucleotide of each strand)
+    if (structureData.strandBreaks != null) {
+      for (Integer breakIndex : structureData.strandBreaks) {
+        if (breakIndex != null
+            && breakIndex >= 0
+            && breakIndex < structureData.nucleotides.size() - 1) {
+          discontinuityIndices.add(breakIndex);
+          labelsToKeep.add(breakIndex);
+          labelsToKeep.add(breakIndex + 1);
+          System.out.println(
+              "Honoring explicit strand break after index "
+                  + breakIndex
+                  + " (number "
+                  + structureData.nucleotides.get(breakIndex).getNumberLabel()
+                  + ")");
+        }
+      }
+    }
+
     for (int i = 0; i < structureData.nucleotides.size() - 1; i++) {
       Nucleotide current = structureData.nucleotides.get(i);
       Nucleotide next = structureData.nucleotides.get(i + 1);
@@ -638,14 +658,19 @@ public class AdvancedDrawer {
     }
 
     // 4. Identify and remove lines corresponding to discontinuities
-    // Iterate in reverse order of indices to avoid index shifting issues during removal
+    // Iterate in descending order of indices to avoid index shifting issues during removal
     List<Element> linesToRemove = new ArrayList<>();
     System.out.println("--- Identifying Backbone Lines to Remove ---");
     System.out.println("Discontinuity indices (line before break): " + discontinuityIndices);
     System.out.println("Total backbone lines found: " + backboneElements.size());
 
-    for (int i = discontinuityIndices.size() - 1; i >= 0; i--) {
-      int indexToRemove = discontinuityIndices.get(i);
+    // Convert to a list sorted descending for safe in-place DOM removal
+    List<Integer> sortedDesc =
+        discontinuityIndices.stream()
+            .sorted(Comparator.reverseOrder())
+            .collect(Collectors.toList());
+
+    for (int indexToRemove : sortedDesc) {
       if (indexToRemove >= 0 && indexToRemove < backboneElements.size()) {
         Element lineElement = backboneElements.get(indexToRemove);
         System.out.println(

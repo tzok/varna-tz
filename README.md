@@ -16,6 +16,7 @@ This tool supports JSON input for custom RNA structure visualization.
 | `drawingAlgorithm` | String | No       | Drawing algorithm: `NAVIEW`, `RADIATE`, `LINEAR`, `CIRCULAR`, or `VARNA_VIEW` |
 | `stackingArrowPlacement` | String | No | Placement of stacking arrowheads: `centered`, `first-partner`, `second-partner`, `both-partners`, or `opposing-partners` |
 | `stackingArrowGap` | Number | No | Distance from each base circle edge to the stacking arrowhead visual center |
+| `strandBreaks`     | Array  | No       | List of zero-based nucleotide indices after which the backbone is discontinuous (last index of each strand except the final one) |
 
 ---
 
@@ -43,6 +44,19 @@ This tool supports JSON input for custom RNA structure visualization.
 - The first and last residue labels are always kept.
 
 If a string `number` does not begin with an integer prefix, insertion-code-specific numbering rules are not applied to that residue.
+
+---
+
+### Strand Breaks
+
+`strandBreaks` is an optional array of zero-based indices into the `nucleotides` array. Each index marks the **last** nucleotide of a strand; the backbone line between that nucleotide and the next is removed during SVG post-processing, producing a visual strand break.
+
+- Indices are positions in the `nucleotides` array, not `Nucleotide.id` or `Nucleotide.number` values.
+- Do not include the last nucleotide of the final strand (there is no following backbone segment to remove).
+- When omitted, strand breaks are inferred only from the numbering-discontinuity heuristic (the leading integer prefix of `number` must jump by something other than `0` or `+1` between consecutive nucleotides).
+- When present, explicit `strandBreaks` are honored **in addition to** the heuristic; the two sources are merged and de-duplicated.
+
+This field is the reliable way to signal strand boundaries when residue numbering is continuous across strands (e.g. PDB structures where chain B continues from chain A's last residue number).
 
 ---
 

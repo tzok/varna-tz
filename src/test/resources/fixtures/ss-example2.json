@@ -1,0 +1,168 @@
+{
+  "drawingAlgorithm": "RADIATE",
+  "nucleotides": [
+    {
+      "id": 1,
+      "number": 1,
+      "char": "C"
+    },
+    {
+      "id": 2,
+      "number": 2,
+      "char": "C"
+    },
+    {
+      "id": 3,
+      "number": 3,
+      "char": "U"
+    },
+    {
+      "id": 4,
+      "number": 4,
+      "char": "G"
+    },
+    {
+      "id": 5,
+      "number": 5,
+      "char": "G"
+    },
+    {
+      "id": 6,
+      "number": 6,
+      "char": "U"
+    },
+    {
+      "id": 7,
+      "number": 7,
+      "char": "C"
+    },
+    {
+      "id": 8,
+      "number": 8,
+      "char": "C"
+    },
+    {
+      "id": 9,
+      "number": 9,
+      "char": "U"
+    },
+    {
+      "id": 10,
+      "number": 10,
+      "char": "U"
+    },
+    {
+      "id": 11,
+      "number": 11,
+      "char": "G"
+    },
+    {
+      "id": 12,
+      "number": 12,
+      "char": "U"
+    },
+    {
+      "id": 13,
+      "number": 13,
+      "char": "A"
+    },
+    {
+      "id": 14,
+      "number": 14,
+      "char": "G"
+    },
+    {
+      "id": 15,
+      "number": 15,
+      "char": "U"
+    },
+    {
+      "id": 16,
+      "number": 16,
+      "char": "C"
+    },
+    {
+      "id": 17,
+      "number": 17,
+      "char": "C"
+    },
+    {
+      "id": 18,
+      "number": 18,
+      "char": "A"
+    },
+    {
+      "id": 19,
+      "number": 19,
+      "char": "G"
+    },
+    {
+      "id": 20,
+      "number": 20,
+      "char": "G"
+    },
+    {
+      "id": 21,
+      "number": 21,
+      "char": "G"
+    }
+  ],
+  "basePairs": [
+    {
+      "id1": 1,
+      "id2": 21,
+      "stericity": "CIS",
+      "edge5": "WC",
+      "edge3": "WC",
+      "canonical": true
+    },
+    {
+      "id1": 2,
+      "id2": 20,
+      "stericity": "CIS",
+      "edge5": "WC",
+      "edge3": "WC",
+      "canonical": true
+    },
+    {
+      "id1": 3,
+      "id2": 19,
+      "stericity": "CIS",
+      "edge5": "WC",
+      "edge3": "WC",
+      "canonical": true
+    },
+    {
+      "id1": 5,
+      "id2": 17,
+      "stericity": "CIS",
+      "edge5": "WC",
+      "edge3": "WC",
+      "canonical": true
+    },
+    {
+      "id1": 8,
+      "id2": 14,
+      "stericity": "CIS",
+      "edge5": "WC",
+      "edge3": "WC",
+      "canonical": true
+    },
+    {
+      "id1": 9,
+      "id2": 13,
+      "stericity": "CIS",
+      "edge5": "WC",
+      "edge3": "WC",
+      "canonical": true
+    },
+    {
+      "id1": 7,
+      "id2": 17,
+      "stericity": "CIS",
+      "edge5": "HOOGSTEEN",
+      "edge3": "HOOGSTEEN",
+      "canonical": false
+    }
+  ]
+}

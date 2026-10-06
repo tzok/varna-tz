@@ -1,0 +1,3306 @@
+{
+  "nucleotides": [
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 0,
+      "number": 3,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 1,
+      "number": 4,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 2,
+      "number": 5,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 3,
+      "number": 6,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 4,
+      "number": 7,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 5,
+      "number": 8,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 6,
+      "number": 9,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 7,
+      "number": 10,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 8,
+      "number": 11,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 9,
+      "number": 12,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 10,
+      "number": 13,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 11,
+      "number": 14,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 12,
+      "number": 15,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 13,
+      "number": 16,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 14,
+      "number": 17,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 15,
+      "number": 18,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 16,
+      "number": 19,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 17,
+      "number": 20,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 18,
+      "number": 21,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 19,
+      "number": 22,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 20,
+      "number": 23,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 21,
+      "number": 24,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 22,
+      "number": 25,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 23,
+      "number": 26,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 24,
+      "number": 27,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 25,
+      "number": 28,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 26,
+      "number": 29,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 27,
+      "number": 30,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 28,
+      "number": 31,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 29,
+      "number": 32,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 30,
+      "number": 33,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 31,
+      "number": 34,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 32,
+      "number": 35,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 33,
+      "number": 36,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 34,
+      "number": 37,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 35,
+      "number": 38,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 36,
+      "number": 39,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 37,
+      "number": 40,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 38,
+      "number": 41,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 39,
+      "number": 42,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 40,
+      "number": 43,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 41,
+      "number": 44,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 42,
+      "number": 45,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 43,
+      "number": 46,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 44,
+      "number": 47,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 45,
+      "number": 48,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 46,
+      "number": 49,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 47,
+      "number": 50,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 48,
+      "number": 51,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 49,
+      "number": 52,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 50,
+      "number": 53,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 51,
+      "number": 54,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 52,
+      "number": 55,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 53,
+      "number": 56,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 54,
+      "number": 57,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 55,
+      "number": 58,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 56,
+      "number": 59,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 57,
+      "number": 60,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 58,
+      "number": 61,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 59,
+      "number": 62,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 60,
+      "number": 63,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 61,
+      "number": 64,
+      "char": "C",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 62,
+      "number": 65,
+      "char": "T",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 63,
+      "number": 66,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 64,
+      "number": 67,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 65,
+      "number": 68,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 66,
+      "number": 69,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 67,
+      "number": 70,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 68,
+      "number": 71,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 69,
+      "number": 72,
+      "char": "g",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 70,
+      "number": 73,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 71,
+      "number": 74,
+      "char": "t",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 72,
+      "number": 75,
+      "char": "c",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 73,
+      "number": 76,
+      "char": "a",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 74,
+      "number": -23,
+      "char": "A",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 75,
+      "number": -22,
+      "char": "C",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 76,
+      "number": -21,
+      "char": "U",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 77,
+      "number": -20,
+      "char": "C",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 78,
+      "number": -19,
+      "char": "U",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 79,
+      "number": -18,
+      "char": "U",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 80,
+      "number": -17,
+      "char": "U",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 81,
+      "number": -16,
+      "char": "A",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 82,
+      "number": -15,
+      "char": "G",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 83,
+      "number": -14,
+      "char": "C",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 84,
+      "number": -13,
+      "char": "G",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 85,
+      "number": -12,
+      "char": "U",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 86,
+      "number": -11,
+      "char": "U",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 87,
+      "number": -10,
+      "char": "G",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 88,
+      "number": -9,
+      "char": "G",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 89,
+      "number": -8,
+      "char": "A",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 90,
+      "number": -7,
+      "char": "C",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 91,
+      "number": -6,
+      "char": "G",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 92,
+      "number": -5,
+      "char": "G",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 93,
+      "number": -4,
+      "char": "U",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 94,
+      "number": -3,
+      "char": "U",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 95,
+      "number": -2,
+      "char": "A",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 96,
+      "number": -1,
+      "char": "C",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 97,
+      "number": 0,
+      "char": "G",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 98,
+      "number": 1,
+      "char": "U",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 99,
+      "number": 2,
+      "char": "C",
+      "outlineColor": "222,45,38",
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 100,
+      "number": 3,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 101,
+      "number": 4,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 102,
+      "number": 5,
+      "char": "G",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 103,
+      "number": 6,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 104,
+      "number": 7,
+      "char": "C",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 105,
+      "number": 8,
+      "char": "G",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 106,
+      "number": 9,
+      "char": "G",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 107,
+      "number": 10,
+      "char": "G",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 108,
+      "number": 11,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 109,
+      "number": 12,
+      "char": "G",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 110,
+      "number": 13,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 111,
+      "number": 14,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 112,
+      "number": 15,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 113,
+      "number": 16,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 114,
+      "number": 17,
+      "char": "G",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 115,
+      "number": 18,
+      "char": "C",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 116,
+      "number": 19,
+      "char": "C",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 117,
+      "number": 20,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 118,
+      "number": 21,
+      "char": "G",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 119,
+      "number": 22,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 120,
+      "number": 23,
+      "char": "C",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 121,
+      "number": 24,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 122,
+      "number": 25,
+      "char": "C",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 123,
+      "number": 26,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 124,
+      "number": 27,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 125,
+      "number": 28,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 126,
+      "number": 29,
+      "char": "C",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 127,
+      "number": 30,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 128,
+      "number": 31,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 129,
+      "number": 32,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 130,
+      "number": 33,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 131,
+      "number": 34,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 132,
+      "number": 35,
+      "char": "G",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 133,
+      "number": 36,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 134,
+      "number": 37,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 135,
+      "number": 38,
+      "char": "C",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 136,
+      "number": 39,
+      "char": "G",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 137,
+      "number": 40,
+      "char": "U",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    },
+    {
+      "parsedOutlineColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedInnerColor": {
+        "empty": true,
+        "present": false
+      },
+      "parsedNameColor": {
+        "empty": true,
+        "present": false
+      },
+      "id": 138,
+      "number": 41,
+      "char": "A",
+      "outlineColor": null,
+      "innerColor": null,
+      "nameColor": null
+    }
+  ],
+  "basePairs": [
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 103,
+      "id2": 118,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 11,
+      "id2": 49,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 13,
+      "id2": 47,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 4,
+      "id2": 56,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 6,
+      "id2": 54,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 14,
+      "id2": 46,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 10,
+      "id2": 50,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 17,
+      "id2": 43,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 0,
+      "id2": 59,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 7,
+      "id2": 53,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 5,
+      "id2": 55,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 8,
+      "id2": 52,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 9,
+      "id2": 51,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 22,
+      "id2": 38,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 24,
+      "id2": 36,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 18,
+      "id2": 42,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 16,
+      "id2": 44,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 12,
+      "id2": 48,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 19,
+      "id2": 41,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 15,
+      "id2": 45,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 20,
+      "id2": 40,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 23,
+      "id2": 37,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 21,
+      "id2": 39,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 25,
+      "id2": 35,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 70,
+      "id2": 134,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 28,
+      "id2": 32,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 69,
+      "id2": 135,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 106,
+      "id2": 115,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 68,
+      "id2": 136,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 1,
+      "id2": 58,
+      "edge5": "SUGAR",
+      "edge3": "HOOGSTEEN",
+      "stericity": "TRANS",
+      "canonical": false,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 2,
+      "id2": 57,
+      "edge5": "HOOGSTEEN",
+      "edge3": "SUGAR",
+      "stericity": "TRANS",
+      "canonical": false,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 29,
+      "id2": 31,
+      "edge5": "WC",
+      "edge3": "HOOGSTEEN",
+      "stericity": "TRANS",
+      "canonical": false,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 72,
+      "id2": 132,
+      "edge5": "HOOGSTEEN",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": false,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 73,
+      "id2": 128,
+      "edge5": "WC",
+      "edge3": "SUGAR",
+      "stericity": "TRANS",
+      "canonical": false,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 73,
+      "id2": 131,
+      "edge5": "HOOGSTEEN",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": false,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 101,
+      "id2": 120,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": false,
+      "color": null,
+      "thickness": null
+    },
+    {
+      "parsedColor": {
+        "empty": true,
+        "present": false
+      },
+      "id1": 102,
+      "id2": 119,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": false,
+      "color": null,
+      "thickness": null
+    }
+  ],
+  "stackings": null,
+  "drawingAlgorithm": "NAVIEW"
+}

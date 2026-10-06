@@ -1,0 +1,164 @@
+{
+  "nucleotides": [
+    {
+      "id": 1,
+      "number": 1,
+      "char": "G"
+    },
+    {
+      "id": 2,
+      "number": 2,
+      "char": "C"
+    },
+    {
+      "id": 3,
+      "number": 3,
+      "char": "G"
+    },
+    {
+      "id": 4,
+      "number": 4,
+      "char": "A"
+    },
+    {
+      "id": 5,
+      "number": 5,
+      "char": "A"
+    },
+    {
+      "id": 6,
+      "number": 6,
+      "char": "C"
+    },
+    {
+      "id": 7,
+      "number": 7,
+      "char": "A"
+    },
+    {
+      "id": 8,
+      "number": 8,
+      "char": "A"
+    },
+    {
+      "id": 9,
+      "number": 9,
+      "char": "G"
+    },
+    {
+      "id": 10,
+      "number": 10,
+      "char": "G"
+    },
+    {
+      "id": 11,
+      "number": 11,
+      "char": "A"
+    },
+    {
+      "id": 12,
+      "number": 12,
+      "char": "G"
+    },
+    {
+      "id": 13,
+      "number": 13,
+      "char": "G"
+    },
+    {
+      "id": 14,
+      "number": 14,
+      "char": "C"
+    },
+    {
+      "id": 15,
+      "number": 15,
+      "char": "C"
+    },
+    {
+      "id": 16,
+      "number": 16,
+      "char": "A"
+    },
+    {
+      "id": 17,
+      "number": 17,
+      "char": "C"
+    },
+    {
+      "id": 18,
+      "number": 18,
+      "char": "G"
+    },
+    {
+      "id": 19,
+      "number": 19,
+      "char": "A"
+    },
+    {
+      "id": 20,
+      "number": 20,
+      "char": "C"
+    },
+    {
+      "id": 21,
+      "number": 21,
+      "char": "G"
+    },
+    {
+      "id": 22,
+      "number": 22,
+      "char": "G"
+    }
+  ],
+  "basePairs": [
+    {
+      "id1": 1,
+      "id2": 14,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true
+    },
+    {
+      "id1": 2,
+      "id2": 13,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true
+    },
+    {
+      "id1": 5,
+      "id2": 18,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true
+    },
+    {
+      "id1": 6,
+      "id2": 17,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true
+    },
+    {
+      "id1": 9,
+      "id2": 22,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true
+    },
+    {
+      "id1": 10,
+      "id2": 21,
+      "edge5": "WC",
+      "edge3": "WC",
+      "stericity": "CIS",
+      "canonical": true
+    }
+  ]
+}

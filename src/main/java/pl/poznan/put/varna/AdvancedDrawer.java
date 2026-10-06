@@ -34,12 +34,18 @@ public class AdvancedDrawer {
       System.exit(1);
     }
 
-    String jsonFilePath = args[0];
-    File jsonFile = new File(jsonFilePath);
+    File jsonFile = new File(args[0]);
+    if (!run(jsonFile, "output.svg")) {
+      System.exit(1);
+    }
+  }
 
+  // Runs the full pipeline without calling System.exit; returns true on success.
+  static boolean run(File jsonFile, String outputFilename) {
+    String jsonFilePath = jsonFile.getPath();
     if (!jsonFile.exists() || !jsonFile.isFile()) {
       System.err.println("Error: File not found or is not a valid file: " + jsonFilePath);
-      System.exit(1);
+      return false;
     }
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -81,7 +87,7 @@ public class AdvancedDrawer {
         // System.out.println("Dot-Bracket:\n" + dotBracket); // Optional: print dot bracket
       } catch (IllegalArgumentException e) {
         System.err.println("Error creating base secondary structure: " + e.getMessage());
-        System.exit(1); // Exit if we can't form the base structure
+        return false; // Abort if we can't form the base structure
       }
 
       // Proceed with VARNA drawing if bpSeq and dotBracket were created
@@ -148,7 +154,6 @@ public class AdvancedDrawer {
           rna.drawRNA(drawMode, config);
 
           // 6. Save SVG
-          String outputFilename = "output.svg"; // Default output filename
           System.out.println("Saving RNA visualization to: " + outputFilename);
           rna.saveRNASVG(outputFilename, config);
           System.out.println("Initial SVG saved successfully.");
@@ -165,6 +170,7 @@ public class AdvancedDrawer {
           // Catch other potential exceptions during RNA processing/drawing
           System.err.println("An unexpected error occurred during RNA processing/drawing:");
           e.printStackTrace();
+          return false;
         }
       }
 
@@ -187,12 +193,14 @@ public class AdvancedDrawer {
                     .map(Enum::name)
                     .collect(Collectors.joining(", ")));
       }
-      System.exit(1);
+      return false;
     } catch (IOException e) {
       // Handle other general IO/parsing errors
       System.err.println("Error reading or parsing JSON file: " + jsonFilePath);
-      System.exit(1);
+      return false;
     }
+
+    return true;
   }
 
   // Utility method to parse color strings
@@ -228,7 +236,7 @@ public class AdvancedDrawer {
     return Optional.empty();
   }
 
-  private static BpSeq createBpSeqFromStructureData(StructureData structureData)
+  static BpSeq createBpSeqFromStructureData(StructureData structureData)
       throws IllegalArgumentException {
     if (structureData == null
         || structureData.nucleotides == null
@@ -547,17 +555,17 @@ public class AdvancedDrawer {
     }
   }
 
-  // Method to parse SVG, remove discontinuous backbone lines, and filter text labels
-  private static void postProcessSvg(String svgFilePath, StructureData structureData)
-      throws Exception {
-    if (structureData == null
-        || structureData.nucleotides == null
-        || structureData.nucleotides.isEmpty()) {
-      // No data to process
-      System.err.println("Warning: No nucleotide data found for SVG post-processing.");
-      return;
-    }
+  static final class SvgPlan {
+    final Set<Integer> discontinuityIndices;
+    final Set<Integer> labelsToKeep;
 
+    SvgPlan(Set<Integer> discontinuityIndices, Set<Integer> labelsToKeep) {
+      this.discontinuityIndices = discontinuityIndices;
+      this.labelsToKeep = labelsToKeep;
+    }
+  }
+
+  static SvgPlan computeSvgPlan(StructureData structureData) {
     // 1. Find indices BEFORE which a discontinuity occurs
     Set<Integer> discontinuityIndices = new TreeSet<>();
     Set<Integer> labelsToKeep = new HashSet<>();
@@ -619,6 +627,24 @@ public class AdvancedDrawer {
     if (discontinuityIndices.isEmpty()) {
       System.out.println("No numbering discontinuities found.");
     }
+
+    return new SvgPlan(discontinuityIndices, labelsToKeep);
+  }
+
+  // Method to parse SVG, remove discontinuous backbone lines, and filter text labels
+  private static void postProcessSvg(String svgFilePath, StructureData structureData)
+      throws Exception {
+    if (structureData == null
+        || structureData.nucleotides == null
+        || structureData.nucleotides.isEmpty()) {
+      // No data to process
+      System.err.println("Warning: No nucleotide data found for SVG post-processing.");
+      return;
+    }
+
+    SvgPlan plan = computeSvgPlan(structureData);
+    Set<Integer> discontinuityIndices = plan.discontinuityIndices;
+    Set<Integer> labelsToKeep = plan.labelsToKeep;
 
     // 2. Parse the SVG file
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -770,7 +796,7 @@ public class AdvancedDrawer {
     transformer.transform(source, result);
   }
 
-  private static boolean isNumberingDiscontinuous(
+  static boolean isNumberingDiscontinuous(
       Optional<Integer> currentPrefix, Optional<Integer> nextPrefix) {
     if (!currentPrefix.isPresent() || !nextPrefix.isPresent()) {
       return false;
@@ -781,7 +807,7 @@ public class AdvancedDrawer {
     return nextValue != currentValue && nextValue != currentValue + 1;
   }
 
-  private static boolean shouldKeepTenthLabel(Optional<Integer> prefix, Set<Integer> keptPrefixes) {
+  static boolean shouldKeepTenthLabel(Optional<Integer> prefix, Set<Integer> keptPrefixes) {
     if (!prefix.isPresent()) {
       return false;
     }

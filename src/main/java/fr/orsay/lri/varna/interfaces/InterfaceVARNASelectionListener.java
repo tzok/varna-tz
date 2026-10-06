@@ -10,7 +10,7 @@ public interface InterfaceVARNASelectionListener {
    * @param oldbase Previously hovered base (possibly null).
    * @param newBase Newly hovered base (possibly null).
    */
-  public void onHoverChanged(ModeleBase oldbase, ModeleBase newBase);
+  void onHoverChanged(ModeleBase oldbase, ModeleBase newBase);
 
   /**
    * Specifies the action to be performed upon changing the selection.
@@ -19,5 +19,5 @@ public interface InterfaceVARNASelectionListener {
    * @param addedBases The list of bases added since previous selection event
    * @param removedBases The list of bases removed since previous selection event
    */
-  public void onSelectionChanged(BaseList selection, BaseList addedBases, BaseList removedBases);
+  void onSelectionChanged(BaseList selection, BaseList addedBases, BaseList removedBases);
 }

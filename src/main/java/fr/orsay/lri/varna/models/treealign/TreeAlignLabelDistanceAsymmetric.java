@@ -8,5 +8,5 @@ public interface TreeAlignLabelDistanceAsymmetric<ValueType1, ValueType2> {
    * also want to have the triangle inequality, although the alignment algorithm does not require
    * it: f(x,z) <= f(x,y) + f(y,z)
    */
-  public double f(ValueType1 x, ValueType2 y);
+  double f(ValueType1 x, ValueType2 y);
 }

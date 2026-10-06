@@ -138,18 +138,18 @@ public class ExampleDistance3 implements TreeAlignLabelDistanceSymmetric<RNANode
         case 1:
           AlignmentA.add(i - 1);
           AlignmentB.add(j - 1);
-          i = i - 1;
-          j = j - 1;
+          i -= 1;
+          j -= 1;
           break;
         case 2:
           AlignmentA.add(i - 1);
           AlignmentB.add(-1);
-          i = i - 1;
+          i -= 1;
           break;
         case 3:
           AlignmentA.add(-1);
           AlignmentB.add(j - 1);
-          j = j - 1;
+          j -= 1;
           break;
         default:
           throw (new Error("Bug in ExampleDistance3: decision = " + decision));
@@ -158,12 +158,12 @@ public class ExampleDistance3 implements TreeAlignLabelDistanceSymmetric<RNANode
     while (i > 0) {
       AlignmentA.add(i - 1);
       AlignmentB.add(-1);
-      i = i - 1;
+      i -= 1;
     }
     while (j > 0) {
       AlignmentA.add(-1);
       AlignmentB.add(j - 1);
-      j = j - 1;
+      j -= 1;
     }
 
     // Convert the ArrayLists to the right format:

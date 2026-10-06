@@ -133,7 +133,7 @@ public class RNATemplate {
 
       EdgeEndPoint currentEndPoint = iter.next();
       switch (currentEndPoint.getPosition()) {
-          // We skip "IN" endpoints, so that we don't return elements twice
+        // We skip "IN" endpoints, so that we don't return elements twice
         case IN1:
         case IN2:
           // We get the corresponding "OUT" endpoint

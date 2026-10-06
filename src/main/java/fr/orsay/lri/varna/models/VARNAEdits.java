@@ -69,8 +69,8 @@ public class VARNAEdits {
         if (e._indices.equals(_indices)) {
           Point2D.Double tot = new Point2D.Double(_dx + e._dx, _dy + e._dy);
           if (tot.distance(0.0, 0.0) < MAX_DISTANCE) {
-            _dx = _dx + e._dx;
-            _dy = _dy + e._dy;
+            _dx += e._dx;
+            _dy += e._dy;
             return true;
           }
         }

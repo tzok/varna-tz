@@ -339,8 +339,8 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
   }
 
   private static double correctComponent(double c) {
-    c = c / 255.0;
-    if (c <= 0.03928) c = c / 12.92;
+    c /= 255.0;
+    if (c <= 0.03928) c /= 12.92;
     else c = Math.pow(((c + 0.055) / 1.055), 2.4);
     return c;
   }
@@ -1460,7 +1460,7 @@ public class RNA extends InterfaceVARNAObservable implements Serializable {
       ymin = objFun(nbHel, nbUnpaired, xmax, bpdist, multidist);
       ymax = objFun(nbHel, nbUnpaired, xmin, bpdist, multidist);
       if (ymin > 0.0) {
-        xmax = xmax + (xmax - xmin);
+        xmax += (xmax - xmin);
       } else if ((y <= 0.0) && (ymax > 0.0)) {
         xmax = x;
       } else if ((y >= 0.0) && (ymin < 0.0)) {

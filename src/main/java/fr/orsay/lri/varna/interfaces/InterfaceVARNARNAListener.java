@@ -13,7 +13,7 @@ public interface InterfaceVARNARNAListener {
    * @param oldseq Previous base content
    * @param newseq New base content
    */
-  public void onSequenceModified(int index, String oldseq, String newseq);
+  void onSequenceModified(int index, String oldseq, String newseq);
 
   /**
    * Reacts to modification of the structure (Base-pair addition/removal).
@@ -22,7 +22,7 @@ public interface InterfaceVARNARNAListener {
    * @param addedBasePairs Newly created base-pairs
    * @param removedBasePairs Newly removed base-pairs
    */
-  public void onStructureModified(
+  void onStructureModified(
       Set<ModeleBP> current, Set<ModeleBP> addedBasePairs, Set<ModeleBP> removedBasePairs);
 
   /**
@@ -30,5 +30,5 @@ public interface InterfaceVARNARNAListener {
    *
    * @param previousPositions
    */
-  public void onRNALayoutChanged(Hashtable<Integer, Point2D.Double> previousPositions);
+  void onRNALayoutChanged(Hashtable<Integer, Point2D.Double> previousPositions);
 }

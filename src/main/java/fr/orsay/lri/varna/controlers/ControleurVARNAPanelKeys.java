@@ -268,7 +268,7 @@ public class ControleurVARNAPanelKeys implements KeyListener, FocusListener {
           }
           break;
 
-          // Navigation control keys (Zoom in/out, arrow keys ...)
+        // Navigation control keys (Zoom in/out, arrow keys ...)
         case (KeyEvent.VK_DOWN):
           if (_vp.getZoom() > 1) {
             _vp.setTranslation(new Point(_vp.getTranslation().x, _vp.getTranslation().y - 5));

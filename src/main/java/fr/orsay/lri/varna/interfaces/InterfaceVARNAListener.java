@@ -25,14 +25,14 @@ import fr.orsay.lri.varna.models.rna.RNA;
  *
  * @author darty
  */
-public abstract interface InterfaceVARNAListener {
-  public abstract void onWarningEmitted(String s);
+public interface InterfaceVARNAListener {
+  void onWarningEmitted(String s);
 
-  public abstract void onStructureRedrawn();
+  void onStructureRedrawn();
 
-  public abstract void onUINewStructure(VARNAConfig v, RNA r);
+  void onUINewStructure(VARNAConfig v, RNA r);
 
-  public abstract void onZoomLevelChanged();
+  void onZoomLevelChanged();
 
-  public abstract void onTranslationChanged();
+  void onTranslationChanged();
 }

@@ -8,5 +8,5 @@ package fr.orsay.lri.varna.models.treealign;
  */
 public interface GraphvizDrawableNodeValue {
   /** Returns a string that will be displayed on the node by graphviz. */
-  public String toGraphvizNodeName();
+  String toGraphvizNodeName();
 }

@@ -401,7 +401,7 @@ public class TemplateEditor extends JFrame
       if (chooser.showSaveDialog(_sk) == JFileChooser.APPROVE_OPTION) {
         String path = chooser.getSelectedFile().getAbsolutePath();
         if (!path.toLowerCase().endsWith(".xml")) {
-          path = path + ".xml";
+          path += ".xml";
         }
         try {
           _sk.getTemplate().toXMLFile(new File(path));

@@ -2937,22 +2937,22 @@ public class VARNAPanel extends JPanel {
         // If both characters are the same, so it'll be in the super
         // structure
         if (firstStruct.charAt(i) == secondStruct.charAt(i)) {
-          string_superStruct = string_superStruct + firstStruct.charAt(i);
+          string_superStruct += firstStruct.charAt(i);
           array_rnaOwn.add(0);
         }
         // Else if one of the characters is an opening parenthese, so
         // it'll be an opening parenthese in the super structure
         else if (firstStruct.charAt(i) == '(' || secondStruct.charAt(i) == '(') {
-          string_superStruct = string_superStruct + '(';
+          string_superStruct += '(';
           array_rnaOwn.add((firstStruct.charAt(i) == '(') ? 1 : 2);
         }
         // Else if one of the characters is a closing parenthese, so
         // it'll be a closing parenthese in the super structure
         else if (firstStruct.charAt(i) == ')' || secondStruct.charAt(i) == ')') {
-          string_superStruct = string_superStruct + ')';
+          string_superStruct += ')';
           array_rnaOwn.add((firstStruct.charAt(i) == ')') ? 1 : 2);
         } else {
-          string_superStruct = string_superStruct + '.';
+          string_superStruct += '.';
           array_rnaOwn.add(-1);
         }
       }

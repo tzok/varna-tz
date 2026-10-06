@@ -63,14 +63,14 @@ public class BatchBenchmark {
 
       // draw RNA
       switch (algo) {
-          // case 0:
-          //	rna.drawRNALine(conf);
-          //	algoname = "Linear";
-          //	break;
-          // case 1:
-          //	rna.drawRNACircle(conf);
-          //	algoname = "Circular";
-          //	break;
+        // case 0:
+        //	rna.drawRNALine(conf);
+        //	algoname = "Linear";
+        //	break;
+        // case 1:
+        //	rna.drawRNACircle(conf);
+        //	algoname = "Circular";
+        //	break;
         case 2:
           rna.drawRNARadiate(conf);
           algoname = "Radiate";
@@ -106,12 +106,12 @@ public class BatchBenchmark {
               DrawRNATemplateCurveMethod.SMART,
               DEFAULT_STRAIGHT_BULGES);
           break;
-          /*
-          case 5:
-          	algoname = "Template/maxfactor";
-          	rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.MAXSCALINGFACTOR, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE, DEFAULT_STRAIGHT_BULGES);
-          	break;
-          	*/
+        /*
+        case 5:
+        	algoname = "Template/maxfactor";
+        	rna.drawRNATemplate(template, conf, DrawRNATemplateMethod.MAXSCALINGFACTOR, DrawRNATemplateCurveMethod.EXACTLY_AS_IN_TEMPLATE, DEFAULT_STRAIGHT_BULGES);
+        	break;
+        	*/
         case 6:
           algoname = "Template/mininter";
           rna.drawRNATemplate(

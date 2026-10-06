@@ -18,5 +18,5 @@ If not, see http://www.gnu.org/licenses.
 package fr.orsay.lri.varna.interfaces;
 
 public interface InterfaceParameterLoader {
-  public String getParameterValue(String key, String def);
+  String getParameterValue(String key, String def);
 }

@@ -10,5 +10,5 @@ public interface InterfaceVARNABasesListener {
    *
    * @param mb The base which has just been clicked
    */
-  public void onBaseClicked(ModeleBase mb, MouseEvent e);
+  void onBaseClicked(ModeleBase mb, MouseEvent e);
 }

@@ -232,7 +232,7 @@ public class ControleurInterpolator extends Thread {
       double x_n_plus_1;
       double result;
       while (true) {
-        numsteps = numsteps + 1;
+        numsteps += 1;
         double d = fsecond(x_n);
         if (d == 0) {
           // if f''(x_n) is 0 we cannot divide by it,
@@ -259,7 +259,7 @@ public class ControleurInterpolator extends Thread {
       // We now have either found the min or the max at x = result.
       // If we have the max at x we know the min is at x+pi.
       if (f(result + Math.PI) < f(result)) {
-        result = result + Math.PI;
+        result += Math.PI;
       }
 
       return result;

@@ -62,8 +62,8 @@ public class RNATemplateMapping {
       if (t instanceof RNATemplate.RNATemplateHelix) {
         k += " (" + ((RNATemplateHelix) t).getCaption() + ")";
         ModeleBase mb = r.getBaseAt(i);
-        if (mb.getElementStructure() > i) k = k + ":5'";
-        else k = k + ":3'";
+        if (mb.getElementStructure() > i) k += ":5'";
+        else k += ":3'";
       }
       if (!ranges.containsKey(k)) {
         ranges.put(k, new Couple<Integer, Integer>(Integer.MAX_VALUE, Integer.MIN_VALUE));

@@ -37,7 +37,17 @@ jobs:
 
       - name: Enable auto-merge for Dependabot PRs
         if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
-        run: gh pr merge --auto --squash "$PR_URL"
+        run: |
+          for i in 1 2 3; do
+            if gh pr merge --auto --squash "$PR_URL"; then
+              exit 0
+            fi
+            echo "Attempt $i failed (PR mergeable state unstable), retrying in 30s..."
+            sleep 30
+          done
+          echo "Failed to enable auto-merge after 3 attempts."
+          echo "This is usually transient (e.g. base branch moved while this run was building)."
+          exit 1
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
